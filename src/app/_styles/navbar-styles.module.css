@@ -1,0 +1,178 @@
+.navRoot {
+    @apply fixed top-0 left-0 w-full z-50 text-black;
+}
+
+:global(.dark) .navRoot {
+    @apply text-slate-300;
+}
+
+.navBackground {
+    content: '';
+    @apply bg-navbar backdrop-blur-lg absolute w-full h-full top-0 left-0 -z-10;
+}
+
+:global(.dark) .navBackground {
+    @apply bg-navbar-dark;
+}
+
+.logoContainer {
+    @apply flex items-center gap-4;
+}
+
+.logoText {
+    @apply text-base mt-1;
+}
+
+.navList::before {
+    @apply navBackground;
+}
+
+.navList {
+    @apply flex items-center justify-between px-4 py-2 my-0 gap-10;
+}
+
+
+.logoLink {
+    @apply text-xl font-bold;
+}
+
+.desktopNav {
+    @apply hidden md:flex gap-6 items-center;
+}
+
+.triggerBtn {
+    @apply px-3 py-2 rounded-md cursor-pointer;
+}
+
+.noChildMenu:hover {
+    @apply text-text-header-secondary;
+}
+
+:global(.dark) .noChildMenu:hover {
+    @apply text-text-header-secondary-dark;
+}
+
+.dropdownContent::before {
+    @apply navBackground rounded-b-3xl;
+}
+
+.dropdownContent {
+    @apply absolute top-full w-auto;
+}
+
+.dropdownList {
+    @apply m-0 py-2 px-1;
+}
+
+.dropdownListItem {
+    @apply block px-4 pb-2;
+}
+
+.dropdownListItemDisabled {
+    @apply block px-4 pb-2 text-gray-400 cursor-not-allowed; 
+}
+
+.disabledTooltip {
+    @apply inline bg-gray-400 text-sm text-white text-center rounded border border-transparent px-1 py-1 z-10 whitespace-nowrap ml-3;
+}
+
+:global(.dark) .disabledTooltip {
+    @apply bg-gray-700;
+}
+
+.dropdownListItem:hover {
+    @apply text-text-header-secondary;
+}
+
+:global(.dark) .dropdownListItem:hover {
+    @apply text-text-header-secondary-dark;
+}
+
+.dropdownListSubTrigger {
+    @apply block px-4 pb-2;
+}
+
+.dropdownListSubItem {
+    @apply block px-8 pb-2;
+}
+
+.dropdownListSubItem:hover {
+    @apply text-text-header-secondary;
+}
+
+:global(.dark) .dropdownListSubItem:hover {
+    @apply text-text-header-secondary-dark;
+}
+
+.dropdownListSubSubTrigger {
+    @apply block px-4 pb-2;
+}
+
+.dropdownListSubSubItem {
+    @apply block px-12 pb-2;
+}
+
+.dropdownListSubSubItem:hover {
+    @apply text-text-header-secondary;
+}
+
+:global(.dark) .dropdownListSubSubItem:hover {
+    @apply text-text-header-secondary-dark;
+}
+
+.mobileToggleContainer {
+    @apply md:hidden flex items-center gap-2;
+}
+
+.mobileToggleBtn {
+    @apply w-[30px] p-2 rounded-md cursor-pointer;
+}
+
+.mobileMenuContainer::before {
+    @apply navBackground;
+}
+
+.mobileMenuContainer {
+    @apply md:hidden h-auto absolute top-full left-0 w-screen rounded-b-3xl;
+}
+
+.mobileMenuList {
+    @apply flex flex-col gap-2 p-4;
+}
+
+.mobileMenuLink {
+    @apply block px-4 py-2;
+}
+
+.mobileMenuLink:hover {
+    @apply text-text-header-secondary;
+}
+
+:global(.dark) .mobileMenuLink:hover {
+    @apply text-text-header-secondary-dark;
+}
+
+.mobileMenuLinkDisabled {
+    @apply block px-4 py-2 text-gray-400 cursor-default cursor-not-allowed;
+}
+
+.dropdownButton {
+    @apply block px-4 py-2 w-full text-left cursor-pointer;
+}
+
+.mobileDropdownList {
+    @apply ml-4 mt-2;
+}
+
+.mobileDropdownSubList {
+    @apply ml-4;
+}
+
+.navList>li:first-child {
+    margin-right: auto;
+}
+
+.dark .triggerBtn.noChildMenu:hover {
+    @apply text-text-header-secondary-dark;
+}
+

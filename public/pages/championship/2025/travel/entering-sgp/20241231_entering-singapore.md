@@ -1,0 +1,1 @@
+Please read [https://www.ica.gov.sg/enter-transit-depart/entering-singapore](https://www.ica.gov.sg/enter-transit-depart/entering-singapore) for more details.

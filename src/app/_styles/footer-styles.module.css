@@ -1,0 +1,66 @@
+/* Footer Container */
+.footer {
+    @apply py-8 flex-grow;
+}
+
+/* Footer Grid Layout */
+.footerContainer {
+    @apply md:grid md:grid-cols-3 md:gap-4 mb-4;
+}
+
+/* Description Section (Left Side) */
+.footerDescription {
+    @apply md:col-span-1 text-text-body mb-5 md:mb-0;
+    text-align: left;
+}
+
+/* Sponsors Section (Grid Structure) */
+.footerSponsors {
+    @apply md:col-span-2 md:grid md:grid-cols-4 lg:grid-cols-3 md:gap-4;
+}
+
+/* Global Sponsors (Spans 2 Columns and Row Span of 2) */
+.footerSponsorsGlobal {
+    @apply md:col-span-2  flex flex-col mb-5 md:mb-0;
+}
+
+/* Tools Sponsors (Spans 1 Column and Row Span of 2) */
+.footerSponsorsTools {
+    @apply md:col-span-2 lg:col-span-1 flex flex-col h-full mb-5 md:mb-0;
+}
+
+/* Local Sponsors (Spans 3 Columns and Row Span of 1) */
+.footerSponsorsLocal {
+    @apply md:col-span-full flex flex-col h-full;
+}
+
+/* Logo Styling */
+.footerLogo {
+    @apply w-40 mb-4 mx-auto;
+    justify-content: space-between;
+}
+
+/* Footer Text Styling */
+.footerText {
+    @apply mt-2 text-text-body;
+}
+
+/* Link Styling */
+.footerLink {
+    @apply text-text-links hover:underline hover:bg-text-links-highlight hover:text-text-links-hover;
+}
+
+/* Section Titles */
+.footerTitle {
+    @apply font-bold text-lg mb-2 mt-8;
+    text-align: left;
+}
+
+.footerSubtitle {
+    @apply text-sm text-text-header-secondary;
+}
+
+/* Copyright */
+.footerCopyright {
+    @apply mt-4 py-2 w-full text-center mx-auto text-sm flex justify-center items-center;
+}

@@ -1,0 +1,8 @@
+.switch {
+  display: inline-block;
+  cursor: pointer;
+  height: 24px;
+  width: 24px;
+  transition: all 0.3s ease-in-out 0s !important;
+}
+

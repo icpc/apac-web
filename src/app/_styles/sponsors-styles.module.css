@@ -1,0 +1,15 @@
+.sectionTitle {
+    @apply text-xl font-semibold text-text-header-secondary text-center;
+}
+
+.sponsorLine {
+    @apply flex flex-row flex-wrap justify-center items-center w-full min-h-0;
+}
+
+.levelContainer {
+    @apply w-full flex flex-col gap-6;
+}
+
+.sponsorSection {
+    /* This class is used as a grouping element. */
+}

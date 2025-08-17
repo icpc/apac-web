@@ -1,0 +1,64 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+blockquote {
+    @apply my-6 text-justify;
+}
+
+h1 {
+    @apply text-4xl mt-8 mb-4 leading-snug font-bold text-text-header-primary dark:text-text-header-primary-dark;
+}
+
+h2 {
+    @apply text-3xl mt-8 mb-4 leading-snug font-bold text-text-header-secondary dark:text-text-header-secondary-dark;
+}
+
+h3 {
+    @apply text-2xl mt-8 mb-4 leading-snug font-bold text-text-header-ternary dark:text-text-header-ternary-dark;
+}
+
+:target {
+    scroll-margin-top: 80px;
+}
+
+.tooltip {
+    @apply hidden absolute bg-[#333] text-sm text-white text-center rounded border border-transparent px-1 py-1 z-10 whitespace-nowrap left-1/2 transform -translate-x-1/2;
+}
+
+a:hover .tooltip {
+    @apply block;
+    z-index: 50;
+}
+
+.header-link {
+    @apply relative opacity-30 hover:opacity-100;
+}
+
+.katex-html {
+    @apply hidden;
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    @apply bg-scrollbar dark:bg-scrollbar-dark;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    @apply bg-gray-400 dark:bg-gray-500;
+    border-radius: 3px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    @apply bg-secondaryAccent-dark dark:bg-secondaryAccent;
+}
+
+::selection {
+    @apply bg-primaryAccent text-black;
+}

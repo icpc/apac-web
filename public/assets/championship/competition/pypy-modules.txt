@@ -1,0 +1,96 @@
+>>>> help('modules')
+
+Please wait a moment while I gather a list of all available modules...
+
+__decimal           _random             distutils           pypy_tools
+__exceptions__      _rawffi             doctest             pypyjit
+__future__          _resource_build     email               pyrepl
+__pypy__            _resource_cffi      encodings           queue
+_abc                _scproxy            ensurepip           quopri
+_aix_support        _sha1               enum                random
+_ast                _sha256             errno               re
+_audioop_build      _sha3               faulthandler        readline
+_audioop_cffi       _sha512             fcntl               reprlib
+_blake2             _signal             filecmp             resource
+_bootsubprocess     _sitebuiltins       fileinput           rlcompleter
+_bz2                _socket             fnmatch             runpy
+_cffi_backend       _sqlite3            fractions           sched
+_cffi_ssl           _sqlite3_build      ftplib              secrets
+_codecs             _sqlite3_cffi       functools           select
+_codecs_cn          _sre                future_builtins     selectors
+_codecs_hk          _ssl                gc                  shelve
+_codecs_iso2022     _ssl_build          genericpath         shlex
+_codecs_jp          _string             getopt              shutil
+_codecs_kr          _strptime           getpass             signal
+_codecs_tw          _struct             gettext             site
+_collections        _structseq          glob                smtpd
+_collections_abc    _sysconfigdata      graphlib            smtplib
+_colorize           _sysconfigdata__linux_x86_64-linux-gnu greenlet            sndhdr
+_compat_pickle      _syslog_build       grp                 socket
+_compression        _syslog_cffi        gzip                socketserver
+_contextvars        _testcapi           hashlib             sqlite3
+_continuation       _testing            heapq               sre_compile
+_cppyy              _testmultiphase     hmac                sre_constants
+_crypt              _testmultiphase_build html                sre_parse
+_csv                _thread             http                ssl
+_ctypes             _threading_local    identity_dict       stackless
+_ctypes_test        _tkinter            idlelib             stat
+_ctypes_test_build  _vmprof             imaplib             statistics
+_curses             _warnings           imghdr              string
+_curses_build       _weakref            imp                 stringprep
+_curses_cffi        _weakrefset         importlib           struct
+_curses_panel       _winapi             inspect             subprocess
+_dbm                abc                 io                  sunau
+_decimal_build      aifc                ipaddress           symtable
+_ffi                antigravity         itertools           sys
+_gdbm               argparse            json                sysconfig
+_gdbm_build         array               keyword             syslog
+_gdbm_cffi          ast                 lib2to3             tabnanny
+_hashlib            asynchat            linecache           tarfile
+_hpy_universal      asyncio             locale              telnetlib
+_immutables_map     asyncore            logging             tempfile
+_imp                atexit              lzma                termios
+_io                 audioop             mailbox             test
+_jitlog             base64              mailcap             textwrap
+_locale             bdb                 marshal             this
+_lsprof             binascii            math                threading
+_lzma               binhex              mimetypes           time
+_lzma_build         bisect              mmap                timeit
+_lzma_cffi          builtins            modulefinder        tkinter
+_markupbase         bz2                 msilib              token
+_marshal            cProfile            msvcrt              tokenize
+_md5                calendar            multiprocessing     tputil
+_minimal_curses     cffi                netrc               trace
+_multibytecodec     cgi                 nntplib             traceback
+_multiprocessing    cgitb               ntpath              tracemalloc
+_opcode             chunk               nturl2path          tty
+_operator           cmath               numbers             turtle
+_osx_support        cmd                 opcode              turtledemo
+_overlapped         code                operator            types
+_pickle_support     codecs              optparse            typing
+_posixshmem         codeop              os                  unicodedata
+_posixshmem_build   collections         pathlib             unittest
+_posixshmem_cffi    colorsys            pdb                 urllib
+_posixsubprocess    compileall          pickle              uu
+_pwdgrp_build       concurrent          pickletools         uuid
+_pwdgrp_cffi        configparser        pipes               venv
+_py_abc             contextlib          pkgutil             warnings
+_pydecimal          contextvars         platform            wave
+_pyio               copy                plistlib            weakref
+_pypy_generic_alias copyreg             poplib              webbrowser
+_pypy_interact      cpyext              posix               wsgiref
+_pypy_irc_topic     crypt               posixpath           xdrlib
+_pypy_openssl       csv                 pprint              xml
+_pypy_testcapi      ctypes              profile             xmlrpc
+_pypy_util_build    ctypes_support      pstats              zipapp
+_pypy_util_cffi     curses              pty                 zipfile
+_pypy_util_cffi_inner dataclasses         pwd                 zipimport
+_pypy_wait          datetime            py_compile          zlib
+_pypy_winbase_build dbm                 pyclbr              zoneinfo
+_pypy_winbase_cffi  decimal             pydoc               
+_pypy_winbase_cffi64 difflib             pydoc_data          
+_pypyjson           dis                 pyexpat             
+
+Enter any module name to get more help.  Or, type "modules spam" to search
+for modules whose name or summary contain the string "spam".
+

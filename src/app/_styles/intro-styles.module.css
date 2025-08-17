@@ -1,0 +1,42 @@
+/* Intro.module.css */
+
+/* Default (light theme) */
+.background {
+    background-size: cover;
+    background-position: center;
+    --intro-gradient-start: rgba(255, 255, 255, 0.7);
+    --intro-gradient-end: rgba(255, 255, 255, 0.6);
+}
+
+:global(.dark) .background {
+    --intro-gradient-start: rgba(0, 0, 0, 0.6);
+    --intro-gradient-end: rgba(0, 0, 0, 0.3);
+}
+
+/* Content Styling */
+.content {
+    @apply relative z-10 text-center md:text-left md:pl-8 text-white;
+}
+
+/* Title Text */
+.title {
+    @apply text-5xl lg:text-[4rem] font-bold tracking-tighter leading-tight md:pr-8 text-black text-left;
+}
+
+:global(.dark) .title {
+    @apply text-white;
+}
+
+/* Subtitle Text */
+.subtitle {
+    @apply text-lg mb-4 text-black text-left;
+}
+
+:global(.dark) .subtitle {
+    @apply text-white;
+}
+
+/* Logo Styling */
+.logo {
+    @apply mb-4 w-2/3 lg:w-64 h-auto;
+}

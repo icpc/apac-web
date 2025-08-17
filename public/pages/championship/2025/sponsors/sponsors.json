@@ -1,0 +1,59 @@
+
+
+
+[
+  {
+    "ICPC Global Sponsors (2025)": [
+      {
+        "Huawei": {
+        "size": 4,
+          "filename": "/assets/sponsors/huawei-logo.png"
+        }
+      },
+      {
+        "Jane Street": {
+          "size": 8,
+          "filename": "/assets/sponsors/jane-street-logo.png"
+        }
+      },
+      {
+        "Jump Trading": {
+          "size": 6,
+          "filename": "/assets/sponsors/jump-trading-logo.png"
+        }
+      }
+    ]
+  },
+  {
+    "ICPC Global Sponsor Programming Tools (2025)": [
+      {
+        "Jetbrains": {
+          "size": 8,
+          "filename": "/assets/sponsors/jetbrains-logo.png"
+        }
+      }
+    ]
+  },
+  {
+    "Local Sponsors": [
+      {
+        "Optiver": {
+          "size": 8,
+          "filename": "/assets/sponsors/optiver-logo.png"
+        }
+      },
+      {
+        "HRT": {
+          "size": 4,
+          "filename": "/assets/sponsors/hrt-logo.png"
+        }
+      },
+      {
+        "Citadel": {
+          "size": 20,
+          "filename": "/assets/sponsors/citadel-logo.png"
+        }
+      }
+    ]
+  }
+]

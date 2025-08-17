@@ -1,0 +1,122 @@
+.markdown {
+  @apply text-lg leading-relaxed;
+}
+
+.markdown ul,
+.markdown ol,
+.markdown p,
+.markdown blockquote {
+  @apply mt-2 mb-4 text-text-body;
+}
+
+.markdown blockquote {
+  @apply text-justify;
+}
+
+.markdown li {
+  @apply text-text-body;
+}
+
+:global(.dark) .markdown ul,
+:global(.dark) .markdown ol,
+:global(.dark) .markdown p,
+:global(.dark) .markdown li,
+:global(.dark) .markdown blockquote {
+  @apply text-text-body-dark;
+}
+
+.markdown table {
+  @apply w-full my-6 border-collapse table-fixed;
+  max-width: 100vw;
+}
+
+.markdown th,
+.markdown td {
+  @apply border border-border px-1 py-2 lg:px-4;
+  word-wrap: break-word;
+}
+
+.markdown td img {
+  @apply block mx-auto;
+}
+
+.markdown td[colspan="3"] { /* data headers */
+  @apply bg-text-header-others-cyanalpha;
+}
+
+.markdown th {
+  @apply font-bold bg-text-header-others-cyanalpha;
+}
+
+.markdown ul {
+  @apply list-disc pl-5;
+}
+
+.markdown ol {
+  @apply list-decimal pl-5;
+}
+
+.markdown ins {
+  @apply bg-green-200 text-black no-underline;
+}
+
+.markdown del {
+  @apply bg-red-200 text-black;
+}
+
+.markdown a {
+    @apply text-text-links border border-transparent;
+    padding: 0.1em 0;
+    border-radius: 0.25rem;
+}
+
+:global(.dark) .markdown a {
+    @apply text-text-links-dark;
+}
+
+.markdown a:hover {
+    @apply underline bg-text-links-highlight text-text-links-hover;
+}
+
+:global(.dark) .markdown a:hover {
+    @apply bg-text-links-highlight-dark text-text-links-hover-dark;
+}
+
+.markdown td li {
+  @apply text-text-body;
+}
+
+:global(.dark) .markdown td li {
+  @apply text-text-body-dark;
+}
+
+.markdown h1,
+
+.markdown h3 {
+  @apply font-bold mb-4 text-text-header-secondary;
+}
+
+.markdown h2 {
+  @apply font-bold mb-4 text-text-body;
+}
+
+:global(.dark) .markdown h1,
+:global(.dark) .markdown h3 {
+  @apply text-text-header-secondary-dark;
+}
+
+:global(.dark) .markdown h2 {
+  @apply text-white;
+}
+
+.markdown h1 {
+  @apply text-3xl;
+}
+
+.markdown h2 {
+  @apply text-2xl ;
+}
+
+.markdown h3 {
+  @apply text-xl;
+}

@@ -1,0 +1,160 @@
+/* Sidebar Navigation Styles */
+
+.sidebarContainer {
+  background-color: hsl(var(--card));
+  color: hsl(var(--card-foreground));
+}
+
+.sidebarHeader {
+  @apply pb-4;
+}
+
+.sidebarTitle {
+  @apply text-lg font-semibold leading-none tracking-tight;
+}
+
+.sidebarContent {
+  @apply space-y-2;
+}
+
+.sidebarSection {
+  @apply space-y-1;
+}
+
+/* Main navigation buttons (sections and H1 headings) */
+.mainNavButton {
+  @apply w-full justify-start pl-6 h-auto font-medium;
+}
+
+/* Collapsible trigger for subsections */
+.subsectionTrigger {
+  @apply w-full justify-between h-auto text-sm;
+  color: hsl(var(--muted-foreground));
+}
+
+.subsectionTrigger:hover {
+  background-color: hsl(var(--accent));
+}
+
+/* Subsection container */
+.subsectionContainer {
+  @apply ml-4 space-y-1 pt-1;
+}
+
+/* H2 subsection buttons */
+.subsectionButton {
+  @apply w-full justify-start h-auto p-2 text-sm;
+  color: hsl(var(--muted-foreground));
+}
+
+.subsectionButton:hover {
+  color: hsl(var(--foreground));
+}
+
+/* Subsection bullet point */
+.subsectionBullet {
+  @apply mr-2;
+}
+
+/* Chevron icon */
+.chevronIcon {
+  @apply h-4 w-4 transition-transform duration-200;
+}
+
+.chevronIcon[data-state="closed"] {
+  transform: rotate(-90deg);
+}
+
+/* Collapsible content transitions */
+.collapsibleContent {
+  overflow: hidden;
+}
+
+/* Scroll area */
+.scrollArea {
+  height: calc(100vh - 200px);
+}
+
+/* Content sections with proper scroll margin */
+.contentSection {
+  @apply mb-12;
+  scroll-margin-top: 8rem; /* 128px */
+}
+
+.contentSectionHeader {
+  @apply flex justify-between items-center mb-2;
+}
+
+.contentSectionTitle {
+  @apply text-2xl font-semibold;
+}
+
+.lastUpdated {
+  @apply text-sm;
+  color: #6b7280; /* gray-500 */
+}
+
+@media (prefers-color-scheme: dark) {
+  .lastUpdated {
+    color: #9ca3af; /* gray-400 */
+  }
+}
+
+.contentSectionDivider {
+  @apply mb-4;
+}
+
+/* Responsive sidebar positioning */
+.sidebarAside {
+  @apply w-full mb-8 self-start;
+}
+
+@media (min-width: 768px) {
+  .sidebarAside {
+    @apply w-1/4 mb-0 sticky;
+    top: 6rem; /* 96px */
+  }
+}
+
+/* Main content area */
+.mainContent {
+  @apply w-full;
+}
+
+@media (min-width: 768px) {
+  .mainContent {
+    @apply w-3/4;
+  }
+}
+
+.pageHeader {
+  @apply flex justify-between items-center mb-6;
+}
+
+.pageTitle {
+  @apply text-3xl font-bold;
+}
+
+.pageHeaderDivider {
+  @apply mb-6;
+}
+
+/* Container layout */
+.pageContainer {
+  @apply container mx-auto px-4 py-8;
+}
+
+.contentLayout {
+  @apply flex flex-col gap-8;
+}
+
+@media (min-width: 768px) {
+  .contentLayout {
+    @apply flex-row;
+  }
+}
+
+/* Separator between sections */
+.sectionSeparator {
+  @apply my-2;
+} 

@@ -1,0 +1,10 @@
+{
+  "entering-sgp": {
+    "order": 1,
+    "display_name": "Entering Singapore"
+  },
+  "accomodations": {
+    "order": 2,
+    "display_name": "Accommodations"
+  }
+}
