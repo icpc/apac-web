@@ -1,5 +1,6 @@
 import { redirect } from 'next/navigation';
 
-export default function YearPage({ params }: { params: { year: string } }) {
-  redirect(`/championship/${params.year}/information`);
+export default async function YearPage({ params }: { params: Promise<{ year: string }> }) {
+  const { year } = await params;
+  redirect(`/championship/${year}/information`);
 } 

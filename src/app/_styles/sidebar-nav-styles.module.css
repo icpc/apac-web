@@ -1,6 +1,7 @@
 /* Sidebar Navigation Styles */
 
 .sidebarContainer {
+  @apply mt-12 w-full;
   background-color: hsl(var(--card));
   color: hsl(var(--card-foreground));
 }
@@ -18,12 +19,12 @@
 }
 
 .sidebarSection {
-  @apply space-y-1;
+  @apply space-y-1 pl-8;
 }
 
 /* Main navigation buttons (sections and H1 headings) */
 .mainNavButton {
-  @apply w-full justify-start pl-6 h-auto font-medium;
+  @apply w-full justify-start h-auto font-medium px-0;
 }
 
 /* Collapsible trigger for subsections */
@@ -61,8 +62,12 @@
   @apply h-4 w-4 transition-transform duration-200;
 }
 
-.chevronIcon[data-state="closed"] {
-  transform: rotate(-90deg);
+.mainNavButton .chevronIcon {
+  transition: transform 0.2s ease-in-out;
+}
+
+.mainNavButton[data-state='open'] .chevronIcon {
+  transform: rotate(180deg);
 }
 
 /* Collapsible content transitions */
@@ -106,7 +111,7 @@
 
 /* Responsive sidebar positioning */
 .sidebarAside {
-  @apply w-full mb-8 self-start;
+  @apply w-full mb-8 self-start pr-6;
 }
 
 @media (min-width: 768px) {

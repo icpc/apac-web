@@ -115,8 +115,8 @@ const ChangelogPage = ({ entries, year }: { entries: ChangelogEntry[], year: str
 );
 
 // Main page component
-export default async function ChangelogsPage({ params }: { params: { year: string } }) {
-  const { year } = params;
+export default async function ChangelogsPage({ params }: { params: Promise<{ year: string }> }) {
+  const { year } = await params;
 
   if (!AVAILABLE_YEARS.includes(year)) {
     notFound();

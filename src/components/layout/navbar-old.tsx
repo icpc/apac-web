@@ -3,10 +3,12 @@
 import * as NavigationMenu from "@radix-ui/react-navigation-menu";
 import Link from "next/link";
 import { useState, useRef, useEffect } from "react";
-import { ThemeSwitcher, useTheme } from "@/components/common";
+import { ThemeSwitcher } from "@/components/common/theme-switcher";
+import { useTheme } from "@/components/common/theme-context";
 import Image from "next/image";
 import styles from "@/app/_styles/navbar-styles.module.css";
 import { ICPC_APAC } from "@/lib/constants";
+import { ChevronDownIcon } from "lucide-react"
 
 // Import the single navItems config
 import { navItems } from "@/app/navConfig";
@@ -94,7 +96,7 @@ export default function Navbar() {
                                                         : styles.dropdownListSubTrigger
                                                 }
                                             >
-                                                {label} ▼
+                                                {label} <ChevronDownIcon className={styles.chevronIcon} />
                                             </NavigationMenu.Trigger>
                                             <NavigationMenu.Content>
                                                 {renderDesktopMenuItems(children, level+1)}
@@ -153,7 +155,7 @@ export default function Navbar() {
                                     onClick={() => toggleDropdown(label)}
                                     className={styles.dropdownButton}
                                 >
-                                    {label} ▼
+                                    {label} <ChevronDownIcon className={styles.chevronIcon} />
                                 </button>
                                 {openDropdown === label && (
                                     <ul className={styles.mobileDropdownList}>
@@ -167,7 +169,7 @@ export default function Navbar() {
                                                             onClick={() => toggleSubMenu(subItem.label)}
                                                             className={styles.dropdownButton}
                                                         >
-                                                            {subItem.label} ▼
+                                                            {subItem.label} <ChevronDownIcon className={styles.chevronIcon} />
                                                         </button>
                                                         {openSubMenu === subItem.label && (
                                                             <ul className={styles.mobileDropdownSubList}>
@@ -182,7 +184,7 @@ export default function Navbar() {
                                                                                     onClick={() => toggleSubSubMenu(subSubItem.label)}
                                                                                     className={styles.dropdownButton}
                                                                                 >
-                                                                                    {subSubItem.label} ▼
+                                                                                    {subSubItem.label} <ChevronDownIcon className={styles.chevronIcon} />
                                                                                 </button>
                                                                                 {openSubSubMenu === subSubItem.label && (
                                                                                     <ul className={styles.mobileDropdownSubList}>
@@ -307,7 +309,7 @@ export default function Navbar() {
                             return (
                                 <NavigationMenu.Item key={label}>
                                     <NavigationMenu.Trigger className={styles.triggerBtn}>
-                                        {label} ▼
+                                        {label} <ChevronDownIcon className={styles.chevronIcon} />
                                     </NavigationMenu.Trigger>
                                     <NavigationMenu.Content className={styles.dropdownContent}>
                                         {renderDesktopMenuItems(top.children ?? [])}

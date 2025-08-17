@@ -104,7 +104,7 @@ export const SidebarNavigation = ({
     <aside className={styles.sidebarAside}>
       <div className={styles.sidebarContainer}>
         <div className={styles.sidebarHeader}>
-          <h1 className={styles.sidebarTitle}>The Championship - {year}</h1>
+          <h1 className={styles.sidebarTitle}>The {year} Championship</h1>
         </div>        
         <ScrollArea className={styles.scrollArea}>
           <div className={styles.sidebarContent}>

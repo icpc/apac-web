@@ -34,66 +34,56 @@ function formatDate(dateString: string): string {
     return new Date(dateString).toLocaleDateString('en-US', options);
 }
 
-export default function DynamicPage({ params }: { params: Promise<Params> }) {
-    const [resolvedParams, setResolvedParams] = useState<Params | null>(null);
+export default function DynamicPage({ params }: { params: Promise<{ slug: string[] }> }) {
     const [markdownContent, setMarkdownContent] = useState<MarkdownContent>({
-        title: "Loading the title...",
-        coverImage: "Loading the cover image...",
-        updatedDate: "Loading the date...",
-        htmlContent: "Loading the content..."
+        title: "",
+        coverImage: "",
+        updatedDate: "",
+        htmlContent: ""
     });
     const [history, setHistory] = useState<MarkdownContent[]>([markdownContent]);
     const [index, setIndex] = useState(0);
     const [isValidPage, setIsValidPage] = useState(true);
 
     useEffect(() => {
-        async function resolveParams() {
-            try {
-                const result = await params;
-                setResolvedParams(result);
-            } catch (error) {
-                console.error('Error resolving params:', error);
-                setIsValidPage(false);
+        async function processParams() {
+            const resolvedParams = await params;
+            if (!resolvedParams) return;
+
+            const { slug } = resolvedParams;
+            const slugArray = Array.isArray(slug) ? slug : [slug];
+
+            if (slugArray.length > 0 && slugArray[0] === 'championship') {
+                notFound();
+                return;
             }
-        }
 
-        resolveParams();
-    }, [params]);
+            if (slugArray.join('/') === 'home') {
+                redirect('/');
+                return;
+            }
 
-    useEffect(() => {
-        if (!resolvedParams) return;
-
-        const { slug } = resolvedParams;
-        const slugArray = Array.isArray(slug) ? slug : [slug];
-
-        if (slugArray.length > 0 && slugArray[0] === 'championship') {
-            notFound();
-            return;
-        }
-
-        if (slugArray.join('/') === 'home') {
-            redirect('/');
-            return;
-        }
-
-        async function loadMarkdown() {
-            try {
-                const slugPath = slugArray.join('%2F');
-                const response = await fetch('/api/fetch-markdown?slug=' + slugPath, {cache:"no-store"});
-                if (!response.ok) {
-                    console.error('Error fetching markdown:', response.statusText);
-                    setIsValidPage(false);
-                } else {
-                    const content = await response.json();
-                    setHistory(content);
+            async function loadMarkdown() {
+                try {
+                    const slugPath = slugArray.join('%2F');
+                    const response = await fetch('/api/fetch-markdown?slug=' + slugPath, {cache:"no-store"});
+                    if (!response.ok) {
+                        console.error('Error fetching markdown:', response.statusText);
+                        setIsValidPage(false);
+                    } else {
+                        const content = await response.json();
+                        setHistory(content);
+                    }
+                } catch (error) {
+                    console.error('Error loading markdown:', error);
                 }
-            } catch (error) {
-                console.error('Error loading markdown:', error);
             }
+
+            loadMarkdown();
         }
 
-        loadMarkdown();
-    }, [resolvedParams]);
+        processParams();
+    }, [params]);
 
     useEffect(() => {
         if (isValidPage && history.length > 0) {
@@ -114,7 +104,7 @@ export default function DynamicPage({ params }: { params: Promise<Params> }) {
         }
     }, [isValidPage, index, history]);
 
-    if (!resolvedParams) {
+    if (markdownContent.htmlContent === "" || markdownContent.htmlContent === "Loading the content...") {
         return <div>Loading...</div>;
     } else if (!isValidPage) {
         return notFound();

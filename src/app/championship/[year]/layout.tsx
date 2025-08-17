@@ -7,7 +7,7 @@ export default async function Layout({
   children: React.ReactNode;
   params: { year: string };
 }) {
-  const { year } = params;
+  const { year } = await params;
 
   return (
     <ChampionshipLayout year={year}>

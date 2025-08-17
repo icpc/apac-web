@@ -126,8 +126,8 @@ export default function ChampionshipLayout({ children, year }: ChampionshipLayou
                     // Button for the sections
                     className={`px-6 py-3 text-lg font-medium rounded-lg transition-colors dark:text-white 
                       ${isActive
-                        ? 'bg-primaryAccent dark:bg-primaryAccent-dark dark:text-background'
-                        : 'hover:bg-primary/10 dark:hover:bg-primaryAccent-dark/10'
+                      ? 'dark:text-primaryAccent-dark text-text-header-secondary border border-text-header-secondary dark:border-primaryAccent-dark bg-primaryAccent/10 dark:bg-primaryAccent-dark/10 '
+                        : 'border border-transparent hover:border-gray-300 hover:bg-transparent dark:hover:border-white dark:hover:bg-transparent'
                       }`}
                   >
                     {item.label}

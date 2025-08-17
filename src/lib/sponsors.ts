@@ -2,11 +2,11 @@
 import { promises as fs } from 'fs';
 import { marked } from 'marked';
 
-export async function getSponsors(sponsorsFilePath) {
+export async function getSponsors(sponsorsFilePath: string) {
     try {
         const fileContents = await fs.readFile(sponsorsFilePath, 'utf8');
         const htmlContent = marked(fileContents);
-        const imageSources = fileContents.match(/!\[.*?\]\((.*?)\)/g)?.map(img => img.match(/\((.*?)\)/)[1]) || [];
+        const imageSources = fileContents.match(/!\[.*?\]\((.*?)\)/g)?.map(img => img.match(/\((.*?)\)/)?.[1]).filter(Boolean) || [];
         return {
             htmlContent,
             imageSources,

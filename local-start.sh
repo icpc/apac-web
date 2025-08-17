@@ -78,4 +78,10 @@ if [ "$VERBOSE" = true ]; then
     log "Verbose mode enabled via DEBUG environment variable."
 fi
 
+# Build the app
+log "Building the app..."
+npm run build
+
+# Run the app
+log "Running the app..."
 npm run dev

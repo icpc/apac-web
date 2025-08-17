@@ -71,7 +71,7 @@ const getSectionSubfolderContents = async (year: string, section: string): Promi
   const YYYYMMDD_REGEX = /^\d{8}_.*\.md$/i;
 
   // Try to read order.json for display_name mapping
-  let orderConfig: Record<string, { display_name?: string }> = {};
+  let orderConfig: Record<string, { display_name?: string, order?: number }> = {};
   try {
     const orderJsonPath = path.join(sectionPath, 'order.json');
     const orderJson = await fs.readFile(orderJsonPath, 'utf8');
@@ -181,7 +181,7 @@ const ContentSection = ({
 };
 
 // Main page component
-export default async function ChampionshipPage({ params }: { params: { year: string, section: string } }) {
+export default async function ChampionshipPage({ params }: { params: Promise<{ year: string, section: string }> }) {
   const { year, section } = await params;
 
   if (!AVAILABLE_YEARS.includes(year)) {
