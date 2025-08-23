@@ -7,7 +7,7 @@ import { ThemeProvider } from "@/app/_components/pages/theme-context";
 
 import "./globals.css";
 import Navbar from "./_components/pages/navbar";
-// import { redirect } from "next/navigation";
+import { redirect } from "next/navigation";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -29,10 +29,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // if (process.env.NODE_ENV === "production") {
-  //   redirect("https://apac.icpc.global/");
-  // }
-//comment
+  redirect("https://apac.icpc.global/");
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
