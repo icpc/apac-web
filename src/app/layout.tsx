@@ -29,7 +29,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  redirect("https://apac.icpc.global/");
   return (
     <html lang="en" suppressHydrationWarning>
       <head>

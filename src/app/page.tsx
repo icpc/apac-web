@@ -4,12 +4,10 @@ import Container from "@/app/_components/pages/container";
 import { Intro } from "@/app/_components/pages/intro";
 import { Content } from "@/app/_components/pages/content";
 import { useEffect, useState } from "react";
-import { redirect } from "next/navigation";
 
 export default function Index() {
-  redirect("https://apac.icpc.global/");
   const [markdownContents, setMarkdownContents] = useState<
-  { title: string; coverImage: string; date: string; excerpt: string; htmlContent: string }[]
+    { title: string; coverImage: string; date: string; excerpt: string; htmlContent: string }[]
   >([]);
 
   useEffect(() => {
