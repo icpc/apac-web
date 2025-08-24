@@ -1,0 +1,10 @@
+{
+  "venue": {
+    "order": 1,
+    "display_name": "Venue"
+  },
+  "timetable": {
+    "order": 2,
+    "display_name": "Time Table"
+  }
+}

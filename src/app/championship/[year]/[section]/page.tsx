@@ -104,10 +104,13 @@ const getSectionSubfolderContents = async (year: string, section: string): Promi
           // Use display_name from order.json if available, else fallback
           const title = orderConfig[subfolderName]?.display_name ||
             subfolderName.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+          const dateStr = newestFile.date;
+          const isValidDate = dateStr !== '00000000';
+
           subfolderContents.push({
             title,
             content,
-            lastUpdated: formatDate(newestFile.date),
+            lastUpdated: isValidDate ? formatDate(dateStr) : undefined,
             directoryName: subfolderName
           });
         }

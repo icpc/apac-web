@@ -1,0 +1,10 @@
+{
+  "entering-vnm": {
+    "order": 1,
+    "display_name": "Entering Vietnam"
+  },
+  "accomodations": {
+    "order": 2,
+    "display_name": "Accommodations"
+  }
+}

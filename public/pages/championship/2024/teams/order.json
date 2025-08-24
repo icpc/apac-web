@@ -1,0 +1,10 @@
+{
+  "teams": {
+    "order": 1,
+    "display_name": "Participating Teams"
+  },
+  "medalists": {
+    "order": 2,
+    "display_name": "List of Medalists"
+  }
+}
