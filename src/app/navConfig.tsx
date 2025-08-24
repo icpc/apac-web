@@ -7,7 +7,14 @@ type MenuItem = {
 
 export const navItems: MenuItem[] = [
     {
-        label: "About", url: "/about"
+        label: "About", url: "/about",
+        children: [
+            { label: "🔗 ICPC Global", url: "https://icpc.global/" },
+            { label: "🔗 ICPC Foundation", url: "https://icpc.foundation/" },
+            { label: "🔗 ICPC Asia Council Chair CJ Hwang's Blog", url: "https://icpcasia.wp.txstate.edu/" },
+            { label: "🔗 ICPC APAC Rules and News", url: "https://icpc.jp/apac/" },
+            { label: "🔗 ICPC APAC Photos Gallery", url: "https://news.icpc.global/galleryAP/" },
+        ]
     },
     {
         label: "Championship",

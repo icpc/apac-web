@@ -4,6 +4,9 @@ import { ICPC_APAC } from "@/lib/constants";
 import WideContainer from "@/app/_components/pages/wide-container";
 import styles from "@/app/_styles/intro-styles.module.css";
 import { useTheme } from "@/app/_components/pages/theme-context";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import { SponsorsCarousel } from "./sponsors-carousel";
 
 export function Intro() {
   const { theme } = useTheme();
@@ -12,13 +15,13 @@ export function Intro() {
   return (
     <div className="mb-20 md:mb-12">
       <section
-        className={`relative h-400px lg:grid lg:h-screen lg:grid-rows-9 items-center px-8 pb-12 ${styles.background}`}
+        className={`relative h-400px lg:grid lg:h-screen lg:grid-rows-9 items-center pb-12 ${styles.background}`}
         style={{
           backgroundImage: `linear-gradient(to bottom, 
             var(--intro-gradient-start) 80%, 
             var(--intro-gradient-end) 100%, 
             transparent), 
-            url('/assets/nus-soc.jpeg')`,
+            url('/assets/home/banner.jpg')`,
         }}
       >
         <div className="lg:row-span-2"></div>
@@ -26,22 +29,26 @@ export function Intro() {
         <WideContainer className={`${styles.content} flex flex-col py-36 lg:py-48 lg:py-0 lg:flex-row items-center justify-between lg:row-span-3`}>
           <div className="order-2 lg:order-1">
             <p className={`${styles.title}`}>{ICPC_APAC}</p>
-            <p className={styles.subtitle}>
-              Hosted by the National University of Singapore
+            <p className={`${styles.subtitle} mt-4 max-w-2xl`}>
+              The premier programming competition for students in the Asia-Pacific region, a gateway to the ICPC World Finals.
             </p>
-            <div className="flex flex-col justify-center items-center lg:inline">
-              <img
-                src={dark ? "/assets/nus-logo-white.png" : "/assets/nus-logo-black.png"}
-                alt="NUS Logo"
-                className={styles.logo}
-              />
-            </div>
+            {/* <div className="flex flex-col sm:flex-row gap-4 mt-8">
+              <Button asChild variant="ghost" className="px-6 py-3 text-lg font-medium rounded-lg transition-colors dark:text-white dark:text-primaryAccent-dark text-text-header-secondary border border-text-header-secondary dark:border-primaryAccent-dark bg-primaryAccent/10 dark:bg-primaryAccent-dark/10 hover:bg-primaryAccent/20 dark:hover:bg-primaryAccent-dark/20">
+                <Link href="/championship/latest/information">
+                  Get Ready for the Asia Pacific Championship
+                </Link>
+              </Button>
+            </div> */}
           </div>
           <img src={`/assets/icpc-apac-logo/icpc-apac-logo-new-solid-${dark ? "light-blue" : "dark-blue"}-thin.png`} alt="ICPC APAC Logo" className="w-2/3 pb-12 md:w-1/3 order-1 lg:order-2 lg:pb-0" />
         </WideContainer>
         <div className="lg:row-span-1"></div>
-        <div className="my-2 lg:row-span-3 ">
+        <div className="my-2 lg:row-span-3 w-full px-4 lg:px-8">
+          <SponsorsCarousel dataPath="/pages/championship/current-global-sponsors.json" sizeMultiplier={1.8} scrollSpeed={1} />
         </div>
+        {/* <div className="my-2 lg:row-span-3 w-full px-4 lg:px-8">
+          <SponsorsCarousel dataPath="/pages/championship/all-sponsors.json" sizeMultiplier={1} scrollSpeed={2} />
+        </div> */}
       </section>
     </div>
   );

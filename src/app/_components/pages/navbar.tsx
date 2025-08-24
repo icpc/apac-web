@@ -8,7 +8,7 @@ import Image from "next/image";
 import styles from "@/app/_styles/navbar-styles.module.css";
 import { ICPC_APAC } from "@/lib/constants";
 import { useTheme } from "@/app/_components/pages/theme-context";
-import { ChevronDownIcon } from "lucide-react"
+import { ChevronDownIcon, Menu, X } from "lucide-react"
 
 // Import the single navItems config
 import { navItems } from "@/app/navConfig";
@@ -357,7 +357,7 @@ export default function Navbar() {
                             onClick={toggleMobileMenu}
                             aria-label="Toggle mobile menu"
                         >
-                            {isMobileMenuOpen ? "✕" : "☰"}
+                            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
                         </button>
                     </div>
 

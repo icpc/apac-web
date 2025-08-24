@@ -25,7 +25,21 @@
         align-items: center;
         border-radius: 10px;
         margin-bottom: 10px;
+        gap: 10px;
         object-fit: contain;
+    }
+
+    .logo-box{
+        @extend .image-box;
+        padding: 10px;
+        height: 150px;
+    }
+
+    .image-caption{
+        text-align: center; 
+        padding: 8px; 
+        font-style: italic; 
+        font-size: 10px;
     }
 
     .responsive-image {
@@ -38,6 +52,7 @@
 
     .text-container {
         width: 60%;
+        padding-right: 20px;
     }
 
     @media (max-width: 768px) {

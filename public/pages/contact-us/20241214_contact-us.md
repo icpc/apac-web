@@ -5,6 +5,6 @@ excerpt: "Contact us for more information about the competition"
 ---
 
 
-For any queries, please directly contact the 2025 ICPC Asia Pacific Championship Director: A/P Steven Halim ([dcssh@nus.edu.sg](mailto:dcssh@nus.edu.sg)).
+For any queries, please directly contact the ICPC Asia Pacific Championship contact person:
 
 Stay informed by following our **[Instagram page](https://www.instagram.com/icpcapac)**

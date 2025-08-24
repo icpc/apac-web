@@ -6,24 +6,20 @@ coverImage: "rgba(110, 231, 183, 1)"
 # Prizes
 
 <div id="icpc-foundation" class="flex-container">
-    <div class="text-container" style="padding-right: 20px;">
-        <p>The winner will be crowned as the 2025 Asia Pacific Champion and recognized at the 2025 ICPC World Finals Opening Ceremony. The 2025 ICPC World Finals will be held in Baku, Azerbaijan on 31 August until 5 September 2025. See the <a href="https://worldfinals.icpc.global/">ICPC World Finals page</a> for more information.</p>
-        <p>Top 4/next 4/next 8 teams (from distinct Universities) will receive Gold/Silver/Bronze medals and prizes from sponsors.
-        <p>Top X (TBC, usually ≈[12..15]) teams in this championship will advance to the 2025 ICPC World Finals.</p>
+    <div class="text-container">
+        <h3>🏆 This is your chance to become the Asia Pacific Champion!</h3>
+        <p>The victorious team will be crowned as the champion and receive special recognition at the <a href="https://worldfinals.icpc.global/">ICPC World Finals</a> Opening Ceremony.</p>
+        <h3>🏅 Claim Your Medals!</h3>
+        <p>Top-performing teams will receive exclusive medals and could win exciting prizes from our sponsors (Note: Prize pool is tentative and subject to the sponsors).</p>
+        <h3>🌍 Secure Your Spot at the World Finals!</h3>
+        <p>The top teams (approximately 12-15, TBC) from this championship will advance to the prestigious <a href="https://worldfinals.icpc.global/">ICPC World Finals</a>, where they'll compete against the top teams from the all other regions across the globe!</p>
     </div>
     <div class="image-container">
         <div class="image-box" style="height: 400px; border: none;">
-            <img src="/assets/home/2025-icpc-world-finals-announcement-poster.jpg" alt="The 2025 ICPC World Finals Announcement Poster" class="responsive-image" style="object-fit: cover; height: 100%; width: 100%;">
+            <img src="/assets/home/icpc-wf-2024.jpg" alt="The 2024 ICPC World Finals in Astana" class="responsive-image" style="object-fit: cover; height: 100%; width: 100%;">
+        </div>
+        <div class="image-caption">
+            The 2024 ICPC World Finals held in Astana, Kazakhstan. Image source: <a href="https://el.kz/en/48th-icpc-world-finals-championship-started-in-astana_132629/">el.kz</a>
         </div>
     </div>
 </div>
-
-<br>
-
-----
-
-## Post-Contest Update
-
-The winner of this championship, **Screenwalkers from The University of Tokyo**, is crowned as the **2025 Asia Pacific Champion**. See the [Medalists of the 2025 Championship](/competition/medalists-2025-championship) page and the [official standings](https://icpc.global/regionals/finder/APSEPC-2025/standings) for more details.
-
-

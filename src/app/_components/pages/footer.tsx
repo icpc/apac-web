@@ -14,9 +14,9 @@ export function Footer() {
   const [sponsors, setSponsors] = React.useState<SponsorGroup[] | null>(null);
 
   React.useEffect(() => {
-    fetch('/pages/championship/global-sponsors.json')
+    fetch('/pages/championship/current-global-sponsors.json')
       .then(res => res.json())
-      .then((data) => setSponsors(data[0]["ICPC Global Sponsors"]))
+      .then((data) => setSponsors(data))
       .catch(console.error);
   }, []);
 
@@ -86,7 +86,7 @@ export function Footer() {
           <Card className="col-span-2">
             <CardContent className="h-full w-full">
               <p className={styles.footerTitle + " text-center text-black"}>
-                We would like to thank the ICPC Global sponsors for their support
+                Current ICPC Global Sponsors:
               </p>
               <div className="p-6 flex flex-wrap gap-6 items-center justify-center">
                 {sponsors?.map((sponsorObj: SponsorGroup) => {
@@ -96,7 +96,7 @@ export function Footer() {
                       key={name}
                       src={logo.filename}
                       alt={name}
-                      style={{ width: `${logo.size * 35}px` }}
+                      style={{ width: `${logo.size * 1.8}rem` }}
                       title={name}
                     />
                   );
