@@ -35,6 +35,10 @@ a:hover .tooltip {
     @apply relative opacity-30 hover:opacity-100;
 }
 
+.header-link:hover {
+    @apply underline bg-text-links-highlight text-text-links-hover;
+}
+
 .katex-html {
     @apply hidden;
 }

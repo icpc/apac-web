@@ -6,6 +6,7 @@ import Divider from '@/app/_components/Divider';
 import { Content } from '@/app/_components/pages/content';
 import { AVAILABLE_YEARS } from "@/lib/constants";
 import { SidebarNavigation } from './sidebar-navigation';
+import modifyHtmlContent from '@/lib/modify-html-content';
 
 // Configure marked options
 marked.setOptions({
@@ -139,8 +140,14 @@ const ContentSection = ({
     // Add IDs to headings for anchor navigation
     htmlContent = htmlContent.replace(/<h([12])>(.*?)<\/h\1>/g, (match, level, content) => {
       const slug = slugify(content);
-      return `<h${level} id="${slug}" class="scroll-mt-32">${content}</h${level}>`;
+      return `<h${level} id="${slug}" class="scroll-mt-16">${content}</h${level}>`;
     });
+    htmlContent = htmlContent.replace(/<h([12]).*?(id=".*?").*?>(.*?)<\/h\1>/g, (match, level, id, content) => {
+      const slug = slugify(content);
+      return `<h${level} ${id} class="scroll-mt-16">${content}</h${level}>`;
+    });
+    htmlContent = modifyHtmlContent(htmlContent)
+    
 
     return (
       <section className="mb-12">
@@ -152,8 +159,19 @@ const ContentSection = ({
   return (
     <>
       {items.map((item, index) => {
-        const htmlContent = marked.parse(item.content || '') as string;
+        let htmlContent = marked.parse(item.content || '') as string;
         const slug = slugify(item.title);
+
+        // Add IDs to headings for anchor navigation
+        htmlContent = htmlContent.replace(/<h([12]).*>(.*?)<\/h\1>/g, (match, level, content) => {
+          const slug = slugify(content);
+          return `<h${level} id="${slug}" class="scroll-mt-16">${content}</h${level}>`;
+        });
+        htmlContent = htmlContent.replace(/<h([12]).*?(id=".*?").*?>(.*?)<\/h\1>/g, (match, level, id, content) => {
+          const slug = slugify(content);
+          return `<h${level} ${id} class="scroll-mt-16">${content}</h${level}>`;
+        });
+        htmlContent = modifyHtmlContent(htmlContent)
         
         return (
           <section key={index} id={slug}>
@@ -161,7 +179,15 @@ const ContentSection = ({
               <Divider />
             </div>
             <div className="flex justify-between items-center mb-2">
-              <h2>{item.title}</h2>
+              <h2>
+                {item.title + " "}
+                <a href={"#" + slug} className="header-link">
+                  🔗
+                  <span className="tooltip" style={{top: "-20px"}}>
+                      Get url to this section
+                  </span>
+                </a>
+              </h2>
               {item.lastUpdated && (
                 <p className="text-sm text-gray-500 dark:text-gray-400">
                   Last updated on {new Date(item.lastUpdated).toLocaleDateString('en-US', {
@@ -196,6 +222,7 @@ export default async function ChampionshipPage({ params }: { params: Promise<{ y
   }
 
   const pageTopTitle = section.charAt(0).toUpperCase() + section.slice(1);
+  const pageTopSlug = slugify(section);
   const showSubfolderTitles = subfolderContentsArray.length > 1;
 
   return (
@@ -204,7 +231,9 @@ export default async function ChampionshipPage({ params }: { params: Promise<{ y
         <SidebarNavigation items={subfolderContentsArray} year={year} />
         <main className="flex-1">
           <div className="mb-8 mt-10">
-            <h1 className="text-4xl font-bold">{pageTopTitle}</h1>
+            <h1 id={pageTopSlug} className="text-4xl font-bold scroll-mt-16">
+              {pageTopTitle}
+            </h1>
           </div>
           <ContentSection 
             items={subfolderContentsArray} 
