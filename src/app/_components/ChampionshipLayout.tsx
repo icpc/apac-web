@@ -1,6 +1,6 @@
 "use client";
 
-import React from 'react';
+import React, { useRef } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import Container from "@/app/_components/pages/container";
@@ -9,7 +9,6 @@ import { useEffect, useState } from 'react';
 import { AVAILABLE_YEARS } from "@/lib/constants";
 
 import SponsorsGrid from "@/app/_components/pages/sponsorsGrid";
-import { marked } from 'marked';
 import Divider from './Divider';
 
 interface ChampionshipLayoutProps {
@@ -39,20 +38,10 @@ export default function ChampionshipLayout({ children, year }: ChampionshipLayou
   const pathname = usePathname();
   const basePath = `/championship/${year}`;
 
-  const [htmlContent, setHtmlContent] = useState<string>('');
   const [navigationItems, setNavigationItems] = useState(defaultNavigationItems);
+  const [isScrollable, setIsScrollable] = useState(false);
 
   useEffect(() => {
-    // Fetch sponsors content
-    fetch(`/pages/championship/${year}/sponsors/sponsors.md`)
-      .then(response => response.text())
-      .then(text => {
-        const parsedHtml = marked.parse(text) as string;
-        setHtmlContent(parsedHtml);
-      })
-      .catch(error => {
-        console.error('Error loading sponsors:', error);
-      });
 
     // Fetch and process order.json
     fetch(`/pages/championship/${year}/order.json`)
@@ -84,6 +73,34 @@ export default function ChampionshipLayout({ children, year }: ChampionshipLayou
       });
   }, [year]);
 
+  // Scroll for sections
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  // Check if the navigation is scrollable
+  useEffect(() => {
+    const checkScrollable = () => {
+      if (scrollContainerRef.current) {
+        const { scrollWidth, clientWidth } = scrollContainerRef.current;
+        setIsScrollable(scrollWidth > clientWidth);
+      }
+    };
+
+    checkScrollable();
+    window.addEventListener('resize', checkScrollable);
+    return () => window.removeEventListener('resize', checkScrollable);
+  }, [navigationItems]);
+
+  const scrollLeft = () => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollBy({ left: -200, behavior: 'smooth' });
+    }
+  };
+  const scrollRight = () => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollBy({ left: 200, behavior: 'smooth' });
+    }
+  };
+
   return (
     <Container>
       <div className="flex flex-col w-full">
@@ -114,26 +131,34 @@ export default function ChampionshipLayout({ children, year }: ChampionshipLayou
           <SponsorsGrid year={year} />
             
           <Divider />
-
-          <div className="w-full mx-auto mt-4 justify-between">
-            <div className="flex flex-wrap gap-2 justify-between">
-              {navigationItems.map((item) => {
-                const isActive = pathname.includes(`/${item.path}`);
-                return (
-                  <Link
-                    key={item.path}
-                    href={`${basePath}/${item.path}`}
-                    // Button for the sections
-                    className={`px-6 py-3 text-lg font-medium rounded-lg transition-colors dark:text-white 
-                      ${isActive
-                      ? 'dark:text-primaryAccent-dark text-text-header-secondary border border-text-header-secondary dark:border-primaryAccent-dark bg-primaryAccent/10 dark:bg-primaryAccent-dark/10 '
-                        : 'border border-transparent hover:border-gray-300 hover:bg-transparent dark:hover:border-white dark:hover:bg-transparent'
-                      }`}
-                  >
-                    {item.label}
-                  </Link>
-                );
-              })}
+          
+          <div className="relative w-full h-fit mt-4">
+            {isScrollable && (
+              <>
+                <button onClick={scrollLeft} className="absolute top-1/2 -translate-y-1/2 left-0 -translate-x-[1em] px-2 py-4 rounded-lg bg-secondaryAccent/10 backdrop-blur-lg text-lg font-medium dark:text-white">{"<"}</button>
+                <button onClick={scrollRight} className="absolute top-1/2 -translate-y-1/2 right-0 translate-x-[1em] px-2 py-4 rounded-lg bg-secondaryAccent/10 backdrop-blur-lg text-lg font-medium transition-colors dark:text-white">{">"}</button>
+              </>
+            )}
+            <div className="w-full mx-auto justify-between overflow-x-auto" ref={scrollContainerRef}>
+              <div className="flex gap-2 justify-between min-w-fit">
+                {navigationItems.map((item) => {
+                  const isActive = pathname.includes(`/${item.path}`);
+                  return (
+                    <Link
+                      key={item.path}
+                      href={`${basePath}/${item.path}`}
+                      // Button for the sections
+                      className={`px-6 py-3 text-lg font-medium rounded-lg transition-colors dark:text-white 
+                        ${isActive
+                        ? 'dark:text-primaryAccent-dark text-text-header-secondary border border-text-header-secondary dark:border-primaryAccent-dark bg-primaryAccent/10 dark:bg-primaryAccent-dark/10 '
+                          : 'border border-transparent hover:border-gray-300 hover:bg-transparent dark:hover:border-white dark:hover:bg-transparent'
+                        }`}
+                    >
+                      {item.label}
+                    </Link>
+                  );
+                })}
+              </div>
             </div>
           </div>
         </div>

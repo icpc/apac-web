@@ -1,7 +1,7 @@
 /* Sidebar Navigation Styles */
 
 .sidebarContainer {
-  @apply mt-12 w-full;
+  @apply mt-12 w-full pl-4;
   background-color: hsl(var(--card));
   color: hsl(var(--card-foreground));
 }
@@ -109,17 +109,59 @@
   @apply mb-4;
 }
 
+/* Mobile Toggle Button */
+.mobileToggleButton {
+   @apply fixed top-1/2 left-1 z-50 md:hidden -translate-y-1/2;
+   background-color: rgba(0, 0, 0, 0.3);
+   border-color: hsl(var(--border));
+ }
+
+.mobileToggleButton:hover {
+   background-color: hsl(var(--accent));
+ }
+
+/* Sidebar Modal Overlay */
+.sidebarOverlay {
+   @apply fixed inset-0 z-40 md:hidden;
+   background-color: rgba(0, 0, 0, 0.9);
+ }
+
+/* Sidebar Modal */
+.sidebarModal {
+   @apply fixed top-10 left-2 z-40 w-1/2 md:hidden;
+   transform: translateX(-500%);
+   transition: transform 0.3s ease-in-out;
+ }
+
+.sidebarModalOpen {
+   transform: translateX(0);
+ }
+
 /* Responsive sidebar positioning */
 .sidebarAside {
-  @apply w-full mb-8 self-start pr-6;
-}
+   @apply w-full mb-8 self-start pr-6 md:block;
+ }
+
+@media (max-width: 767px) {
+   .sidebarAside {
+     @apply hidden;
+   }
+ }
 
 @media (min-width: 768px) {
-  .sidebarAside {
-    @apply w-1/4 mb-0 sticky;
-    top: 6rem; /* 96px */
-  }
-}
+   .sidebarAside {
+     @apply w-1/4 mb-0 sticky;
+     top: 6rem; /* 96px */
+   }
+
+   .sidebarModal {
+     @apply hidden;
+   }
+
+   .sidebarOverlay {
+     @apply hidden;
+   }
+ }
 
 /* Main content area */
 .mainContent {
