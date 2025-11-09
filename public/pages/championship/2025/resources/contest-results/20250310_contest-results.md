@@ -2,7 +2,7 @@
 
 The championship has concluded. Congratulations to the team Screenwalkers from the University of Tokyo as the winner of this championship!
 
-![Screenwalkers from the University of Tokyo](/assets/competition/medals/champion.jpg)
+![Screenwalkers from the University of Tokyo](/assets/championship/2025/champion.jpg)
 
 ## List of Medalists
 

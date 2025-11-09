@@ -224,5 +224,3 @@ The rough breakdown of the contest dates are:
     <td>USS &rightarrow; Changi</td>
   </tr>
 </table>
-
-

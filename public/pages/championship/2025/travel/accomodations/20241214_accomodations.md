@@ -2,7 +2,7 @@ The organizers have arranged transportation to and from the following selected h
 
 ## RELC International Hotel
 
-![RELC International Hotel](/assets/accomodations/relc-international-hotel.jpeg)
+![RELC International Hotel](/assets/championship/2025/accomodations/relc-international-hotel.jpeg)
 
 - **Address**: 30 Orange Grove Road (Off Orchard Road), Singapore 258352
 - **Phone**: (+65) 6885 7888
@@ -11,7 +11,7 @@ The organizers have arranged transportation to and from the following selected h
 
 ## Park Avenue Rochester Hotel
 
-![Park Avenue Rochester Hotel](/assets/accomodations/park-avenue-rochester-hotel.jpg)
+![Park Avenue Rochester Hotel](/assets/championship/2025/accomodations/park-avenue-rochester-hotel.jpg)
 
 - **Address**: 31 Rochester Drive, Singapore 138637
 - **Phone**: (+65) 6808 8600

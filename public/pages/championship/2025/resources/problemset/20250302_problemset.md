@@ -1,0 +1,3 @@
+- [Contest Problemset](/assets/championship/2025/problemset.pdf)
+- [Contest Problemset Analysis](/assets/championship/2025/problem-analysis.pdf)
+- [Test Data](https://github.com/jonathanirvings/icpc-apac-2025-tasks)

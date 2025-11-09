@@ -1,28 +1,21 @@
----
-title: "Contest Environment"
-coverImage: "/assets/competition/contest-environment.jpg"
-excerpt: "The contest environment for the competition"
----
+## Judging Environment
+* [DOMjudge Team Manual](/assets/championship/2025/domjudge-team-manual.pdf)
+* [Judging Details](/assets/championship/2025/judging-details.pdf)
 
+## Contestant Environment
 
-# Judging Environment
-* [DOMjudge Team Manual](/assets/competition/domjudge-team-manual.pdf)
-* [Judging Details](/assets/competition/judging-details.pdf)
-
-# Contestant Environment
-
-## Hardware
+### Hardware
 * **System unit**: [HP ZBook Power 15.6 inch G10](https://support.hp.com/us-en/product/details/hp-zbook-power-15.6-inch-g10-mobile-workstation-pc/model/2101596022), with 32GB RAM, 512GB SSD, and 13th Generation Intel® Core™ i7-13700H processor.
 * **External screen**: Not provided.
 * **External keyboard**: Not provided.
-* **External mouse**:  HP 125 Wired Mouse (image [here](/assets/competition/mouse.jpg)).
+* **External mouse**:  HP 125 Wired Mouse (image [here](/assets/championship/2025/mouse.jpg)).
 
 System unit and External mouse:
-<img src="/assets/competition/system-unit-and-mouse.jpg" style="width: 50%; display: block; margin: 0 auto;" alt="System Unit and Mouse">
+<img src="/assets/championship/2025/system-unit-and-mouse.jpg" style="width: 50%; display: block; margin: 0 auto;" alt="System Unit and Mouse">
 
 No hardware substitutions will be allowed (that is, teams may not bring their own equipment onto the contest floor). This includes that teams may not substitute keyboards or other peripherals; all teams will use identical equipment, as described above, during the contest.
 
-## Software
+### Software
 * Operating System: Ubuntu 22.04 (To be confirmed)
 * Desktop: GNOME
 * IDE:
@@ -32,7 +25,7 @@ No hardware substitutions will be allowed (that is, teams may not bring their ow
 * Languages:
   * To be announced
 
-# Additional Items
+## Additional Items
 Contestants may also bring the following items to their workstation. Contestants must bring these items to the practice session, and leave it on the workstation at the end of the practice session.
 
 * Printed Team Reference Document (Team Notebook)
