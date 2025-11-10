@@ -2,6 +2,7 @@
 
 import { SidebarNavigation } from './sidebar-navigation';
 import SubfolderContent from './SubfolderContent';
+import { useEffect } from 'react';
 
 // Types
 interface SubSectionContent {
@@ -53,6 +54,17 @@ export default function ChampionshipClient({
   pageTopSlug: string;
   showSubfolderTitles: boolean;
 }) {
+
+  // Add smooth scrolling behavior
+  useEffect(() => {
+    // Enable smooth scrolling for the entire document
+    document.documentElement.style.scrollBehavior = 'smooth';
+    
+    return () => {
+      // Clean up
+      document.documentElement.style.scrollBehavior = '';
+    };
+  }, []);
 
   return (
     <div className="container mx-auto px-4">

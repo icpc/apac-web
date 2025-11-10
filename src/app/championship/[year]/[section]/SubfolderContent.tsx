@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Content } from '@/app/_components/pages/content';
 import { marked } from 'marked';
 import Divider from '@/app/_components/Divider';
@@ -30,11 +30,32 @@ interface SubfolderContentProps {
 }
 
 const SubfolderContent = ({ item, showTitle }: SubfolderContentProps) => {
+  // State for parsed HTML to prevent hydration mismatch
+  const [parsedContent, setParsedContent] = useState<string>('');
+  const [isClient, setIsClient] = useState(false);
+
   // Individual diff state for this subfolder only
   const [diffState, setDiffState] = useState<DiffState>({
     isDiffMode: false,
     selectedVersion: null
   });
+
+  // Ensure we're on client side before parsing markdown
+  useEffect(() => {
+    setIsClient(true);
+    let htmlContent = marked.parse(item.content || '') as string;
+    // Add IDs to headings for anchor navigation
+    htmlContent = htmlContent.replace(/<h([12])>(.*?)<\/h\1>/g, (match, level, content) => {
+      const slug = slugify(content);
+      return `<h${level} id="${slug}" class="scroll-mt-16">${content}</h${level}>`;
+    });
+    htmlContent = htmlContent.replace(/<h([12]).*?(id=".*?").*?>(.*?)<\/h\1>/g, (match, level, id, content) => {
+      const slug = slugify(content);
+      return `<h${level} ${id} class="scroll-mt-16">${content}</h${level}>`;
+    });
+    htmlContent = modifyHtmlContent(htmlContent);
+    setParsedContent(htmlContent);
+  }, [item.content]);
 
   // Available versions for this specific subfolder
   const availableVersions = item.previousVersions?.map(v => ({
@@ -46,20 +67,20 @@ const SubfolderContent = ({ item, showTitle }: SubfolderContentProps) => {
 
   // Render normal content
   const renderNormalContent = () => {
-    let htmlContent = marked.parse(item.content || '') as string;
-    // Add IDs to headings for anchor navigation
-    htmlContent = htmlContent.replace(/<h([12])>(.*?)<\/h\1>/g, (match, level, content) => {
-      const slug = slugify(content);
-      return `<h${level} id="${slug}" class="scroll-mt-16">${content}</h${level}>`;
-    });
-    htmlContent = htmlContent.replace(/<h([12]).*?(id=".*?").*?>(.*?)<\/h\1>/g, (match, level, id, content) => {
-      const slug = slugify(content);
-      return `<h${level} ${id} class="scroll-mt-16">${content}</h${level}>`;
-    });
-    htmlContent = modifyHtmlContent(htmlContent)
-    const slug = slugify(item.title);
+    // Show loading state during hydration
+    if (!isClient || !parsedContent) {
+      return (
+        <section className="mb-12">
+          <div className="animate-pulse">
+            <div className="h-4 bg-gray-200 rounded w-3/4 mb-4"></div>
+            <div className="h-4 bg-gray-200 rounded w-1/2 mb-4"></div>
+            <div className="h-4 bg-gray-200 rounded w-5/6"></div>
+          </div>
+        </section>
+      );
+    }
 
-    // Check if there's only one version (no previous versions)
+    const slug = slugify(item.title);
     const hasOnlyOneVersion = !item.previousVersions || item.previousVersions.length === 0;
 
     return (
@@ -135,14 +156,14 @@ const SubfolderContent = ({ item, showTitle }: SubfolderContentProps) => {
              </div>
           </>
         )}
-        <Content content={htmlContent} />
+        <Content content={parsedContent} />
       </section>
     );
   };
 
   // Render diff content
   const renderDiffContent = () => {
-    if (!diffState.selectedVersion) return null;
+    if (!diffState.selectedVersion || !isClient) return null;
 
     const selectedVersionData = availableVersions.find(v => v.date === diffState.selectedVersion);
     if (!selectedVersionData) return null;
