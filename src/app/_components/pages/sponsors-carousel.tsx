@@ -87,7 +87,7 @@ export function SponsorsCarousel({
   return (
     <div className="w-full">
       <div className="w-full max-w-screen-2xl mx-auto py-8 px-4">
-        <div className="bg-white dark:bg-background flex flex-col gap-6 rounded-xl border border-border/60 dark:border-border/30 py-2 shadow-sm">
+        <div className="bg-white dark:bg-background flex flex-col gap-6 rounded-xl border border-border/60 dark:border-border/30 py-2">
           {/* <p className="text-center text-lg text-text-header-primary font-medium pt-2">Our Global Sponsors:</p> */}
           <div className="relative w-full h-32 flex items-center overflow-x-hidden px-6">
             <div 

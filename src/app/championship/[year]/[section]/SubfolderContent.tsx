@@ -7,6 +7,8 @@ import Divider from '@/app/_components/Divider';
 import diff from 'html-diff-ts';
 import matter from 'gray-matter';
 import modifyHtmlContent from '@/lib/modify-html-content';
+import VersionControls from '@/app/_components/VersionControls';
+import { InfoIcon, XIcon } from 'lucide-react';
 
 interface SubSectionContent {
   title: string;
@@ -22,12 +24,27 @@ interface SubSectionContent {
 interface DiffState {
   isDiffMode: boolean;
   selectedVersion: string | null;
+  showVersionDropdown: boolean;
 }
 
 interface SubfolderContentProps {
   item: SubSectionContent;
   showTitle: boolean;
 }
+
+// Local component for consistent "Last updated" display
+const LastUpdatedText = ({ date }: { date?: string }) => {
+  if (!date) return null;
+  return (
+    <p className="text-sm text-gray-500 dark:text-gray-400">
+      {`Last updated on ${new Date(date).toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+      })}`}
+    </p>
+  );
+};
 
 const SubfolderContent = ({ item, showTitle }: SubfolderContentProps) => {
   // State for parsed HTML to prevent hydration mismatch
@@ -37,7 +54,8 @@ const SubfolderContent = ({ item, showTitle }: SubfolderContentProps) => {
   // Individual diff state for this subfolder only
   const [diffState, setDiffState] = useState<DiffState>({
     isDiffMode: false,
-    selectedVersion: null
+    selectedVersion: null,
+    showVersionDropdown: false
   });
 
   // Ensure we're on client side before parsing markdown
@@ -62,7 +80,12 @@ const SubfolderContent = ({ item, showTitle }: SubfolderContentProps) => {
     date: v.date,
     title: item.title,
     directoryName: item.directoryName,
-    content: v.content
+    content: v.content,
+    label: new Date(v.date).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    })
   })) || [];
 
   // Render normal content
@@ -90,70 +113,63 @@ const SubfolderContent = ({ item, showTitle }: SubfolderContentProps) => {
             <div className="mt-8">
               <Divider />
             </div>
-             <div className="flex justify-between items-center mb-2">
-               <h2>
-                 {item.title + " "}
-                 <a href={"#" + slug} className="header-link">
-                   🔗
-                   <span className="tooltip" style={{top: "-20px"}}>
-                       Get url to this section
-                   </span>
-                 </a>
-               </h2>
-               <div className="flex flex-col items-end gap-2">
+              <div className="flex justify-between items-center mb-2">
+                <h2>
+                  {item.title + " "}
+                  <span className="relative group">
+                    <a href={"#" + slug} className="header-link">
+                      🔗
+                    </a>
+                    <span className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 text-xs text-white bg-gray-900 dark:bg-gray-700 rounded whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
+                      Get url to this section
+                    </span>
+                  </span>
+                </h2>
+               <div className="flex flex-col items-end gap-0">
                  <div className="flex items-center gap-3">
-                   {item.lastUpdated && (
-                     <p className="text-sm text-gray-500 dark:text-gray-400">
-                       Last updated on {new Date(item.lastUpdated).toLocaleDateString('en-US', {
-                         year: 'numeric',
-                         month: 'long',
-                         day: 'numeric'
-                       })}
-                     </p>
-                   )}
-                   <div className="flex items-center gap-2">
+                  <LastUpdatedText date={item.lastUpdated} />
+                  <div className="relative group">
                      <button
                        onClick={() => !hasOnlyOneVersion && setDiffState(prev => ({
                          ...prev,
-                         isDiffMode: !prev.isDiffMode,
-                         selectedVersion: prev.isDiffMode ? null : prev.selectedVersion
+                         showVersionDropdown: !prev.showVersionDropdown,
+                         isDiffMode: !prev.showVersionDropdown,
+                         selectedVersion: !prev.showVersionDropdown ? prev.selectedVersion : null
                        }))}
                        disabled={hasOnlyOneVersion}
-                       title={hasOnlyOneVersion ? "This content has only one version available" : undefined}
-                       className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
+                       className={`p-1.5 rounded-md text-sm font-medium transition-all duration-200 ${
                          hasOnlyOneVersion
-                           ? 'bg-gray-100 text-gray-400 cursor-not-allowed dark:bg-gray-800 dark:text-gray-500'
-                           : diffState.isDiffMode
-                             ? 'bg-red-100 text-red-700 hover:bg-red-200 dark:bg-red-900 dark:text-red-200 dark:hover:bg-red-800'
-                             : 'bg-blue-100 text-blue-700 hover:bg-blue-200 dark:bg-blue-900 dark:text-blue-200 dark:hover:bg-blue-800'
+                           ? 'text-gray-400 cursor-not-allowed'
+                           : diffState.showVersionDropdown
+                             ? 'text-red-600 dark:text-red-400'
+                             : 'text-gray-600 dark:text-gray-400 hover:text-text-primaryAccent'
                        }`}
                      >
-                       {diffState.isDiffMode ? '✖' : '!'}
+                       {diffState.showVersionDropdown ? (
+                         <XIcon className="size-4" />
+                       ) : (
+                         <InfoIcon className="size-4" />
+                       )}
                      </button>
+                     {hasOnlyOneVersion ? (
+                       <span className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 text-xs text-white bg-gray-900 dark:bg-gray-700 rounded whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
+                         No previous versions available
+                       </span>
+                     ) : (
+                       <span className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 text-xs text-white bg-gray-900 dark:bg-gray-700 rounded whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
+                         See content changes history
+                       </span>
+                     )}
                    </div>
                  </div>
-                 {/* Version dropdown below the diff button and last updated text */}
-                 {diffState.isDiffMode && availableVersions.length > 0 && (
-                   <div className="flex items-center gap-2">
-                     <label className="text-xs font-medium text-gray-700 dark:text-gray-300">
-                       Version:
-                     </label>
-                     <select
-                       value={diffState.selectedVersion || ''}
-                       onChange={(e) => setDiffState(prev => ({ ...prev, selectedVersion: e.target.value }))}
-                       className="border border-gray-300 rounded px-2 py-1 text-xs focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
-                     >
-                       <option value="">Choose version...</option>
-                       {availableVersions.map(version => (
-                         <option key={version.date} value={version.date}>
-                            {version.date}
-                         </option>
-                       ))}
-                     </select>
-                   </div>
-                 )}
+                 <VersionControls
+                   showVersionDropdown={diffState.showVersionDropdown}
+                   selectedVersion={diffState.selectedVersion}
+                   onChangeVersion={(value) => setDiffState(prev => ({ ...prev, selectedVersion: value }))}
+                   availableVersions={availableVersions}
+                 />
                </div>
-             </div>
+              </div>
           </>
         )}
         <Content content={parsedContent} />
@@ -191,60 +207,54 @@ const SubfolderContent = ({ item, showTitle }: SubfolderContentProps) => {
             <div className="mt-8">
               <Divider />
             </div>
-             <div className="flex justify-between items-center mb-2">
-               <h2>{item.title}</h2>
-               <div className="flex flex-col items-end gap-2">
-                 <div className="flex items-center gap-3">
-                   {item.lastUpdated && (
-                     <p className="text-sm text-gray-500 dark:text-gray-400">
-                       Last updated on {new Date(item.lastUpdated).toLocaleDateString('en-US', {
-                         year: 'numeric',
-                         month: 'long',
-                         day: 'numeric'
-                       })}
-                     </p>
-                   )}
-                   <div className="flex items-center gap-2">
-                     <button
-                       onClick={() => !hasOnlyOneVersion && setDiffState(prev => ({
-                         ...prev,
-                         isDiffMode: !prev.isDiffMode,
-                         selectedVersion: prev.isDiffMode ? null : prev.selectedVersion
-                       }))}
-                       disabled={hasOnlyOneVersion}
-                       title={hasOnlyOneVersion ? "This content has only one version available" : undefined}
-                       className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
-                         hasOnlyOneVersion
-                           ? 'bg-gray-100 text-gray-400 cursor-not-allowed dark:bg-gray-800 dark:text-gray-500'
-                           : 'bg-red-100 text-red-700 hover:bg-red-200 dark:bg-red-900 dark:text-red-200 dark:hover:bg-red-800'
-                       }`}
-                     >
-                       ✖
-                     </button>
-                   </div>
-                 </div>
-                 {/* Version dropdown below the diff button and last updated text */}
-                 {availableVersions.length > 0 && (
-                   <div className="flex items-center gap-2">
-                     <label className="text-xs font-medium text-gray-700 dark:text-gray-300">
-                       Version:
-                     </label>
-                     <select
-                       value={diffState.selectedVersion || ''}
-                       onChange={(e) => setDiffState(prev => ({ ...prev, selectedVersion: e.target.value }))}
-                       className="border border-gray-300 rounded px-2 py-1 text-xs focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
-                     >
-                       <option value="">Choose version...</option>
-                       {availableVersions.map(version => (
-                         <option key={version.date} value={version.date}>
-                            {version.date}
-                         </option>
-                       ))}
-                     </select>
-                   </div>
-                 )}
-               </div>
-             </div>
+            <div className="flex justify-between items-center mb-2">
+              <h2>{item.title}</h2>
+              <div className="flex flex-col items-end gap-2">
+                <div className="flex items-center gap-3">
+                  <LastUpdatedText date={item.lastUpdated} />
+                  <div className="relative group">
+                    <button
+                      onClick={() => !hasOnlyOneVersion && setDiffState(prev => ({
+                        ...prev,
+                        showVersionDropdown: !prev.showVersionDropdown,
+                        isDiffMode: !prev.showVersionDropdown,
+                        selectedVersion: !prev.showVersionDropdown ? prev.selectedVersion : null
+                      }))}
+                      disabled={hasOnlyOneVersion}
+                      className={`p-1.5 rounded-md text-sm font-medium transition-all duration-200 ${
+                        hasOnlyOneVersion
+                          ? 'text-gray-400 cursor-not-allowed'
+                          : diffState.showVersionDropdown
+                            ? 'text-red-600 dark:text-red-400'
+                            : 'text-gray-600 dark:text-gray-400 hover:text-text-primaryAccent'
+                      }`}
+                    >
+                      {diffState.showVersionDropdown ? (
+                        <XIcon className="size-4" />
+                      ) : (
+                        <InfoIcon className="size-4" />
+                      )}
+                    </button>
+                    {hasOnlyOneVersion ? (
+                      <span className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 text-xs text-white bg-gray-900 dark:bg-gray-700 rounded whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
+                        No previous versions available
+                      </span>
+                    ) : (
+                      <span className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 text-xs text-white bg-gray-900 dark:bg-gray-700 rounded whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
+                        See content changes history
+                      </span>
+                    )}
+                  </div>
+                </div>
+                <VersionControls
+                  showVersionDropdown={diffState.showVersionDropdown}
+                  selectedVersion={diffState.selectedVersion}
+                  onChangeVersion={(value) => setDiffState(prev => ({ ...prev, selectedVersion: value }))}
+                  availableVersions={availableVersions}
+                  compareLabel="Comparing with:"
+                />
+              </div>
+            </div>
           </>
         )}
 

@@ -13,7 +13,10 @@
 * **External mouse**:  HP 125 Wired Mouse (image [here](/assets/championship/2025/mouse.jpg)).
 
 System unit and External mouse:
-<img src="/assets/championship/2025/system-unit-and-mouse.jpg" style="width: 50%; display: block; margin: 0 auto;" alt="System Unit and Mouse">
+<figure>
+  <img src="/assets/championship/2025/system-unit-and-mouse.jpg" style="width: 50%; display: block; margin: 0 auto;" alt="System Unit and Mouse">
+  <figcaption>System unit and External mouse</figcaption>
+</figure>
 
 No hardware substitutions will be allowed (that is, teams may not bring their own equipment onto the contest floor). This includes that teams may not substitute keyboards or other peripherals; all teams will use identical equipment, as described above, during the contest.
 

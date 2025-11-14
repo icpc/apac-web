@@ -1,7 +1,7 @@
 export const modifyHtmlContent = (htmlContent: string): string => {
-    return htmlContent.replace(
-        /<h(2)(.*?)id="(.*?)"(.*?)>(.*)<\/h\1>/g,
-        `<h2$2id="$3"$4>
+    let updated = htmlContent.replace(
+        /<h(1)(.*?)id="(.*?)"(.*?)>(.*)<\/h\1>/g,
+        `<h1$2id="$3"$4>
             $5
             <a href="#$3" class="header-link">
                 🔗
@@ -9,8 +9,10 @@ export const modifyHtmlContent = (htmlContent: string): string => {
                     Get url to this section
                 </span>
             </a>
-        </h2>`
+        </h1>`
     );
+
+    return updated;
 };
 
 export default modifyHtmlContent;

@@ -10,6 +10,7 @@ import { AVAILABLE_YEARS } from "@/lib/constants";
 
 import SponsorsGrid from "@/app/_components/pages/sponsorsGrid";
 import Divider from './Divider';
+import StyledDropdown from '@/components/ui/styled-dropdown';
 
 interface ChampionshipLayoutProps {
   children: React.ReactNode;
@@ -109,17 +110,20 @@ export default function ChampionshipLayout({ children, year }: ChampionshipLayou
             <div className="flex flex-row items-center justify-between gap-4 h-32">
               <div className="flex items-center gap-4">
                 <h1 className="text-3xl font-bold my-auto">The Championship</h1>
-                <select 
-                  className="px-4 py-2 text-xl bg-background border rounded-md font-bold my-auto text-text-header-secondary"
-                  value={year}
-                  onChange={(e) => {
-                    window.location.href = `/championship/${e.target.value}/${pathname.split('/')[3] || 'information'}`;
-                  }}
-                >
-                  {AVAILABLE_YEARS.sort((a, b) => Number(b) - Number(a)).map(year => (
-                    <option key={year} value={year}>{year}</option>
-                  ))}
-                </select>
+                <div>
+                  <StyledDropdown
+                    value={year}
+                    onValueChange={(y) => {
+                      window.location.href = `/championship/${y}/${pathname.split('/')[3] || 'information'}`;
+                    }}
+                    options={AVAILABLE_YEARS.sort((a, b) => Number(b) - Number(a)).map((y) => ({ value: y, label: y }))}
+                    placeholder={year}
+                    size="lg"
+                    triggerClassName="text-2xl font-bold bg-white"
+                    itemsClassName="text-lg font-medium"
+                    className="text-black"
+                  />
+                </div>
               </div>
               <a 
                 href={`${basePath}/changelogs`} className="text-gray-400">
