@@ -245,5 +245,14 @@
 }
 
 .sectionSeparator {
-  @apply my-2;
+  @apply my-4 border-t border-border;
+}
+
+.navigationSection {
+  @apply mb-4;
+}
+
+.navigationTitle {
+  @apply text-sm font-semibold mb-2 px-2;
+  color: hsl(var(--muted-foreground));
 } 

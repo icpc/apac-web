@@ -111,7 +111,7 @@ export const SidebarNavigation = ({
       });
     };
 
-   const handleAnchorClick = (e: React.MouseEvent<HTMLAnchorElement>, slug: string) => {
+   const handleAnchorClick = (e: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement>, slug: string) => {
      e.preventDefault();
      const element = document.getElementById(slug);
      if (element) {
@@ -175,12 +175,15 @@ export const SidebarNavigation = ({
                           onOpenChange={(isOpen) => handleToggle(slug, isOpen)}
                         >
                           {item.title && (
-                            <Button
-                              variant="ghost"
-                              className={`${styles.mainNavButton} focus-visible:ring-0 focus-visible:ring-offset-0`}
-                              onClick={(e) => handlePinToggle(e, slug)}
-                              aria-label={pinnedSections.has(slug) ? 'Unpin section' : `Pin section ${item.title}`}
-                            >
+                           <Button
+                             variant="ghost"
+                             className={`${styles.mainNavButton} focus-visible:ring-0 focus-visible:ring-offset-0`}
+                             onClick={(e) => {
+                               handleAnchorClick(e, slug);
+                               handlePinToggle(e, slug);
+                             }}
+                             aria-label={pinnedSections.has(slug) ? 'Unpin section' : `Pin section ${item.title}`}
+                           >
                               <span className={`${styles.mainNavTitle} ${openSections.has(slug) ? 'text-text-header-secondary dark:text-text-header-secondary-dark' : ''}`}>{item.title}</span>
                               <div className="flex items-center gap-1">
                                 {/* Pin slot (fixed width) */}
@@ -220,15 +223,10 @@ export const SidebarNavigation = ({
                           <Button
                             variant="ghost"
                             className={`${styles.mainNavButton} focus-visible:ring-0 focus-visible:ring-offset-0`}
-                            onClick={(e) => handlePinToggle(e, slug)}
-                            aria-label={pinnedSections.has(slug) ? 'Unpin section' : `Pin section ${item.title}`}
+                            onClick={(e) => handleAnchorClick(e, slug)}
                           >
                             <span className={`${styles.mainNavTitle} ${openSections.has(slug) ? 'text-text-header-secondary dark:text-text-header-secondary-dark' : ''}`}>{item.title}</span>
                             <div className="flex items-center gap-1">
-                              {/* Pin slot (fixed width) */}
-                              <span className="inline-flex h-4 w-4 items-center justify-center">
-                                <Pin className={`h-3 w-3 ${pinnedSections.has(slug) ? 'text-text-header-secondary dark:text-text-header-secondary-dark opacity-100' : 'opacity-0'}`} />
-                              </span>
                               {/* Chevron slot placeholder to align with items that have children */}
                               <span className="inline-flex h-4 w-4 items-center justify-center">
                                 <ChevronDown className={`${styles.chevronIcon} opacity-0`} />
@@ -270,12 +268,15 @@ export const SidebarNavigation = ({
                         onOpenChange={(isOpen) => handleToggle(slug, isOpen)}
                       >
                         {item.title && (
-                          <Button
-                            variant="ghost"
-                            className={`${styles.mainNavButton} focus-visible:ring-0 focus-visible:ring-offset-0`}
-                            onClick={(e) => handlePinToggle(e, slug)}
-                            aria-label={pinnedSections.has(slug) ? 'Unpin section' : `Pin section ${item.title}`}
-                          >
+                           <Button
+                             variant="ghost"
+                             className={`${styles.mainNavButton} focus-visible:ring-0 focus-visible:ring-offset-0`}
+                             onClick={(e) => {
+                               handleAnchorClick(e, slug);
+                               handlePinToggle(e, slug);
+                             }}
+                             aria-label={pinnedSections.has(slug) ? 'Unpin section' : `Pin section ${item.title}`}
+                           >
                             <span className={`${styles.mainNavTitle} ${openSections.has(slug) ? 'text-text-header-secondary dark:text-text-header-secondary-dark' : ''}`}>{item.title}</span>
                             <div className="flex items-center gap-1">
                               {/* Pin slot (fixed width) */}
@@ -310,28 +311,23 @@ export const SidebarNavigation = ({
                           </div>
                         </CollapsibleContent>
                       </Collapsible>
-                    ) : (
-                      item.title && (
-                        <Button
-                          variant="ghost"
-                          className={`${styles.mainNavButton} focus-visible:ring-0 focus-visible:ring-offset-0`}
-                          onClick={(e) => handlePinToggle(e, slug)}
-                          aria-label={pinnedSections.has(slug) ? 'Unpin section' : `Pin section ${item.title}`}
-                        >
-                          <span className={`${styles.mainNavTitle} ${openSections.has(slug) ? 'text-text-header-secondary dark:text-text-header-secondary-dark' : ''}`}>{item.title}</span>
-                          <div className="flex items-center gap-1">
-                            {/* Pin slot (fixed width) */}
-                            <span className="inline-flex h-4 w-4 items-center justify-center">
-                              <Pin className={`h-3 w-3 ${pinnedSections.has(slug) ? 'text-text-header-secondary dark:text-text-header-secondary-dark opacity-100' : 'opacity-0'}`} />
-                            </span>
-                            {/* Chevron slot placeholder to align with items that have children */}
-                            <span className="inline-flex h-4 w-4 items-center justify-center">
-                              <ChevronDown className={`${styles.chevronIcon} opacity-0`} />
-                            </span>
-                          </div>
-                        </Button>
-                      )
-                    )}
+                     ) : (
+                       item.title && (
+                         <Button
+                           variant="ghost"
+                           className={`${styles.mainNavButton} focus-visible:ring-0 focus-visible:ring-offset-0`}
+                           onClick={(e) => handleAnchorClick(e, slug)}
+                         >
+                           <span className={`${styles.mainNavTitle} ${openSections.has(slug) ? 'text-text-header-secondary dark:text-text-header-secondary-dark' : ''}`}>{item.title}</span>
+                           <div className="flex items-center gap-1">
+                             {/* Chevron slot placeholder to align with items that have children */}
+                             <span className="inline-flex h-4 w-4 items-center justify-center">
+                               <ChevronDown className={`${styles.chevronIcon} opacity-0`} />
+                             </span>
+                           </div>
+                         </Button>
+                       )
+                     )}
                   </div>
                 );
               })}
