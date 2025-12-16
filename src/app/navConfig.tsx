@@ -22,9 +22,11 @@ export const navItems: MenuItem[] = [
         children: [
             { label: "Information", url: "/championship/latest/information" },
             { label: "Competition", url: "/championship/latest/competition" },
+            { label: "Resources", url: "/championship/latest/resources" },
             { label: "Teams", url: "/championship/latest/teams" },
             { label: "Schedule", url: "/championship/latest/schedule" },
-            { label: "Travel", url: "/championship/latest/travel" }
+            { label: "Travel", url: "/championship/latest/travel" },
+            { label: "Committee", url: "/championship/latest/committee" }
         ],
     },
     {

@@ -67,14 +67,14 @@ export default function ChampionshipClient({
   }, []);
 
   return (
-    <div className="container mx-auto px-4">
+    <div className="container mx-auto px-4 overflow-x-clip">
       {/* Main Content */}
-      <div className="flex flex-col md:flex-row gap-8">
+      <div className="flex flex-col md:flex-row">
         <SidebarNavigation
           items={subfolderContentsArray}
           year={year}
         />
-        <main className="flex-1">
+        <main className="flex-1 md:ml-8">
           <div className="mb-8 mt-10">
             <h1 id={pageTopSlug} className="text-4xl font-bold scroll-mt-16">{pageTopTitle}</h1>
           </div>

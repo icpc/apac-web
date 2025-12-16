@@ -1,0 +1,30 @@
+{
+  "information": {
+    "order": 1,
+    "display_name": "Information"
+  },
+  "competition": {
+    "order": 2,
+    "display_name": "Competition"
+  },
+  "resources": {
+    "order": 3,
+    "display_name": "Resources"
+  },
+  "teams": {
+    "order": 4,
+    "display_name": "Teams"
+  },
+  "schedule": {
+    "order": 5,
+    "display_name": "Schedule"
+  },
+  "travel": {
+    "order": 6,
+    "display_name": "Travel"
+  },
+  "committee": {
+    "order": 7,
+    "display_name": "Committee"
+  }
+}

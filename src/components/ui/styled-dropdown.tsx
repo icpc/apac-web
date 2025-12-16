@@ -15,6 +15,8 @@ interface StyledDropdownProps {
   triggerClassName?: string;
   itemsClassName?: string;
   size?: 'sm' | 'default' | 'lg';
+  staticWidth?: boolean;
+  width?: number;
 }
 
 export default function StyledDropdown({
@@ -25,7 +27,9 @@ export default function StyledDropdown({
   className = '',
   triggerClassName = '',
   itemsClassName = 'rounded-sm font-normal text-xs',
-  size = 'default'
+  size = 'default',
+  staticWidth = false,
+  width
 }: StyledDropdownProps) {
   const selectedOption = options.find(option => option.value === value);
   const triggerRef = useRef<HTMLButtonElement | null>(null);
@@ -33,6 +37,12 @@ export default function StyledDropdown({
   const [maxWidth, setMaxWidth] = useState<number | undefined>(undefined);
 
   useEffect(() => {
+    if (staticWidth && width) {
+      const adjustedWidth = width + (8 * 2);
+      setMaxWidth(adjustedWidth);
+      return;
+    }
+
     const updateWidth = () => {
       let triggerW = 0;
       let contentW = 0;
@@ -44,7 +54,9 @@ export default function StyledDropdown({
         contentW = contentRef.current.getBoundingClientRect().width;
       }
       
-      setMaxWidth(Math.max(triggerW, contentW));
+      // Use the wider of trigger or content, but ensure minimum width
+      const calculatedWidth = Math.max(triggerW, contentW, 120); // Minimum 120px
+      setMaxWidth(calculatedWidth);
     };
     
     // Initial measurement
@@ -58,7 +70,7 @@ export default function StyledDropdown({
       window.removeEventListener('resize', updateWidth);
       clearTimeout(timeoutId);
     };
-  }, [options]);
+  }, [options, staticWidth, width, size]);
   
   const sizeClasses = {
     sm: 'text-xs px-2 py-1',
@@ -74,7 +86,7 @@ export default function StyledDropdown({
           size={size}
           ref={triggerRef}
           style={{ width: maxWidth, boxSizing: 'border-box' }}
-          className={`${sizeClasses[size]} font-normal text-text-header-secondary bg-white border rounded-md data-[state=open]:rounded-b-none data-[state=open]:border-b-1 ${triggerClassName}`}
+          className={`${sizeClasses[size]} font-normal text-text-header-secondary bg-white border rounded-md data-[state=open]:rounded-b-none data-[state=open]:border-b-1 ${triggerClassName} align-left`}
         >
           <span className="mr-2">{selectedOption?.label || placeholder}</span>
           <ChevronDownIcon className="size-3" />
@@ -84,7 +96,7 @@ export default function StyledDropdown({
         ref={contentRef}
         align="start"
         sideOffset={0}
-        style={{ width: maxWidth, boxSizing: 'border-box' }}
+        style={{ width: maxWidth, boxSizing: 'border-box', minWidth: maxWidth }}
         className={`z-[9999] bg-white text-black shadow-none border rounded-md rounded-t-none border-t-0 mt-0 p-0
           data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=open]:fade-in-0 data-[state=closed]:fade-out-0 data-[side=bottom]:slide-in-from-top-1 duration-50
           ${className}`}
@@ -95,7 +107,7 @@ export default function StyledDropdown({
             onSelect={() => onValueChange(option.value)}
             className={`cursor-pointer ${sizeClasses[size]} ${itemsClassName}
               hover:text-text-header-secondary hover:bg-primaryAccent/10 dark:hover:bg-primaryAccent-dark/10
-            `}
+              w-full text-left`}
           >
             {option.label}
           </DropdownMenuItem>

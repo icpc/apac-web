@@ -3,6 +3,8 @@ import path from 'path';
 import { notFound } from 'next/navigation';
 import { AVAILABLE_YEARS } from "@/lib/constants";
 import Divider from '@/app/_components/Divider';
+import { SidebarNavigation } from '../[section]/sidebar-navigation';
+
 
 // Types
 interface ChangelogEntry {
@@ -16,6 +18,9 @@ interface ChangelogEntry {
 
 // Utility functions
 const formatDate = (dateStr: string): string => {
+  if (dateStr === '00000000') {
+    return 'n/a';
+  }
   return `${dateStr.substring(0,4)}-${dateStr.substring(4,6)}-${dateStr.substring(6,8)}`;
 };
 
@@ -79,37 +84,47 @@ const getAllChangelogFiles = async (year: string): Promise<ChangelogEntry[]> => 
 
 // Components
 const ChangelogPage = ({ entries, year }: { entries: ChangelogEntry[], year: string }) => (
-  <div className="w-full">
-    <div className="max-w-4xl mx-auto px-6 py-8">
-      <div className="mb-8">
-        <h1 className="text-4xl font-bold mb-4">Change Logs</h1>
-        <p className="text-gray-600 dark:text-gray-200 text-lg">
-          A chronological list of all updates and changes made to the championship content for the {year} championship.
-        </p>
-      </div>
-      <div className="space-y-4 markdown">
-        {entries.length === 0 ? (
-          <p className="text-gray-500 italic">No changelog entries found.</p>
-        ) : (
-          <table className="w-full text-left">
-            <tbody>
-              {entries.map((entry, index) => (
-                <tr key={index} className="border-y border-gray-300 dark:border-gray-600">
-                  <td className="py-2">{entry.formattedDate}</td>
-                  <td className="py-2">
-                    <a 
-                      href={`/championship/${year}/${entry.section}${entry.section !== entry.subsection ? `#${entry.subsection}` : ''}`}
-                      className="capitalize text-text-links dark:text-text-links-dark"
-                    >
-                      {entry.section} {entry.section !== entry.subsection ? ` / ${entry.subsection}` : ''}
-                    </a>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        )}
-      </div>
+  <div className="container mx-auto px-4 overflow-x-clip">
+    {/* Main Content */}
+    <div className="flex flex-col md:flex-row">
+      <SidebarNavigation
+        items={[]}
+        year={year}
+        hideDesktopSidebar={true}
+      />
+      <main className="flex-1 md:ml-8">
+        <div className="max-w-4xl">
+          <div className="mb-8 mt-10">
+            <h1 className="text-4xl font-bold scroll-mt-16">Change Logs</h1>
+            <p className="text-gray-600 dark:text-gray-200 text-lg">
+              A chronological list of all updates and changes made to the championship content for the {year} championship.
+            </p>
+          </div>
+          <div className="space-y-4 markdown">
+            {entries.length === 0 ? (
+              <p className="text-gray-500 italic">No changelog entries found.</p>
+            ) : (
+              <table className="w-full text-left">
+                <tbody>
+                  {entries.map((entry, index) => (
+                    <tr key={index} className="border-y border-gray-300 dark:border-gray-600">
+                      <td className="py-2 text-center min-w-[100px]">{entry.formattedDate}</td>
+                      <td className="py-2">
+                        <a 
+                          href={`/championship/${year}/${entry.section}${entry.section !== entry.subsection ? `#${entry.subsection}` : ''}`}
+                          className="capitalize text-text-links dark:text-text-links-dark"
+                        >
+                          {entry.section} {entry.section !== entry.subsection ? ` / ${entry.subsection}` : ''}
+                        </a>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
+          </div>
+        </div>
+      </main>
     </div>
   </div>
 );

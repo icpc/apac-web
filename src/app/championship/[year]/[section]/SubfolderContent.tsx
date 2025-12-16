@@ -9,6 +9,7 @@ import matter from 'gray-matter';
 import modifyHtmlContent from '@/lib/modify-html-content';
 import VersionControls from '@/app/_components/VersionControls';
 import { InfoIcon, XIcon } from 'lucide-react';
+import { CopyTooltip, InfoTooltip } from '@/components/ui/tooltip';
 
 interface SubSectionContent {
   title: string;
@@ -50,6 +51,7 @@ const SubfolderContent = ({ item, showTitle }: SubfolderContentProps) => {
   // State for parsed HTML to prevent hydration mismatch
   const [parsedContent, setParsedContent] = useState<string>('');
   const [isClient, setIsClient] = useState(false);
+  const [showCopiedTooltip, setShowCopiedTooltip] = useState(false);
 
   // Individual diff state for this subfolder only
   const [diffState, setDiffState] = useState<DiffState>({
@@ -58,17 +60,147 @@ const SubfolderContent = ({ item, showTitle }: SubfolderContentProps) => {
     showVersionDropdown: false
   });
 
+  // Helper function to render version controls
+  const renderVersionControls = (isDiffMode: boolean = false) => {
+    const hasOnlyOneVersion = !item.previousVersions || item.previousVersions.length === 0;
+    const slug = slugify(item.title);
+
+    const handleToggleDropdown = () => {
+      if (!hasOnlyOneVersion) {
+        setDiffState(prev => ({
+          ...prev,
+          showVersionDropdown: !prev.showVersionDropdown,
+          isDiffMode: !prev.showVersionDropdown,
+          selectedVersion: !prev.showVersionDropdown ? prev.selectedVersion : null
+        }));
+      }
+    };
+
+    const handleCopyUrl = async (e: React.MouseEvent) => {
+      e.preventDefault();
+      const url = `${window.location.origin}${window.location.pathname}#${slug}`;
+      try {
+        await navigator.clipboard.writeText(url);
+        setShowCopiedTooltip(true);
+        setTimeout(() => setShowCopiedTooltip(false), 2000);
+      } catch (err) {
+        console.error('Failed to copy URL:', err);
+      }
+    };
+
+    const renderTitle = () => (
+      <h2 className="m-0 pt-2">
+        {item.title + " "}
+        <CopyTooltip
+          onCopy={handleCopyUrl}
+          showCopiedTooltip={showCopiedTooltip}
+        >
+          🔗
+        </CopyTooltip>
+      </h2>
+    );
+
+    const renderToggleButton = () => {
+      const tooltipText = hasOnlyOneVersion 
+        ? "No previous versions available" 
+        : "See content changes history";
+      
+      return (
+        <InfoTooltip
+          text={tooltipText}
+          alignment="right"
+          forceShow={diffState.showVersionDropdown && !hasOnlyOneVersion}
+        >
+          <button
+            onClick={handleToggleDropdown}
+            disabled={hasOnlyOneVersion}
+            className={`p-1.5 rounded-md text-sm font-medium transition-all duration-200 relative opacity-50 hover:opacity-100 hover:bg-text-links-highlight hover:text-text-links-hover ${
+              hasOnlyOneVersion
+                ? 'text-gray-400 cursor-not-allowed'
+                : diffState.showVersionDropdown
+                  ? 'text-red-600 dark:text-red-400 opacity-100'
+                  : 'text-gray-600 dark:text-gray-400'
+            }`}
+          >
+            {diffState.showVersionDropdown ? (
+              <XIcon className="size-4" />
+            ) : (
+              <InfoIcon className="size-4" />
+            )}
+          </button>
+        </InfoTooltip>
+      );
+    };
+
+    const renderVersionDropdown = () => (
+      <VersionControls
+        showVersionDropdown={diffState.showVersionDropdown}
+        selectedVersion={diffState.selectedVersion}
+        onChangeVersion={(value) => setDiffState(prev => ({ ...prev, selectedVersion: value }))}
+        availableVersions={availableVersions}
+        compareLabel={isDiffMode ? "Comparing with:" : undefined}
+      />
+    );
+
+    return (
+      <>
+        {/* Desktop layout */}
+        <div className="hidden sm:block">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              {renderTitle()}
+            </div>
+            <div className={`flex items-center gap-2 ${diffState.showVersionDropdown ? '-mt-6' : 'mt-3'}`}>
+              <LastUpdatedText date={item.lastUpdated} />
+              {renderToggleButton()}
+            </div>
+          </div>
+          {diffState.showVersionDropdown && (
+            <div className="flex justify-end -mt-5">
+              <div className="relative -top-1">
+                {renderVersionDropdown()}
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* Mobile layout */}
+        <div className="sm:hidden">
+          <div className="flex items-center gap-2 mb-2">
+            <h2 className="m-0">
+              {item.title + " "}
+              <CopyTooltip
+                onCopy={handleCopyUrl}
+                showCopiedTooltip={showCopiedTooltip}
+                alignment="center"
+              >
+                🔗
+              </CopyTooltip>
+            </h2>
+          </div>
+          <div className="flex items-center gap-2 mb-2">
+            <LastUpdatedText date={item.lastUpdated} />
+            {renderToggleButton()}
+          </div>
+          <div className="block sm:hidden -mt-2">
+            {renderVersionDropdown()}
+            <Divider/>
+          </div>
+        </div>
+      </>
+    );
+  };
+
   // Ensure we're on client side before parsing markdown
   useEffect(() => {
     setIsClient(true);
     let htmlContent = marked.parse(item.content || '') as string;
     // Add IDs to headings for anchor navigation
-    htmlContent = htmlContent.replace(/<h([12])>(.*?)<\/h\1>/g, (match, level, content) => {
+    htmlContent = htmlContent.replace(/<h([12])>(.*?)<\/h\1>/g, (_, level, content) => {
       const slug = slugify(content);
       return `<h${level} id="${slug}" class="scroll-mt-16">${content}</h${level}>`;
     });
-    htmlContent = htmlContent.replace(/<h([12]).*?(id=".*?").*?>(.*?)<\/h\1>/g, (match, level, id, content) => {
-      const slug = slugify(content);
+    htmlContent = htmlContent.replace(/<h([12]).*?(id=".*?").*?>(.*?)<\/h\1>/g, (_, level, id, content) => {
       return `<h${level} ${id} class="scroll-mt-16">${content}</h${level}>`;
     });
     htmlContent = modifyHtmlContent(htmlContent);
@@ -93,7 +225,7 @@ const SubfolderContent = ({ item, showTitle }: SubfolderContentProps) => {
     // Show loading state during hydration
     if (!isClient || !parsedContent) {
       return (
-        <section className="mb-12">
+      <section className="pb-2 mt-10">
           <div className="animate-pulse">
             <div className="h-4 bg-gray-200 rounded w-3/4 mb-4"></div>
             <div className="h-4 bg-gray-200 rounded w-1/2 mb-4"></div>
@@ -104,75 +236,22 @@ const SubfolderContent = ({ item, showTitle }: SubfolderContentProps) => {
     }
 
     const slug = slugify(item.title);
-    const hasOnlyOneVersion = !item.previousVersions || item.previousVersions.length === 0;
 
     return (
-      <section id={slug} className="mb-12">
+      <section id={slug} className="pb-2 mt-10 ">
         {showTitle && (
           <>
             <div className="mt-8">
               <Divider />
             </div>
-              <div className="flex justify-between items-center mb-2">
-                <h2>
-                  {item.title + " "}
-                  <span className="relative group">
-                    <a href={"#" + slug} className="header-link">
-                      🔗
-                    </a>
-                    <span className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 text-xs text-white bg-gray-900 dark:bg-gray-700 rounded whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
-                      Get url to this section
-                    </span>
-                  </span>
-                </h2>
-               <div className="flex flex-col items-end gap-0">
-                 <div className="flex items-center gap-3">
-                  <LastUpdatedText date={item.lastUpdated} />
-                  <div className="relative group">
-                     <button
-                       onClick={() => !hasOnlyOneVersion && setDiffState(prev => ({
-                         ...prev,
-                         showVersionDropdown: !prev.showVersionDropdown,
-                         isDiffMode: !prev.showVersionDropdown,
-                         selectedVersion: !prev.showVersionDropdown ? prev.selectedVersion : null
-                       }))}
-                       disabled={hasOnlyOneVersion}
-                       className={`p-1.5 rounded-md text-sm font-medium transition-all duration-200 ${
-                         hasOnlyOneVersion
-                           ? 'text-gray-400 cursor-not-allowed'
-                           : diffState.showVersionDropdown
-                             ? 'text-red-600 dark:text-red-400'
-                             : 'text-gray-600 dark:text-gray-400 hover:text-text-primaryAccent'
-                       }`}
-                     >
-                       {diffState.showVersionDropdown ? (
-                         <XIcon className="size-4" />
-                       ) : (
-                         <InfoIcon className="size-4" />
-                       )}
-                     </button>
-                     {hasOnlyOneVersion ? (
-                       <span className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 text-xs text-white bg-gray-900 dark:bg-gray-700 rounded whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
-                         No previous versions available
-                       </span>
-                     ) : (
-                       <span className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 text-xs text-white bg-gray-900 dark:bg-gray-700 rounded whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
-                         See content changes history
-                       </span>
-                     )}
-                   </div>
-                 </div>
-                 <VersionControls
-                   showVersionDropdown={diffState.showVersionDropdown}
-                   selectedVersion={diffState.selectedVersion}
-                   onChangeVersion={(value) => setDiffState(prev => ({ ...prev, selectedVersion: value }))}
-                   availableVersions={availableVersions}
-                 />
-               </div>
-              </div>
+            <div className={`flex flex-col transition-all duration-200 min-h-12 sm:min-h-16`}>
+              {renderVersionControls(false)}
+            </div>
           </>
         )}
-        <Content content={parsedContent} />
+        <div className="mt-6 sm:mt-0">
+          <Content content={parsedContent} />
+        </div>
       </section>
     );
   };
@@ -197,68 +276,19 @@ const SubfolderContent = ({ item, showTitle }: SubfolderContentProps) => {
       marked.parse(latestSelectedContent.content) as string
     );
 
-    // Check if there's only one version (no previous versions)
-    const hasOnlyOneVersion = !item.previousVersions || item.previousVersions.length === 0;
-
     return (
-      <section className="mb-12">
+      <section className="pb-2 mt-10 ">
         {showTitle && (
           <>
             <div className="mt-8">
               <Divider />
             </div>
-            <div className="flex justify-between items-center mb-2">
-              <h2>{item.title}</h2>
-              <div className="flex flex-col items-end gap-2">
-                <div className="flex items-center gap-3">
-                  <LastUpdatedText date={item.lastUpdated} />
-                  <div className="relative group">
-                    <button
-                      onClick={() => !hasOnlyOneVersion && setDiffState(prev => ({
-                        ...prev,
-                        showVersionDropdown: !prev.showVersionDropdown,
-                        isDiffMode: !prev.showVersionDropdown,
-                        selectedVersion: !prev.showVersionDropdown ? prev.selectedVersion : null
-                      }))}
-                      disabled={hasOnlyOneVersion}
-                      className={`p-1.5 rounded-md text-sm font-medium transition-all duration-200 ${
-                        hasOnlyOneVersion
-                          ? 'text-gray-400 cursor-not-allowed'
-                          : diffState.showVersionDropdown
-                            ? 'text-red-600 dark:text-red-400'
-                            : 'text-gray-600 dark:text-gray-400 hover:text-text-primaryAccent'
-                      }`}
-                    >
-                      {diffState.showVersionDropdown ? (
-                        <XIcon className="size-4" />
-                      ) : (
-                        <InfoIcon className="size-4" />
-                      )}
-                    </button>
-                    {hasOnlyOneVersion ? (
-                      <span className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 text-xs text-white bg-gray-900 dark:bg-gray-700 rounded whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
-                        No previous versions available
-                      </span>
-                    ) : (
-                      <span className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 text-xs text-white bg-gray-900 dark:bg-gray-700 rounded whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
-                        See content changes history
-                      </span>
-                    )}
-                  </div>
-                </div>
-                <VersionControls
-                  showVersionDropdown={diffState.showVersionDropdown}
-                  selectedVersion={diffState.selectedVersion}
-                  onChangeVersion={(value) => setDiffState(prev => ({ ...prev, selectedVersion: value }))}
-                  availableVersions={availableVersions}
-                  compareLabel="Comparing with:"
-                />
-              </div>
+            <div className={`flex flex-col transition-all duration-200 min-h-12 sm:min-h-16`}>
+              {renderVersionControls(true)}
             </div>
           </>
         )}
-
-        <div className="diff-container">
+        <div className="mt-6 sm:mt-0">
           <Content content={diffHtml} />
         </div>
       </section>

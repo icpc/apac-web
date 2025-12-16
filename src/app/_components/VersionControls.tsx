@@ -31,7 +31,7 @@ const VersionControls = ({
       }`}
     >
       {showVersionDropdown && availableVersions.length > 0 && (
-        <div className="flex items-center gap-2">
+        <div className={`flex items-center gap-2`}>
           <label className={`${labelClassName}`}>{compareLabel}</label>
           <StyledDropdown
             value={selectedVersion || ''}
@@ -40,6 +40,7 @@ const VersionControls = ({
             placeholder={placeholder}
             size="sm"
             triggerClassName="text-xs"
+            staticWidth={true}
           />
         </div>
       )}

@@ -6,6 +6,14 @@ html {
   scroll-behavior: smooth;
 }
 
+body {
+  overflow-x: hidden;
+}
+
+* {
+  box-sizing: border-box;
+}
+
 blockquote {
     @apply my-6 text-justify;
 }
@@ -72,7 +80,7 @@ a:hover .tooltip {
 }
 
 figure {
-    @apply flex flex-col items-center justify-center;
+    @apply flex flex-col items-center justify-center pt-4;
 }
 
 figcaption {

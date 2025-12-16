@@ -155,10 +155,10 @@ export default function Navbar() {
                                     onClick={() => toggleDropdown(label)}
                                     className={styles.dropdownButton}
                                 >
-                                    {label} <ChevronDownIcon className={styles.chevronIcon} />
+                                    {label} <ChevronDownIcon className={`${styles.chevronIcon} ${openDropdown === label ? styles.chevronRotated : ''}`} />
                                 </button>
                                 {openDropdown === label && (
-                                    <ul className={styles.mobileDropdownList}>
+                                    <ul className={`${styles.mobileDropdownList} ${styles.dropdownOpen}`}>
                                         {children.map((subItem) => {
                                             const hasSubChildren = subItem.children && subItem.children.length > 0;
 
@@ -169,10 +169,10 @@ export default function Navbar() {
                                                             onClick={() => toggleSubMenu(subItem.label)}
                                                             className={styles.dropdownButton}
                                                         >
-                                                            {subItem.label} <ChevronDownIcon className={styles.chevronIcon} />
+                                                            {subItem.label} <ChevronDownIcon className={`${styles.chevronIcon} ${openSubMenu === subItem.label ? styles.chevronRotated : ''}`} />
                                                         </button>
                                                         {openSubMenu === subItem.label && (
-                                                            <ul className={styles.mobileDropdownSubList}>
+                                                            <ul className={`${styles.mobileDropdownSubList} ${styles.dropdownOpen}`}>
                                                                 {subItem.children!.map((subSubItem) => {
                                                                     const hasSubSubChildren =
                                                                         subSubItem.children && subSubItem.children.length > 0;
@@ -184,10 +184,10 @@ export default function Navbar() {
                                                                                     onClick={() => toggleSubSubMenu(subSubItem.label)}
                                                                                     className={styles.dropdownButton}
                                                                                 >
-                                                                                    {subSubItem.label} <ChevronDownIcon className={styles.chevronIcon} />
+                                                                                    {subSubItem.label} <ChevronDownIcon className={`${styles.chevronIcon} ${openSubSubMenu === subSubItem.label ? styles.chevronRotated : ''}`} />
                                                                                 </button>
                                                                                 {openSubSubMenu === subSubItem.label && (
-                                                                                    <ul className={styles.mobileDropdownSubList}>
+                                                                                    <ul className={`${styles.mobileDropdownSubList} ${styles.dropdownOpen}`}>
                                                                                         {subSubItem.children!.map((deepItem) => (
                                                                                             <li key={deepItem.label}>
                                                                                                 {deepItem.enabled !== false && deepItem.url ? (
@@ -362,7 +362,7 @@ export default function Navbar() {
                     </div>
 
                     {isMobileMenuOpen && (
-                        <div className={styles.mobileMenuContainer}>
+                        <div className={`${styles.mobileMenuContainer} ${styles.mobileMenuOpen}`}>
                             {renderMobileMenuItems(navItems, 0)}
                         </div>
                     )}
