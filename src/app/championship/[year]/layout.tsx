@@ -5,7 +5,7 @@ export default async function Layout({
   params,
 }: {
   children: React.ReactNode;
-  params: Promise<{ year: string }>; 
+  params: Promise<{ year: string }>;
 }) {
   const { year } = await params;
 
