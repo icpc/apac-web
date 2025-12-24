@@ -27,6 +27,15 @@ else
     echo ".env has been copied from .env.example. Don't forget to change the values later."
 fi
 
+# Install dependencies
+echo "Installing dependencies..."
+if npm install; then
+    echo "Dependencies installed successfully."
+else
+    echo "Failed to install dependencies."
+    exit 1
+fi
+
 # Build the application
 echo "Building the application..."
 if npm run build; then
