@@ -11,6 +11,7 @@ A modern, responsive website built with Next.js for the ICPC Asia Pacific Champi
 - [Theme System](#theme-system)
 - [Components](#components)
 - [Assets Management](#assets-management)
+- [Content Management](#content-management)
 - [Deployment](#deployment)
 
 ## Prerequisites
@@ -175,70 +176,21 @@ The theme system is implemented using:
 - SVG icons when possible
 - Web app manifest included
 
-### Yearly Sponsors Data Structure
+## Content Management
 
-The `public/pages/championship/{year}/sponsors/sponsors.json` file defines the sponsors to be displayed on the sponsorship page. It follows a specific structure to allow for flexible ordering and grouping.
+For detailed instructions on managing championship content, see **[CHAMPIONSHIP_CONTENT_GUIDE.md](./CHAMPIONSHIP_CONTENT_GUIDE.md)**.
 
-The file contains a top-level JSON array `[]`.
+The content guide covers:
+- Adding new championship years
+- Adding pages and subpages
+- Managing sponsor logos
+- Working with tables and columns
+- File naming conventions
+- Troubleshooting common issues
 
-Each element in the array is an object `{}` that represents a single sponsor card (e.g., a card for "Local Sponsors"). The order of these objects in the array dictates the priority of the cards on the page.
+### Quick Reference
 
-```json
-[
-  { /* Card 1 */ },
-  { /* Card 2 */ },
-  { /* Card 3 */ }
-]
-```
-
-Inside each card object, there is a **single key-value pair**.
-- The **key** is a string that serves as the title for the card (e.g., `"ICPC Global Sponsors"`).
-- The **value** is an array of sponsor objects.
-
-```json
-{
-  "Card Title": [ /* List of sponsors for this card */ ]
-}
-```
-
-The array of sponsors contains objects, where each object represents one sponsor. The order of these objects determines the display order of the logos within the card.
-
-Similar to the card object, each sponsor object has a **single key-value pair**.
-- The **key** is the sponsor's name (e.g., `"Huawei"`).
-- The **value** is an object containing the sponsor's details.
-
-```json
-{
-  "Sponsor Name": {
-    "size": 13,
-    "filename": "/path/to/logo.png"
-  }
-}
-```
-
-The sponsor details object has two properties:
-- `"size"`: A number representing the proportional space the logo should occupy relative to other logos in the same line.
-- `"filename"`: A string with the path to the logo image file. The path should be absolute from the `public` directory.
-
-#### Full Example:
-
-```json
-[
-  {
-    "ICPC Global Sponsors": [
-      {
-        "Huawei": {
-          "size": 13,
-          "filename": "/assets/sponsors/huawei-logo.png"
-        }
-      },
-      {
-        "Jane Street": {
-          "size": 10,
-          "filename": "/assets/sponsors/jane-street-logo.png"
-        }
-      }
-    ]
-  }
-]
-```
+- **Championship content**: `public/pages/championship/{year}/`
+- **Markdown files**: Use date prefix format `YYYYMMDD_filename.md`
+- **Ordering**: Controlled by `order.json` files in each directory
+- **Sponsors**: Defined in `public/pages/championship/{year}/sponsors/sponsors.json`
