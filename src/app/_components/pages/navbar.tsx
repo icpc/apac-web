@@ -3,15 +3,15 @@
 import * as NavigationMenu from "@radix-ui/react-navigation-menu";
 import Link from "next/link";
 import { useState, useRef, useEffect } from "react";
-import { ThemeSwitcher } from "@/app/_components/pages/theme-switcher";
+import { ThemeSwitcher } from "@/components/common/theme-switcher";
 import Image from "next/image";
 import styles from "@/app/_styles/navbar-styles.module.css";
 import { ICPC_APAC } from "@/lib/constants";
-import { useTheme } from "@/app/_components/pages/theme-context";
+import { useTheme } from "@/components/common/theme-context";
 import { ChevronDownIcon, Menu, X } from "lucide-react"
 
 // Import the single navItems config
-import { navItems } from "@/app/navConfig";
+import { navItems } from "@/app/nav-config";
 
 type MenuItem = {
     label: string;

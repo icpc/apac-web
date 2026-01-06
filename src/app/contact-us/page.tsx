@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Container from "@/app/_components/pages/container";
+import Container from "@/components/common/container";
 import { Content } from "@/app/_components/pages/content";
 import InstagramEmbed from "@/app/_components/pages/instagram-embed";
 

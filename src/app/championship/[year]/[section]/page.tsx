@@ -2,7 +2,7 @@ import { promises as fs } from 'fs';
 import path from 'path';
 import { notFound } from 'next/navigation';
 import { AVAILABLE_YEARS } from "@/lib/constants";
-import ChampionshipClient from './ChampionshipClient';
+import ChampionshipClient from './championship-client';
 import modifyHtmlContent from '@/lib/modify-html-content';
 import { marked } from 'marked';
 import { isValid } from 'date-fns';

@@ -4,14 +4,12 @@ import React, { useRef, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { ChevronRightIcon } from 'lucide-react';
-import { Button } from "@/components/ui/button";
-import { Menu } from "lucide-react";
-import Container from "@/app/_components/pages/container";
+import Container from "@/components/common/container";
 
 import { AVAILABLE_YEARS } from "@/lib/constants";
 
-import SponsorsGrid from "@/app/_components/pages/sponsorsGrid";
-import Divider from './Divider';
+import SponsorsGrid from "@/app/_components/pages/sponsors-grid";
+import Divider from './divider';
 import StyledDropdown from '@/components/ui/styled-dropdown';
 
 interface ChampionshipLayoutProps {

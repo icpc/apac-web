@@ -1,7 +1,7 @@
 'use client';
 
 import { SidebarNavigation } from './sidebar-navigation';
-import SubfolderContent from './SubfolderContent';
+import SubfolderContent from './subfolder-content';
 import { useEffect } from 'react';
 
 // Types

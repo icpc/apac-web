@@ -10,10 +10,10 @@ import { Button } from "@/components/ui/button";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { ChevronDown, Menu, X, Pin } from "lucide-react";
 import styles from '@/app/_styles/sidebar-nav-styles.module.css';
-import { navItems } from '@/app/navConfig';
+import { navItems } from '@/app/nav-config';
 import { AVAILABLE_YEARS } from "@/lib/constants";
 import StyledDropdown from '@/components/ui/styled-dropdown';
-import Divider from '@/app/_components/Divider';
+import Divider from '@/app/_components/divider';
 
 interface SubSectionContent {
   title: string;

@@ -3,7 +3,7 @@ import { ICPC_APAC } from "@/lib/constants";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import cn from "classnames";
-import { ThemeProvider } from "@/app/_components/pages/theme-context";
+import { ThemeProvider } from "@/components/common/theme-context";
 
 import "./globals.css";
 import Navbar from "./_components/pages/navbar";

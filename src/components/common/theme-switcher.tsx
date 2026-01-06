@@ -1,6 +1,6 @@
 "use client";
 
-import { useTheme } from "@/app/_components/pages/theme-context";
+import { useTheme } from "@/components/common/theme-context";
 import { Button } from "@/components/ui/button";
 
 export function ThemeSwitcher() {

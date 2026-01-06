@@ -2,7 +2,7 @@ import { promises as fs } from 'fs';
 import path from 'path';
 import { notFound } from 'next/navigation';
 import { AVAILABLE_YEARS } from "@/lib/constants";
-import Divider from '@/app/_components/Divider';
+import Divider from '@/app/_components/divider';
 import { SidebarNavigation } from '../[section]/sidebar-navigation';
 
 

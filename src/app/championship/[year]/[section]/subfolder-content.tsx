@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { Content } from '@/app/_components/pages/content';
 import { marked } from 'marked';
-import Divider from '@/app/_components/Divider';
+import Divider from '@/app/_components/divider';
 import diff from 'html-diff-ts';
 import matter from 'gray-matter';
 import modifyHtmlContent from '@/lib/modify-html-content';

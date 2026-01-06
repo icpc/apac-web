@@ -1,4 +1,4 @@
-import ChampionshipLayout from '@/app/_components/ChampionshipLayout';
+import ChampionshipLayout from '@/app/_components/championship-layout';
 
 export default async function Layout({
   children,

@@ -2,7 +2,7 @@
 
 import React from "react";
 import { ICPC_APAC } from "@/lib/constants";
-import WideContainer from "@/app/_components/pages/wide-container";
+import WideContainer from "@/components/common/wide-container";
 import styles from "@/app/_styles/footer-styles.module.css";
 
 import { Card, CardContent } from "@/components/ui/card";

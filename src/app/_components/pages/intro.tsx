@@ -1,9 +1,9 @@
 "use client";
 
 import { ICPC_APAC } from "@/lib/constants";
-import WideContainer from "@/app/_components/pages/wide-container";
+import WideContainer from "@/components/common/wide-container";
 import styles from "@/app/_styles/intro-styles.module.css";
-import { useTheme } from "@/app/_components/pages/theme-context";
+import { useTheme } from "@/components/common/theme-context";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { SponsorsCarousel } from "./sponsors-carousel";
