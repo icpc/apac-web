@@ -1,0 +1,4 @@
+- [Practice Problemset](/assets/championship/2024/practice-problemset.pdf)
+- [Contest Problemset](/assets/championship/2024/problemset.pdf)
+- [Contest Problemset Analysis](/assets/championship/2024/problem-analysis.pdf)
+- [Test Data Files](https://github.com/jonathanirvings/icpc-apac-2024-tasks)

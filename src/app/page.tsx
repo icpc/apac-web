@@ -1,6 +1,6 @@
 "use client";
 
-import Container from "@/app/_components/pages/container";
+import Container from "@/components/common/container";
 import { Intro } from "@/app/_components/pages/intro";
 import { Content } from "@/app/_components/pages/content";
 import { useEffect, useState } from "react";

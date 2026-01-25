@@ -1,13 +1,20 @@
-/* Sidebar Navigation Styles */
-
 .sidebarContainer {
-  @apply mt-12 w-full;
+  @apply w-full;
   background-color: hsl(var(--card));
   color: hsl(var(--card-foreground));
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  margin-bottom: 0;
+  padding-bottom: 0;
+  min-height: 0;
+  flex: 1;
+  width: 100%;
 }
 
 .sidebarHeader {
-  @apply pb-4;
+  @apply pl-12 pr-6 pb-2 pt-12 sm:pt-4 sm:px-0;
 }
 
 .sidebarTitle {
@@ -15,19 +22,39 @@
 }
 
 .sidebarContent {
-  @apply space-y-2;
+  @apply space-y-2 px-6 sm:px-0;
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  padding-bottom: 10rem;
 }
 
 .sidebarSection {
-  @apply space-y-1 pl-8;
+  @apply space-y-1 pl-2;
+  position: relative;
+  width: 100%;
 }
 
-/* Main navigation buttons (sections and H1 headings) */
 .mainNavButton {
-  @apply w-full justify-start h-auto font-medium px-0;
+  @apply w-full justify-start font-medium px-0 min-w-0 flex items-center leading-tight h-9; /* fixed 36px */
 }
 
-/* Collapsible trigger for subsections */
+.iconGroup {
+  @apply inline-flex items-center justify-end;
+  width: 2.25rem; /* 36px to cover two 16px icons + gap */
+}
+
+.mainNavTitle {
+  @apply truncate flex-1 text-left;
+}
+
+.mainNavButton a {
+  @apply truncate;
+}
+
 .subsectionTrigger {
   @apply w-full justify-between h-auto text-sm;
   color: hsl(var(--muted-foreground));
@@ -37,53 +64,110 @@
   background-color: hsl(var(--accent));
 }
 
-/* Subsection container */
 .subsectionContainer {
-  @apply ml-4 space-y-1 pt-1;
+  @apply space-y-1 pt-1 min-w-0 pl-2;
 }
 
-/* H2 subsection buttons */
 .subsectionButton {
-  @apply w-full justify-start h-auto p-2 text-sm;
+  @apply w-full justify-start h-auto text-sm min-w-0 p-2;
   color: hsl(var(--muted-foreground));
+}
+
+.subsectionButton a {
+  @apply truncate;
 }
 
 .subsectionButton:hover {
   color: hsl(var(--foreground));
 }
 
-/* Subsection bullet point */
 .subsectionBullet {
-  @apply mr-2;
+  @apply mr-1 flex-shrink-0;
 }
 
-/* Chevron icon */
 .chevronIcon {
-  @apply h-4 w-4 transition-transform duration-200;
+  @apply h-4 w-4 transition-transform duration-300;
 }
+
+
 
 .mainNavButton .chevronIcon {
-  transition: transform 0.2s ease-in-out;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .mainNavButton[data-state='open'] .chevronIcon {
   transform: rotate(180deg);
 }
 
-/* Collapsible content transitions */
 .collapsibleContent {
   overflow: hidden;
+  position: relative;
+  min-height: 0;
 }
 
-/* Scroll area */
+.collapsibleContent[data-state='open'] {
+  animation: slideDown 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.collapsibleContent[data-state='closed'] {
+  animation: slideUp 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes slideDown {
+  from { height: 0; opacity: 0; }
+  to { height: var(--radix-collapsible-content-height); opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { height: var(--radix-collapsible-content-height); opacity: 1; }
+  to { height: 0; opacity: 0; }
+}
+
 .scrollArea {
-  height: calc(100vh - 200px);
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-gutter: stable both-edges;
+  scrollbar-width: thin;
+  scrollbar-color: hsl(var(--muted-foreground)) hsl(var(--background));
+  position: relative;
+  min-height: 0;
+  max-height: 100%;
+  height: 0;
 }
 
-/* Content sections with proper scroll margin */
+.scrollArea::-webkit-scrollbar {
+  width: 8px;
+}
+
+.scrollArea::-webkit-scrollbar-track {
+  background-color: rgba(220, 220, 220, 1);
+}
+
+.scrollArea::-webkit-scrollbar-thumb {
+  background-color: rgba(156, 163, 175, 1);
+  border-radius: 3px;
+}
+
+.scrollArea::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(26, 105, 76, 1);
+}
+
+:global(.dark) .scrollArea::-webkit-scrollbar-track {
+  background-color: rgba(51, 61, 75, 1);
+}
+
+:global(.dark) .scrollArea::-webkit-scrollbar-thumb {
+  background-color: rgba(107, 114, 128, 1);
+}
+
+:global(.dark) .scrollArea::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(178, 255, 229, 1);
+}
+
 .contentSection {
   @apply mb-12;
-  scroll-margin-top: 8rem; /* 128px */
+  scroll-margin-top: 8rem;
 }
 
 .contentSectionHeader {
@@ -96,12 +180,12 @@
 
 .lastUpdated {
   @apply text-sm;
-  color: #6b7280; /* gray-500 */
+  color: #6b7280;
 }
 
 @media (prefers-color-scheme: dark) {
   .lastUpdated {
-    color: #9ca3af; /* gray-400 */
+    color: #9ca3af;
   }
 }
 
@@ -109,19 +193,85 @@
   @apply mb-4;
 }
 
-/* Responsive sidebar positioning */
-.sidebarAside {
-  @apply w-full mb-8 self-start pr-6;
+.mobileToggleButton {
+   @apply fixed top-1/2 left-1 z-50 md:hidden -translate-y-1/2;
+   background-color: rgba(0, 0, 0, 0.3);
+   border-color: hsl(var(--border));
+ }
+
+.mobileToggleButton:hover {
+   background-color: hsl(var(--accent));
+ }
+
+.sidebarOverlay {
+   @apply fixed inset-0 z-40 md:hidden ;
+   @apply bg-background;
+   opacity: 0.97;
+ }
+
+:global(.dark) .sidebarOverlay {
+   @apply bg-background-dark;
+ }
+
+
+
+.sidebarModal {
+   @apply fixed top-10 z-40 md:hidden left-0;
+   transform: translateX(-100%);
+   transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
+   opacity: 0;
+   width: 100vw;
+   height: calc(100vh - 4rem);
+   overflow: hidden;
+   display: flex;
+   flex-direction: column;
+ }
+
+.sidebarModalContent {
+   height: 100%;
+   overflow: hidden;
+   display: flex;
+   flex-direction: column;
+   position: relative;
 }
+
+.sidebarModalOpen {
+   transform: translateY(0);
+   opacity: 1;
+ }
+
+.sidebarAside {
+   @apply w-full self-start md:block min-w-0 pr-2;
+   height: 100%;
+   margin-bottom: 0;
+}
+
+@media (max-width: 767px) {
+   .sidebarAside {
+     @apply hidden;
+   }
+ }
 
 @media (min-width: 768px) {
-  .sidebarAside {
-    @apply w-1/4 mb-0 sticky;
-    top: 6rem; /* 96px */
-  }
-}
+      .sidebarAside {
+         @apply w-1/4 sticky;
+         top: 5rem;
+         height: calc(100vh - 5rem);
+         max-height: calc(100vh - 7.5rem);
+         z-index: 10;
+         padding-bottom: 0;
+         margin-bottom: 0;
+      }
 
-/* Main content area */
+   .sidebarModal {
+     @apply hidden;
+   }
+
+   .sidebarOverlay {
+     @apply hidden;
+   }
+ }
+
 .mainContent {
   @apply w-full;
 }
@@ -144,7 +294,6 @@
   @apply mb-6;
 }
 
-/* Container layout */
 .pageContainer {
   @apply container mx-auto px-4 py-8;
 }
@@ -159,7 +308,50 @@
   }
 }
 
-/* Separator between sections */
-.sectionSeparator {
-  @apply my-2;
-} 
+.navigationSection {
+  @apply mb-2;
+}
+
+.navigationTitle {
+  @apply text-sm font-semibold mb-2 px-2;
+  color: hsl(var(--muted-foreground));
+}
+
+.fullWidthSection {
+  @apply mx-0;
+}
+
+.fullWidthButton {
+  @apply w-full;
+}
+
+.fullWidthSeparator {
+  @apply mx-0;
+}
+
+.yearDropdownContainer {
+  @apply mt-2 w-full;
+}
+
+/* Championship buttons grid */
+.championshipButtonsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.5rem;
+  margin: 0.25rem 0;
+}
+
+.championshipButtonsGrid > * {
+  min-width: 0; /* Prevent grid items from overflowing */
+}
+
+.championshipButton {
+  @apply px-3 py-2 text-sm font-medium rounded-lg transition-colors text-center;
+  width: 100%;
+  box-sizing: border-box;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+

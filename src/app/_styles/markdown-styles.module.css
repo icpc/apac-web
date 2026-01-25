@@ -90,33 +90,26 @@
   @apply text-text-body-dark;
 }
 
-.markdown h1,
-
-.markdown h3 {
-  @apply font-bold mb-4 text-text-header-secondary;
+.markdown h1 {
+  @apply text-4xl mt-8 mb-4 leading-snug font-bold text-text-header-primary;
 }
 
 .markdown h2 {
-  @apply font-bold mb-4 text-text-body;
+    @apply text-2xl mt-8 mb-4 leading-snug font-bold text-text-header-secondary;
 }
 
-:global(.dark) .markdown h1,
-:global(.dark) .markdown h3 {
-  @apply text-text-header-secondary-dark;
+.markdown h3 {
+    @apply text-xl mt-8 mb-4 leading-snug font-bold text-text-header-ternary;
+}
+
+:global(.dark) .markdown h1 {
+    @apply text-text-header-primary-dark;
 }
 
 :global(.dark) .markdown h2 {
-  @apply text-white;
+    @apply text-text-header-secondary-dark;
 }
 
-.markdown h1 {
-  @apply text-3xl;
-}
-
-.markdown h2 {
-  @apply text-2xl ;
-}
-
-.markdown h3 {
-  @apply text-xl;
+:global(.dark) .markdown h3 {
+    @apply text-text-header-ternary-dark;
 }

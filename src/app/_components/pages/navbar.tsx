@@ -3,15 +3,15 @@
 import * as NavigationMenu from "@radix-ui/react-navigation-menu";
 import Link from "next/link";
 import { useState, useRef, useEffect } from "react";
-import { ThemeSwitcher } from "@/app/_components/pages/theme-switcher";
+import { ThemeSwitcher } from "@/components/common/theme-switcher";
 import Image from "next/image";
 import styles from "@/app/_styles/navbar-styles.module.css";
 import { ICPC_APAC } from "@/lib/constants";
-import { useTheme } from "@/app/_components/pages/theme-context";
-import { ChevronDownIcon } from "lucide-react"
+import { useTheme } from "@/components/common/theme-context";
+import { ChevronDownIcon, Menu, X } from "lucide-react"
 
 // Import the single navItems config
-import { navItems } from "@/app/navConfig";
+import { navItems } from "@/app/nav-config";
 
 type MenuItem = {
     label: string;
@@ -155,10 +155,10 @@ export default function Navbar() {
                                     onClick={() => toggleDropdown(label)}
                                     className={styles.dropdownButton}
                                 >
-                                    {label} <ChevronDownIcon className={styles.chevronIcon} />
+                                    {label} <ChevronDownIcon className={`${styles.chevronIcon} ${openDropdown === label ? styles.chevronRotated : ''}`} />
                                 </button>
                                 {openDropdown === label && (
-                                    <ul className={styles.mobileDropdownList}>
+                                    <ul className={`${styles.mobileDropdownList} ${styles.dropdownOpen}`}>
                                         {children.map((subItem) => {
                                             const hasSubChildren = subItem.children && subItem.children.length > 0;
 
@@ -169,10 +169,10 @@ export default function Navbar() {
                                                             onClick={() => toggleSubMenu(subItem.label)}
                                                             className={styles.dropdownButton}
                                                         >
-                                                            {subItem.label} <ChevronDownIcon className={styles.chevronIcon} />
+                                                            {subItem.label} <ChevronDownIcon className={`${styles.chevronIcon} ${openSubMenu === subItem.label ? styles.chevronRotated : ''}`} />
                                                         </button>
                                                         {openSubMenu === subItem.label && (
-                                                            <ul className={styles.mobileDropdownSubList}>
+                                                            <ul className={`${styles.mobileDropdownSubList} ${styles.dropdownOpen}`}>
                                                                 {subItem.children!.map((subSubItem) => {
                                                                     const hasSubSubChildren =
                                                                         subSubItem.children && subSubItem.children.length > 0;
@@ -184,10 +184,10 @@ export default function Navbar() {
                                                                                     onClick={() => toggleSubSubMenu(subSubItem.label)}
                                                                                     className={styles.dropdownButton}
                                                                                 >
-                                                                                    {subSubItem.label} <ChevronDownIcon className={styles.chevronIcon} />
+                                                                                    {subSubItem.label} <ChevronDownIcon className={`${styles.chevronIcon} ${openSubSubMenu === subSubItem.label ? styles.chevronRotated : ''}`} />
                                                                                 </button>
                                                                                 {openSubSubMenu === subSubItem.label && (
-                                                                                    <ul className={styles.mobileDropdownSubList}>
+                                                                                    <ul className={`${styles.mobileDropdownSubList} ${styles.dropdownOpen}`}>
                                                                                         {subSubItem.children!.map((deepItem) => (
                                                                                             <li key={deepItem.label}>
                                                                                                 {deepItem.enabled !== false && deepItem.url ? (
@@ -357,12 +357,12 @@ export default function Navbar() {
                             onClick={toggleMobileMenu}
                             aria-label="Toggle mobile menu"
                         >
-                            {isMobileMenuOpen ? "✕" : "☰"}
+                            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
                         </button>
                     </div>
 
                     {isMobileMenuOpen && (
-                        <div className={styles.mobileMenuContainer}>
+                        <div className={`${styles.mobileMenuContainer} ${styles.mobileMenuOpen}`}>
                             {renderMobileMenuItems(navItems, 0)}
                         </div>
                     )}

@@ -14,5 +14,9 @@
   "scoreboard": {
     "order": 4,
     "display_name": "Scoreboard"
+  },
+  "contest-results": {
+    "order": 5,
+    "display_name": "Contest Results"
   }
 }

@@ -2,7 +2,7 @@
 
 # Stop the application
 echo "Stopping the application on PM2..."
-if pm2 stop icpc-apac-2025; then
+if pm2 stop icpc-apac; then
     echo "Application stopped successfully."
 else
     echo "Failed to stop the application."
@@ -27,6 +27,15 @@ else
     echo ".env has been copied from .env.example. Don't forget to change the values later."
 fi
 
+# Install dependencies
+echo "Installing dependencies..."
+if npm install; then
+    echo "Dependencies installed successfully."
+else
+    echo "Failed to install dependencies."
+    exit 1
+fi
+
 # Build the application
 echo "Building the application..."
 if npm run build; then
@@ -38,7 +47,7 @@ fi
 
 # Start the application
 echo "Starting the application..."
-if pm2 start icpc-apac-2025; then
+if pm2 start icpc-apac; then
     echo "Application started successfully."
 else
     echo "Failed to start the application."
@@ -54,4 +63,4 @@ else
     exit 1
 fi
 
-echo "icpc-apac-2025 is ready. Visit https://apac.icpc.global to see the latest deployment."
+echo "icpc-apac is ready. Visit https://apac.icpc.global to see the latest deployment."

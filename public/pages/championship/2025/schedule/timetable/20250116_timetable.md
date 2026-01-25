@@ -223,5 +223,3 @@ The rough breakdown of the contest dates are:
     <td>USS &rightarrow; Hotel <br><br> Hotel &rightarrow; Changi</td>
   </tr>
 </table>
-
-

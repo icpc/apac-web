@@ -133,7 +133,7 @@
 }
 
 .mobileMenuContainer {
-    @apply md:hidden h-auto absolute top-full left-0 w-screen rounded-b-3xl;
+    @apply md:hidden h-auto absolute top-full left-0 w-screen rounded-b-3xl transition-all duration-200 ease-in-out;
 }
 
 .mobileMenuList {
@@ -141,7 +141,7 @@
 }
 
 .mobileMenuLink {
-    @apply block px-4 py-2;
+    @apply block px-4 py-2 w-full;
 }
 
 .mobileMenuLink:hover {
@@ -157,15 +157,15 @@
 }
 
 .dropdownButton {
-    @apply block px-4 py-2 w-full text-left cursor-pointer;
+    @apply flex items-center justify-between px-4 py-2 w-full text-left cursor-pointer transition-colors duration-150;
 }
 
 .mobileDropdownList {
-    @apply ml-4 mt-2;
+    @apply ml-4 mt-2 space-y-1 overflow-hidden transition-all duration-200 ease-in-out;
 }
 
 .mobileDropdownSubList {
-    @apply ml-4;
+    @apply ml-4 overflow-hidden transition-all duration-200 ease-in-out;
 }
 
 .navList>li:first-child {
@@ -201,5 +201,21 @@
 
 .yearTriggerBtn {
     @apply flex items-center gap-2 px-4 py-2 text-xl font-bold my-auto;
+}
+
+.chevronIcon {
+    @apply w-4 h-4 transition-all duration-200 ease-in-out flex-shrink-0 ml-2;
+}
+
+.chevronRotated {
+    @apply rotate-180;
+}
+
+.dropdownOpen {
+    animation: slideDown 0.2s ease-out;
+}
+
+.mobileMenuOpen {
+    animation: slideDown 0.2s ease-out;
 }
 

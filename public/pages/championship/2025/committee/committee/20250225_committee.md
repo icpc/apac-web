@@ -1,9 +1,3 @@
----
-title: "Committee"
-coverImage: "/assets/about/committee.jpg"
-excerpt: "The organizing committee for the competition"
----
-
 # Organizing Committees
 
 <table>

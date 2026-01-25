@@ -3,7 +3,7 @@ import { ICPC_APAC } from "@/lib/constants";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import cn from "classnames";
-import { ThemeProvider } from "@/app/_components/pages/theme-context";
+import { ThemeProvider } from "@/components/common/theme-context";
 
 import "./globals.css";
 import Navbar from "./_components/pages/navbar";
@@ -32,6 +32,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" type="image/png" href="/favicon/favicon-96x96.png" sizes="96x96" />
         <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
         <link rel="shortcut icon" href="/favicon.ico" />

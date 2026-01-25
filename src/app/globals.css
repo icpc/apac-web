@@ -2,6 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+* {
+  box-sizing: border-box;
+}
+
 blockquote {
     @apply my-6 text-justify;
 }
@@ -35,6 +47,10 @@ a:hover .tooltip {
     @apply relative opacity-30 hover:opacity-100;
 }
 
+.header-link:hover {
+    @apply underline bg-text-links-highlight text-text-links-hover;
+}
+
 .katex-html {
     @apply hidden;
 }
@@ -61,4 +77,12 @@ a:hover .tooltip {
 
 ::selection {
     @apply bg-primaryAccent text-black;
+}
+
+figure {
+    @apply flex flex-col items-center justify-center pt-4;
+}
+
+figcaption {
+    @apply text-sm italic text-gray-600 dark:text-gray-400 mt-2;
 }

@@ -1,0 +1,123 @@
+
+
+
+[
+  {
+    "ICPC Global Sponsors": [
+      {
+        "Huawei": {
+        "size": 4,
+          "filename": "/assets/sponsors/huawei-logo.png"
+        }
+      },
+      {
+        "Jane Street": {
+          "size": 8,
+          "filename": "/assets/sponsors/jane-street-logo.png"
+        }
+      }
+    ]
+  },
+  {
+    "ICPC Global Sponsor Programming Tools": [
+      {
+        "Jetbrains": {
+          "size": 8,
+          "filename": "/assets/sponsors/jetbrains-logo.png"
+        }
+      }
+    ]
+  },
+  {
+    "Gold Sponsors": [
+      {
+        "Viettel": {
+          "size": 6,
+          "filename": "/assets/sponsors/viettel-logo.png"
+        }
+      },
+      {
+        "Samsung": {
+          "size": 6,
+          "filename": "/assets/sponsors/samsung-logo.png"
+        }
+      }
+    ]
+  },
+  {
+    "Silver Sponsors": [
+      {
+        "Pendle": {
+          "size": 6,
+          "filename": "/assets/sponsors/pendle-logo.png"
+        }
+      },
+      {
+        "Phygital Labs": {
+          "size": 8,
+          "filename": "/assets/sponsors/phygital-labs-logo.png"
+        }
+      },
+      {
+        "FPT": {
+          "size": 4,
+          "filename": "/assets/sponsors/fpt-logo.png"
+        }
+      }
+    ]
+  },
+  {
+    "Bronze Sponsors": [
+      {
+        "Sky Mavis": {
+          "size": 5,
+          "filename": "/assets/sponsors/sky-mavis-logo.png"
+        }
+      }
+    ]
+  },
+  {
+    "Sponsors": [
+      {
+        "Cohost AI": {
+          "size": 4,
+          "filename": "/assets/sponsors/cohost-ai-logo.png"
+        }
+      },
+      {
+        "Dagoras": {
+          "size": 3,
+          "filename": "/assets/sponsors/dagoras-logo.png"
+        }
+      },
+      {
+        "Intelligent Integration": {
+          "size": 5,
+          "filename": "/assets/sponsors/intelligent-integration-logo.png"
+        }
+      },
+      {
+        "VNPT Technology": {
+          "size": 6,
+          "filename": "/assets/sponsors/vnpt-technology-logo.png"
+        }
+      }
+    ]
+  },
+  {
+    "PC Sponsors": [
+      {
+        "Thanh Giong": {
+          "size": 4,
+          "filename": "/assets/sponsors/thanh-giong-logo.png"
+        }
+      },
+      {
+        "May Chu Ha Noi": {
+          "size": 3,
+          "filename": "/assets/sponsors/may-chu-ha-noi-logo.png"
+        }
+      }
+    ]
+  }
+]

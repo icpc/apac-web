@@ -3,7 +3,7 @@
 
 [
   {
-    "ICPC Global Sponsors (2025)": [
+    "ICPC Global Sponsors": [
       {
         "Huawei": {
         "size": 4,
@@ -25,7 +25,7 @@
     ]
   },
   {
-    "ICPC Global Sponsor Programming Tools (2025)": [
+    "ICPC Global Sponsor Programming Tools": [
       {
         "Jetbrains": {
           "size": 8,
@@ -38,19 +38,19 @@
     "Local Sponsors": [
       {
         "Optiver": {
-          "size": 8,
+          "size": 6,
           "filename": "/assets/sponsors/optiver-logo.png"
         }
       },
       {
         "HRT": {
-          "size": 4,
+          "size": 3,
           "filename": "/assets/sponsors/hrt-logo.png"
         }
       },
       {
         "Citadel": {
-          "size": 20,
+          "size": 15,
           "filename": "/assets/sponsors/citadel-logo.png"
         }
       }

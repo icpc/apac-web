@@ -1,0 +1,14 @@
+{
+  "registration": {
+    "order": 1,
+    "display_name": "Registration"
+  },
+  "contest-env": {
+    "order": 2,
+    "display_name": "Contest Environment"
+  },
+  "contest-rules": {
+    "order": 3,
+    "display_name": "Contest Rules"
+  }
+}

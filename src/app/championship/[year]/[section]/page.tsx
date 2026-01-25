@@ -1,50 +1,23 @@
 import { promises as fs } from 'fs';
 import path from 'path';
 import { notFound } from 'next/navigation';
-import { marked } from 'marked';
-import Divider from '@/app/_components/Divider';
-import { Content } from '@/app/_components/pages/content';
 import { AVAILABLE_YEARS } from "@/lib/constants";
-import { SidebarNavigation } from './sidebar-navigation';
-
-// Configure marked options
-marked.setOptions({
-  gfm: true,
-  breaks: true,
-});
+import ChampionshipClient from './championship-client';
+import modifyHtmlContent from '@/lib/modify-html-content';
+import { marked } from 'marked';
+import { isValid } from 'date-fns';
 
 // Types
 interface SubSectionContent {
   title: string;
-  content: string;
+  content: string; // Always refers to the latest version
   lastUpdated?: string;
   directoryName?: string;
+  previousVersions?: Array<{
+    date: string;
+    content: string;
+  }>;
 }
-
-interface Heading {
-  text: string;
-  slug: string;
-  depth: number;
-}
-
-// Utility functions
-const slugify = (text: string): string => {
-  return text
-    .toLowerCase()
-    .replace(/\s+/g, '-')
-    .replace(/[^\w\-]+/g, '');
-};
-
-const extractHeadings = (markdown: string): Heading[] => {
-  const tokens = marked.lexer(markdown);
-  return tokens
-    .filter((token: any) => token.type === 'heading' && (token.depth === 1 || token.depth === 2) && typeof token.text === 'string')
-    .map((token: any) => ({
-      text: token.text,
-      slug: slugify(token.text),
-      depth: token.depth
-    }));
-};
 
 const formatDate = (dateStr: string): string => {
   return `${dateStr.substring(0,4)}-${dateStr.substring(4,6)}-${dateStr.substring(6,8)}`;
@@ -66,7 +39,7 @@ const getChampionshipSections = async (year: string): Promise<string[]> => {
 };
 
 const getSectionSubfolderContents = async (year: string, section: string): Promise<SubSectionContent[]> => {
-  const sectionPath = path.join(process.cwd(), 'public', 'pages', 'championship', year, section);
+  const sectionPath = path.resolve(process.cwd(), 'public', path.join('pages', 'championship', year, section));
   const subfolderContents: SubSectionContent[] = [];
   const YYYYMMDD_REGEX = /^\d{8}_.*\.md$/i;
 
@@ -100,14 +73,27 @@ const getSectionSubfolderContents = async (year: string, section: string): Promi
           const newestFile = markdownFiles[0];
           const filePath = path.join(subfolderPath, newestFile.name);
           const content = await fs.readFile(filePath, 'utf8');
+          
+          // Collect previous versions
+          const previousVersions = await Promise.all(
+            markdownFiles.slice(1).map(async (prevFile) => ({
+              date: formatDate(prevFile.date),
+              content: await fs.readFile(path.join(subfolderPath, prevFile.name), 'utf8')
+            }))
+          );
+          
           // Use display_name from order.json if available, else fallback
           const title = orderConfig[subfolderName]?.display_name ||
             subfolderName.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+          const dateStr = newestFile.date;
+          const isValidDate = dateStr !== '00000000';
+
           subfolderContents.push({
             title,
             content,
-            lastUpdated: formatDate(newestFile.date),
-            directoryName: subfolderName
+            lastUpdated: isValidDate ? formatDate(dateStr) : undefined,
+            directoryName: subfolderName,
+            previousVersions: previousVersions.length > 0 && isValidDate ? previousVersions : undefined
           });
         }
       } catch (err) {
@@ -125,59 +111,11 @@ const getSectionSubfolderContents = async (year: string, section: string): Promi
   }
 };
 
-const ContentSection = ({ 
-  items, 
-  showSubfolderTitles 
-}: { 
-  items: SubSectionContent[], 
-  showSubfolderTitles: boolean 
-}) => {
-  if (!showSubfolderTitles) {
-    const item = items[0];
-    let htmlContent = marked.parse(item.content || '') as string;
-    
-    // Add IDs to headings for anchor navigation
-    htmlContent = htmlContent.replace(/<h([12])>(.*?)<\/h\1>/g, (match, level, content) => {
-      const slug = slugify(content);
-      return `<h${level} id="${slug}" class="scroll-mt-32">${content}</h${level}>`;
-    });
-
-    return (
-      <section className="mb-12">
-        <Content content={htmlContent} />
-      </section>
-    );
-  }
-
-  return (
-    <>
-      {items.map((item, index) => {
-        const htmlContent = marked.parse(item.content || '') as string;
-        const slug = slugify(item.title);
-        
-        return (
-          <section key={index} id={slug}>
-            <div className="mt-8">
-              <Divider />
-            </div>
-            <div className="flex justify-between items-center mb-2">
-              <h2>{item.title}</h2>
-              {item.lastUpdated && (
-                <p className="text-sm text-gray-500 dark:text-gray-400">
-                  Last updated on {new Date(item.lastUpdated).toLocaleDateString('en-US', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric'
-                  })}
-                </p>
-              )}
-            </div>
-            <Content content={htmlContent} />
-          </section>
-        );
-      })}
-    </>
-  );
+const slugify = (text: string): string => {
+  return text
+    .toLowerCase()
+    .replace(/\s+/g, '-')
+    .replace(/[^\w\-]+/g, '');
 };
 
 // Main page component
@@ -196,22 +134,16 @@ export default async function ChampionshipPage({ params }: { params: Promise<{ y
   }
 
   const pageTopTitle = section.charAt(0).toUpperCase() + section.slice(1);
+  const pageTopSlug = slugify(section);
   const showSubfolderTitles = subfolderContentsArray.length > 1;
 
   return (
-    <div className="container mx-auto px-4">
-      <div className="flex flex-col md:flex-row gap-8">
-        <SidebarNavigation items={subfolderContentsArray} year={year} />
-        <main className="flex-1">
-          <div className="mb-8 mt-10">
-            <h1 className="text-4xl font-bold">{pageTopTitle}</h1>
-          </div>
-          <ContentSection 
-            items={subfolderContentsArray} 
-            showSubfolderTitles={showSubfolderTitles} 
-          />
-        </main>
-      </div>
-    </div>
+    <ChampionshipClient 
+      subfolderContentsArray={subfolderContentsArray}
+      year={year}
+      pageTopTitle={pageTopTitle}
+      pageTopSlug={pageTopSlug}
+      showSubfolderTitles={showSubfolderTitles}
+    />
   );
 }

@@ -2,17 +2,17 @@ ICPC Asia Pacific Championship 2025 Approved Hotels (transportation back-and-for
 
 ## RELC International Hotel
 
-![RELC International Hotel](/assets/accomodations/relc-international-hotel.jpeg)
+![RELC International Hotel](/assets/championship/2025/accomodations/relc-international-hotel.jpeg)
 
 - **Address**: 30 Orange Grove Road (Off Orchard Road), Singapore 258352
 - **Phone**: (+65) 6885 7888
 - **Email**: [IHReservation@relc.org.sg](mailto:IHReservation@relc.org.sg)
 - **Website**: [www.relcih.com.sg](https://www.relcih.com.sg/en)
-- **Booking**: Please download this [booking form](/assets/accomodations/RELC_Reservation_Form-ICPC_APAC_-_27_February_to_2_March_2025.pdf) and email the filled-in form directly to the Reservation department at [IHReservation@relc.org.sg](mailto:IHReservation@relc.org.sg) before 6 Feb 2025
+- **Booking**: Please download this [booking form](/assets/championship/2025/RELC_Reservation_Form-ICPC_APAC_-_27_February_to_2_March_2025.pdf) and email the filled-in form directly to the Reservation department at [IHReservation@relc.org.sg](mailto:IHReservation@relc.org.sg) before 6 Feb 2025
 
 ## Park Avenue Rochester Hotel
 
-![Park Avenue Rochester Hotel](/assets/accomodations/park-avenue-rochester-hotel.jpg)
+![Park Avenue Rochester Hotel](/assets/championship/2025/accomodations/park-avenue-rochester-hotel.jpg)
 
 - **Address**: 31 Rochester Drive, Singapore 138637
 - **Phone**: (+65) 6808 8600

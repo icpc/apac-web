@@ -1,11 +1,11 @@
-import ChampionshipLayout from '@/app/_components/ChampionshipLayout';
+import ChampionshipLayout from '@/app/_components/championship-layout';
 
 export default async function Layout({
   children,
   params,
 }: {
   children: React.ReactNode;
-  params: { year: string };
+  params: Promise<{ year: string }>; 
 }) {
   const { year } = await params;
 
