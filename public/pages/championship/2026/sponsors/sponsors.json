@@ -1,0 +1,102 @@
+[
+  {
+    "ICPC Global Sponsors": [
+      {
+        "Jane Street": {
+          "size": 8,
+          "filename": "/assets/sponsors/jane-street-logo.png"
+        }
+      },
+      {
+        "Jump Trading": {
+          "size": 6,
+          "filename": "/assets/sponsors/jump-trading-logo.png"
+        }
+      },
+      {
+        "Jetbrains": {
+          "size": 10,
+          "filename": "/assets/sponsors/jetbrains-logo.png"
+        }
+      },
+      {
+        "HRT": {
+          "size": 5,
+          "filename": "/assets/sponsors/hrt-logo.svg"
+        }
+      }
+    ]
+  },
+  {
+    "Organizers": [
+      {
+        "Association of Taiwan Computer Programming Contest": {
+          "size": 6,
+          "filename": "/assets/sponsors/TCPC-logo.png"
+        }
+      },
+      {
+        "National Taipei University of Business": {
+          "size": 5,
+          "filename": "/assets/sponsors/ntub-logo.png"
+        }
+      }
+    ]
+  },
+  {
+    "Co-Organizers": [
+      {
+        "Taoyuan City Government": {
+           "size": 5,
+	   "filename": "/assets/sponsors/taoyuan-city.png"
+	}
+      },
+      {
+        "Association of Algorithms and Computation Theory": {
+           "size": 4,
+	   "filename": "/assets/sponsors/AACT_logo.jpg"
+	}
+      },
+      {
+        "Computer Society of The Republic of China": {
+           "size": 5,
+	   "filename": "/assets/sponsors/CSROC_logo.jpg"
+	}
+      },
+      {
+        "Information Technology Center, Department of Computer Science, National Yang Ming Chiao Tung University": {
+           "size": 4.5,
+	   "filename": "/assets/sponsors/nycu-csit.svg"
+	}
+      }
+    ]
+  },
+  {
+    "Local Sponsors": [
+      {
+        "Chunghwa Telecom": {
+           "size": 5,
+	   "filename": "/assets/sponsors/CHT_logo.png"
+        }
+      },
+      {
+	"Galaxy Software Service": {
+           "size": 5,
+	   "filename": "/assets/sponsors/gss_logo.png"
+        }
+      },
+      {
+	"National Center for High-performance Computing": {
+           "size": 7,
+	   "filename": "/assets/sponsors/NCHC_logo.png"
+        }
+      },
+      {
+        "Micare Production": {
+           "size": 4,
+	   "filename": "/assets/sponsors/Micare_logo.svg"
+        }
+      }
+    ]
+  }
+]

@@ -1,0 +1,3 @@
+- [Contest Problemset](/assets/championship/2026/problemset.pdf)
+- [Contest Problemset Analysis](/assets/championship/2026/problemset-analysis.pdf)
+- [Test Data](https://github.com/icpc-apac-org/icpc-apc-problem-archive/tree/master/2026)

@@ -31,6 +31,7 @@ const defaultNavigationItems = [
   { label: 'Resources', path: 'resources' },
   { label: 'Teams', path: 'teams' },
   { label: 'Schedule', path: 'schedule' },
+  { label: 'Venue', path: 'venue' },
   { label: 'Travel', path: 'travel' },
   { label: 'Committee', path: 'committee' }
 ];

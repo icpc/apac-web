@@ -5,4 +5,4 @@ export const HOME_OG_IMAGE_URL =
 
 export const ICPC_APAC = "The ICPC Asia Pacific Championship"
 
-export const AVAILABLE_YEARS = ['2025', '2024'];
+export const AVAILABLE_YEARS = ['2026', '2025', '2024'];

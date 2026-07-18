@@ -1,0 +1,1 @@
+The official livestream playlist for this Championship is available here: https://www.youtube.com/playlist?list=PLaSPkFE9cpGR1CzyFXhRLYmzS3Blvodn3

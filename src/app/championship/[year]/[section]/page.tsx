@@ -1,115 +1,7 @@
-import { promises as fs } from 'fs';
-import path from 'path';
 import { notFound } from 'next/navigation';
 import { AVAILABLE_YEARS } from "@/lib/constants";
 import ChampionshipClient from './championship-client';
-import modifyHtmlContent from '@/lib/modify-html-content';
-import { marked } from 'marked';
-import { isValid } from 'date-fns';
-
-// Types
-interface SubSectionContent {
-  title: string;
-  content: string; // Always refers to the latest version
-  lastUpdated?: string;
-  directoryName?: string;
-  previousVersions?: Array<{
-    date: string;
-    content: string;
-  }>;
-}
-
-const formatDate = (dateStr: string): string => {
-  return `${dateStr.substring(0,4)}-${dateStr.substring(4,6)}-${dateStr.substring(6,8)}`;
-};
-
-// File system operations
-const getChampionshipSections = async (year: string): Promise<string[]> => {
-  const yearPath = path.join(process.cwd(), 'public', 'pages', 'championship', year);
-  try {
-    const entries = await fs.readdir(yearPath, { withFileTypes: true });
-    return entries
-      .filter(dirent => dirent.isDirectory())
-      .map(dirent => dirent.name)
-      .sort();
-  } catch (error) {
-    console.error(`Error reading directory: ${yearPath}`, error);
-    return [];
-  }
-};
-
-const getSectionSubfolderContents = async (year: string, section: string): Promise<SubSectionContent[]> => {
-  const sectionPath = path.resolve(process.cwd(), 'public', path.join('pages', 'championship', year, section));
-  const subfolderContents: SubSectionContent[] = [];
-  const YYYYMMDD_REGEX = /^\d{8}_.*\.md$/i;
-
-  // Try to read order.json for display_name mapping
-  let orderConfig: Record<string, { display_name?: string, order?: number }> = {};
-  try {
-    const orderJsonPath = path.join(sectionPath, 'order.json');
-    const orderJson = await fs.readFile(orderJsonPath, 'utf8');
-    orderConfig = JSON.parse(orderJson);
-  } catch (e) {
-    // order.json not found or invalid, fallback to default
-    orderConfig = {};
-  }
-
-  try {
-    const subfolders = await fs.readdir(sectionPath, { withFileTypes: true });
-    for (const dirent of subfolders) {
-      if (!dirent.isDirectory()) continue;
-      const subfolderName = dirent.name;
-      const subfolderPath = path.join(sectionPath, subfolderName);
-      try {
-        const filesInSubfolder = await fs.readdir(subfolderPath);
-        const markdownFiles = filesInSubfolder
-          .map(fileName => {
-            const match = fileName.match(YYYYMMDD_REGEX);
-            return match ? { name: fileName, date: match[0].slice(0,8) } : null;
-          })
-          .filter((file): file is { name: string; date: string } => file !== null);
-        if (markdownFiles.length > 0) {
-          markdownFiles.sort((a, b) => b.date.localeCompare(a.date));
-          const newestFile = markdownFiles[0];
-          const filePath = path.join(subfolderPath, newestFile.name);
-          const content = await fs.readFile(filePath, 'utf8');
-          
-          // Collect previous versions
-          const previousVersions = await Promise.all(
-            markdownFiles.slice(1).map(async (prevFile) => ({
-              date: formatDate(prevFile.date),
-              content: await fs.readFile(path.join(subfolderPath, prevFile.name), 'utf8')
-            }))
-          );
-          
-          // Use display_name from order.json if available, else fallback
-          const title = orderConfig[subfolderName]?.display_name ||
-            subfolderName.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
-          const dateStr = newestFile.date;
-          const isValidDate = dateStr !== '00000000';
-
-          subfolderContents.push({
-            title,
-            content,
-            lastUpdated: isValidDate ? formatDate(dateStr) : undefined,
-            directoryName: subfolderName,
-            previousVersions: previousVersions.length > 0 && isValidDate ? previousVersions : undefined
-          });
-        }
-      } catch (err) {
-        console.warn(`Error processing subfolder ${year}/${section}/${subfolderName}:`, err);
-      }
-    }
-    return subfolderContents.sort((a, b) => {
-      const orderA = orderConfig[a.directoryName!]?.order ?? 999;
-      const orderB = orderConfig[b.directoryName!]?.order ?? 999;
-      return orderA - orderB;
-    });
-  } catch (error) {
-    console.error(`Error reading section directory: ${sectionPath}`, error);
-    return [];
-  }
-};
+import { getChampionshipSections, getSectionSubfolderContents } from "@/lib/championship-data";
 
 const slugify = (text: string): string => {
   return text
@@ -117,6 +9,8 @@ const slugify = (text: string): string => {
     .replace(/\s+/g, '-')
     .replace(/[^\w\-]+/g, '');
 };
+
+export const dynamic = "force-static";
 
 // Main page component
 export default async function ChampionshipPage({ params }: { params: Promise<{ year: string, section: string }> }) {
@@ -146,4 +40,13 @@ export default async function ChampionshipPage({ params }: { params: Promise<{ y
       showSubfolderTitles={showSubfolderTitles}
     />
   );
+}
+
+export async function generateStaticParams() {
+  const params: { year: string; section: string }[] = [];
+  for (const year of AVAILABLE_YEARS) {
+    const sections = await getChampionshipSections(year);
+    params.push(...sections.map((section) => ({ year, section })));
+  }
+  return params;
 }

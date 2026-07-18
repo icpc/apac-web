@@ -12,6 +12,7 @@ A modern, responsive website built with Next.js for the ICPC Asia Pacific Champi
 - [Components](#components)
 - [Assets Management](#assets-management)
 - [Content Management](#content-management)
+- [URL Shortener](#url-shortener)
 - [Deployment](#deployment)
 
 ## Prerequisites
@@ -194,3 +195,18 @@ The content guide covers:
 - **Markdown files**: Use date prefix format `YYYYMMDD_filename.md`
 - **Ordering**: Controlled by `order.json` files in each directory
 - **Sponsors**: Defined in `public/pages/championship/{year}/sponsors/sponsors.json`
+
+## URL Shortener
+
+The website supports a simple static URL shortener. This is implemented via a client-side check in the 404 page, which works for both development and static builds (`output: export`).
+
+### Adding a New Shortlink
+
+1. Open `src/shortlinks.json`.
+2. Add a new key-value pair where the key is the desired slug/path and the value is the target URL.
+
+```json
+{
+  "livestreams2026": "https://www.youtube.com/playlist?list=PLaSPkFE9cpGR1CzyFXhRLYmzS3Blvodn3"
+}
+```

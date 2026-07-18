@@ -25,6 +25,7 @@ export const navItems: MenuItem[] = [
             { label: "Resources", url: "/championship/latest/resources" },
             { label: "Teams", url: "/championship/latest/teams" },
             { label: "Schedule", url: "/championship/latest/schedule" },
+            { label: "Venue", url: "/championship/latest/venue" },
             { label: "Travel", url: "/championship/latest/travel" },
             { label: "Committee", url: "/championship/latest/committee" }
         ],

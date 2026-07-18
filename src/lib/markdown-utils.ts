@@ -1,5 +1,19 @@
 import { marked } from 'marked';
+import markedKatex from "marked-katex-extension";
+import { gfmHeadingId } from "marked-gfm-heading-id";
 import { modifyHtmlContent } from '@/lib/modify-html-content';
+
+marked.setOptions({
+    gfm: true,
+    breaks: true,
+});
+
+const markedKatexOptions = {
+    throwOnError: false
+};
+
+marked.use(gfmHeadingId());
+marked.use(markedKatex(markedKatexOptions));
 
 export function processMarkdownFiles(parsedFiles: Array<{ data: any, content: string, filename: string }>) {
     return parsedFiles.map(({ data, content, filename }) => {

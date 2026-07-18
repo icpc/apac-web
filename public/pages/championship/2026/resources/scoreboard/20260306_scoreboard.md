@@ -1,0 +1,1 @@
+See the live scoreboard at https://icpcapac.firebaseapp.com/standings/.

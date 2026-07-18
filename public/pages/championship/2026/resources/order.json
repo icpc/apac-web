@@ -1,0 +1,22 @@
+{
+  "livestream": {
+    "order": 1,
+    "display_name": "Live Stream"
+  },
+  "mirror": {
+    "order": 2,
+    "display_name": "Mirror"
+  },
+  "problemset": {
+    "order": 3,
+    "display_name": "Problemset"
+  },
+  "scoreboard": {
+    "order": 4,
+    "display_name": "Scoreboard"
+  },
+  "contest-results": {
+    "order": 5,
+    "display_name": "Contest Results"
+  }
+}

@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import { AVAILABLE_YEARS } from "@/lib/constants";
 import Divider from '@/app/_components/divider';
 import { SidebarNavigation } from '../[section]/sidebar-navigation';
+import { getChampionshipSections } from '@/lib/championship-data';
 
 
 // Types
@@ -129,6 +130,8 @@ const ChangelogPage = ({ entries, year }: { entries: ChangelogEntry[], year: str
   </div>
 );
 
+export const dynamic = "force-static";
+
 // Main page component
 export default async function ChangelogsPage({ params }: { params: Promise<{ year: string }> }) {
   const { year } = await params;
@@ -139,4 +142,15 @@ export default async function ChangelogsPage({ params }: { params: Promise<{ yea
 
   const changelogEntries = await getAllChangelogFiles(year);
   return <ChangelogPage entries={changelogEntries} year={year} />;
-} 
+}
+
+export async function generateStaticParams() {
+  const params: { year: string }[] = [];
+  for (const year of AVAILABLE_YEARS) {
+    const sections = await getChampionshipSections(year);
+    if (sections.length > 0) {
+      params.push({ year });
+    }
+  }
+  return params;
+}
