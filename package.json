@@ -38,13 +38,16 @@
     "marked": "^15.0.3",
     "marked-gfm-heading-id": "^4.1.1",
     "marked-katex-extension": "^5.1.4",
-    "next": "^15.3.8",
+    "next": "^15.5.20",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "remark": "^15.0.1",
     "remark-html": "^16.0.1",
     "tailwind-merge": "^2.6.0",
     "tw-animate-css": "^1.3.2"
+  },
+  "overrides": {
+    "postcss": "^8.5.10"
   },
   "devDependencies": {
     "@types/node": "^20.14.8",
