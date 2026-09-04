@@ -30,9 +30,9 @@ export default async function Index() {
                   style={{
                     backgroundImage,
                     backgroundColor,
-                    backgroundSize: "cover",
-                    backgroundPosition: "calc(50% - 2rem) center",
-                    transform: "scale(1.5)",
+                    backgroundSize: "contain",
+                    backgroundPosition: "calc(20% - 10rem) center",
+                    backgroundRepeat: "no-repeat",
                   }}
                 />
               )}
