@@ -31,7 +31,7 @@ export default async function Index() {
                     backgroundImage,
                     backgroundColor,
                     backgroundSize: "contain",
-                    backgroundPosition: "calc(20% - 10rem) center",
+                    backgroundPosition: "calc(50% + 10rem) center",
                     backgroundRepeat: "no-repeat",
                   }}
                 />
