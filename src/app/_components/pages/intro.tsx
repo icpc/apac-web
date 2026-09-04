@@ -7,6 +7,7 @@ import { useTheme } from "@/components/common/theme-context";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { SponsorsCarousel } from "./sponsors-carousel";
+import { getAssetUrl } from "@/lib/base-path";
 
 export function Intro() {
   const { theme } = useTheme();
@@ -21,7 +22,7 @@ export function Intro() {
             var(--intro-gradient-start) 20%, 
             var(--intro-gradient-end) 100%, 
             transparent), 
-            url('/assets/home/banner.jpg')`,
+            url('${getAssetUrl("/assets/home/banner.jpg")}')`,
         }}
       >
         <div className="lg:row-span-2"></div>
@@ -40,7 +41,7 @@ export function Intro() {
               </Button>
             </div> */}
           </div>
-          <img src={`/assets/icpc-apac-logo/icpc-apac-logo-new-solid-${dark ? "white" : "blue"}.png`} alt="ICPC APAC Logo" className="w-2/3 max-w-[300px] pb-12 md:w-1/3 order-1 lg:order-2 lg:pb-0" />
+          <img src={getAssetUrl(`/assets/icpc-apac-logo/icpc-apac-logo-new-solid-${dark ? "white" : "blue"}.png`)} alt="ICPC APAC Logo" className="w-2/3 max-w-[300px] pb-12 md:w-1/3 order-1 lg:order-2 lg:pb-0" />
         </WideContainer>
         <div className="lg:row-span-1"></div>
         <div className="my-2 lg:row-span-3 w-full px-4 lg:px-8">

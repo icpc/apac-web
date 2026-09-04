@@ -289,7 +289,7 @@ const SubfolderContent = ({ item, showTitle }: SubfolderContentProps) => {
           </>
         )}
         <div className="mt-6 sm:mt-0">
-          <Content content={diffHtml} />
+          <Content content={modifyHtmlContent(diffHtml)} />
         </div>
       </section>
     );

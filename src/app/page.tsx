@@ -2,6 +2,7 @@ import Container from "@/components/common/container";
 import { Intro } from "@/app/_components/pages/intro";
 import { Content } from "@/app/_components/pages/content";
 import { getMarkdownContent } from "@/lib/get-markdown-content";
+import { getAssetUrl } from "@/lib/base-path";
 
 export const dynamic = "force-static";
 
@@ -17,8 +18,7 @@ export default async function Index() {
           const processedCoverImage = content.coverImage ? content.coverImage.replace("[theme]", activeTheme) : "";
           const hasCoverImage = Boolean(processedCoverImage);
           const isClassBased = processedCoverImage.includes("bg-");
-          const backgroundImage = !isClassBased && processedCoverImage.startsWith("/assets") ? `url(${processedCoverImage})` : undefined;
-
+          const backgroundImage = !isClassBased && processedCoverImage.startsWith("/assets") ? `url('${getAssetUrl(processedCoverImage)}')` : undefined;
           const backgroundColor =
             !isClassBased && (processedCoverImage.startsWith("rgba") || /^#[0-9A-Fa-f]{6}$/.test(processedCoverImage)) ? processedCoverImage : undefined;
 

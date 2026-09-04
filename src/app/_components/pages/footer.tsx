@@ -4,8 +4,8 @@ import React from "react";
 import { ICPC_APAC } from "@/lib/constants";
 import WideContainer from "@/components/common/wide-container";
 import styles from "@/app/_styles/footer-styles.module.css";
-
 import { Card, CardContent } from "@/components/ui/card";
+import { getAssetUrl } from "@/lib/base-path";
 
 interface SponsorInfo { filename: string; size: number; }
 interface SponsorGroup { [name: string]: SponsorInfo }
@@ -14,7 +14,7 @@ export function Footer() {
   const [sponsors, setSponsors] = React.useState<SponsorGroup[] | null>(null);
 
   React.useEffect(() => {
-    fetch('/pages/championship/current-global-sponsors.json')
+    fetch(getAssetUrl('/pages/championship/current-global-sponsors.json'))
       .then(res => res.json())
       .then((data) => setSponsors(data))
       .catch(console.error);
@@ -29,7 +29,7 @@ export function Footer() {
           <Card className={`${styles.footerDescription}`}>
             <CardContent className="p-6">
               <img
-                src="/assets/icpc-apac-logo/icpc-apac-logo-new-solid-blue.png"
+                src={getAssetUrl("/assets/icpc-apac-logo/icpc-apac-logo-new-solid-blue.png")}
                 alt={`${ICPC_APAC} Logo`}
                 className={styles.footerLogo}
               />
@@ -70,7 +70,7 @@ export function Footer() {
                     className={styles.footerLink}
                   >
                     <img
-                      src="/favicon/instagram-logo.png"
+                      src={getAssetUrl("/favicon/instagram-logo.png")}
                       alt="Instagram Logo"
                       className="inline-block w-5 h-5 mr-1"
                     />
@@ -94,7 +94,7 @@ export function Footer() {
                   return (
                     <img
                       key={name}
-                      src={logo.filename}
+                      src={getAssetUrl(logo.filename)}
                       alt={name}
                       style={{ width: `${logo.size * 1.6}rem` }}
                       title={name}

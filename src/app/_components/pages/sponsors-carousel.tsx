@@ -2,15 +2,16 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
+import { getAssetUrl } from '@/lib/base-path';
 
 // Preload images function
 const preloadImages = (sponsors: Sponsor[]) => {
   if (typeof window === 'undefined') return;
-  
+
   sponsors.forEach(sponsor => {
     const [_, { filename }] = Object.entries(sponsor)[0];
     const img = new window.Image();
-    img.src = filename;
+    img.src = getAssetUrl(filename);
   });
 };
 
@@ -52,16 +53,16 @@ const useCarousel = <T,>(items: T[], visibleCount = 4, scrollSpeed = 1) => {
 
       // Calculate new offset (continuous right movement)
       currentOffset += Math.floor(scrollSpeed * delta) / 8;
-      
+
       // Reset after the first item of the 2nd array has fully shown
       const resetPoint = singleSetWidth;
-      
+
       if (currentOffset >= resetPoint) {
         currentOffset = -8;
         setIsResetting(true);
         setTimeout(() => setIsResetting(false), 150); // Re-enable transition after brief moment
       }
-      
+
       setOffset(currentOffset);
       animationFrameId = requestAnimationFrame(animate);
     };
@@ -102,8 +103,8 @@ interface SponsorsCarouselProps {
 }
 
 // Memoize the component to prevent unnecessary re-renders
-export const SponsorsCarousel = React.memo(function SponsorsCarousel({ 
-  dataPath, 
+export const SponsorsCarousel = React.memo(function SponsorsCarousel({
+  dataPath,
   sizeMultiplier = 1.8,
   scrollSpeed = 1
 }: SponsorsCarouselProps) {
@@ -124,9 +125,9 @@ export const SponsorsCarousel = React.memo(function SponsorsCarousel({
         }
 
         // Then fetch fresh data
-        const response = await fetch(dataPath, { cache: 'force-cache' });
+        const response = await fetch(getAssetUrl(dataPath), { cache: 'force-cache' });
         const data = await response.json();
-        
+
         if (JSON.stringify(sponsorsData) !== JSON.stringify(data)) {
           setSponsorsData(data);
           sessionStorage.setItem(`sponsors-${dataPath}`, JSON.stringify(data));
@@ -162,7 +163,7 @@ export const SponsorsCarousel = React.memo(function SponsorsCarousel({
       <div className="w-full max-w-screen-2xl mx-auto py-4 md:py-8 px-2 md:px-4">
         <div className="bg-white dark:bg-background flex flex-col gap-6 rounded-xl border border-border/60 dark:border-border/30 py-4">
           <div className="relative w-full h-40 overflow-hidden">
-            <div 
+            <div
               ref={containerRef}
               className="absolute top-0 left-0 h-full flex items-center will-change-transform"
               style={{
@@ -173,14 +174,14 @@ export const SponsorsCarousel = React.memo(function SponsorsCarousel({
               {displayItems.map((sponsor, index) => {
                 const [sponsorName, sponsorData] = Object.entries(sponsor || {})[0] || [];
                 const { filename = '', size = 0 } = sponsorData || {};
-                
+
                 return (
-                  <div 
+                  <div
                     key={`${sponsorName}-${index}`}
                     className="flex-shrink-0 flex flex-col items-center justify-center"
                     style={{ width: '300px' }}
                   >
-                    <div 
+                    <div
                       className="relative flex items-center justify-center"
                       style={{
                         height: '80px',
@@ -190,7 +191,7 @@ export const SponsorsCarousel = React.memo(function SponsorsCarousel({
                       }}
                     >
                       <Image
-                        src={filename}
+                        src={getAssetUrl(filename)}
                         alt={sponsorName}
                         width={size * 10 * sizeMultiplier}
                         height={80}
