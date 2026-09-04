@@ -8,7 +8,8 @@ import Image from "next/image";
 import styles from "@/app/_styles/navbar-styles.module.css";
 import { ICPC_APAC } from "@/lib/constants";
 import { useTheme } from "@/components/common/theme-context";
-import { ChevronDownIcon, Menu, X } from "lucide-react"
+import { ChevronDownIcon, Menu, X } from "lucide-react";
+import { getAssetUrl } from "@/lib/base-path";
 
 // Import the single navItems config
 import { navItems } from "@/app/nav-config";
@@ -288,7 +289,7 @@ export default function Navbar() {
                     <Link href="/" className={styles.logoContainer} onClick={closeMobileMenu}>
                         <span className={styles.logoLink}>
                             <Image
-                                src={`/assets/icpc-logo.png`}
+                                src={getAssetUrl("/assets/icpc-logo.png")}
                                 alt="ICPC Logo"
                                 width={50}
                                 height={50}

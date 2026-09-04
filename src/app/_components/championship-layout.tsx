@@ -7,6 +7,7 @@ import { ChevronRightIcon } from 'lucide-react';
 import Container from "@/components/common/container";
 
 import { AVAILABLE_YEARS } from "@/lib/constants";
+import { getAssetUrl } from '@/lib/base-path';
 
 import SponsorsGrid from "@/app/_components/pages/sponsors-grid";
 import Divider from './divider';
@@ -49,7 +50,7 @@ export default function ChampionshipLayout({ children, year }: ChampionshipLayou
   useEffect(() => {
 
     // Fetch and process order.json
-    fetch(`/pages/championship/${year}/order.json`)
+    fetch(getAssetUrl(`/pages/championship/${year}/order.json`))
       .then(response => {
         if (!response.ok) {
           throw new Error('Order file not found');
@@ -59,7 +60,7 @@ export default function ChampionshipLayout({ children, year }: ChampionshipLayou
       .then((orderConfig: OrderConfig) => {
         // Create map for display names only
         const displayNameMap = new Map<string, string>();
-        
+
         Object.values(orderConfig).forEach(item => {
           displayNameMap.set(item["directory_name"], item["display_name"]);
         });
@@ -144,7 +145,7 @@ export default function ChampionshipLayout({ children, year }: ChampionshipLayou
           {/* Header Section */}
           <div className="flex items-center justify-between w-full mb-6 mt-8">
             <div className="flex items-center gap-2">
-              
+
               {/* Title */}
               <div className="hidden sm:block">
                 <h1 className="text-4xl font-bold">The Championship</h1>
@@ -162,7 +163,7 @@ export default function ChampionshipLayout({ children, year }: ChampionshipLayou
                 <h1 className="text-3xl font-bold">The {year} Championship</h1>
                 <h2 className="text-3xl font-bold">{currentSectionLabel === 'changelogs' ? 'Change Logs' : currentSectionLabel}</h2>
               </div>
-              
+
               {/* Year Dropdown - Desktop Only */}
               <div className="hidden sm:block mt-4">
                 <StyledDropdown
@@ -179,8 +180,8 @@ export default function ChampionshipLayout({ children, year }: ChampionshipLayou
               </div>
             </div>
             <div className="hidden sm:flex items-center gap-4">
-              <a 
-                href={`${basePath}/changelogs`} 
+              <a
+                href={`${basePath}/changelogs`}
                 className="text-gray-400 text-sm sm:text-base whitespace-nowrap hover:text-gray-600 transition-colors"
               >
                 Change Logs
@@ -190,23 +191,23 @@ export default function ChampionshipLayout({ children, year }: ChampionshipLayou
 
           {/* Sponsors */}
           <SponsorsGrid year={year} />
-          
+
           <div className="hidden sm:block">
             <Divider />
           </div>
-          
+
           {/* Desktop Navigation */}
           <div className="hidden sm:block relative w-full h-fit mt-4">
             {isScrollable && (
               <>
-                <button 
-                  onClick={scrollLeft} 
+                <button
+                  onClick={scrollLeft}
                   className="absolute top-1/2 -translate-y-1/2 left-0 -translate-x-[1em] px-2 py-4 rounded-lg bg-secondaryAccent/10 backdrop-blur-lg text-lg font-medium dark:text-white"
                 >
                   {"<"}
                 </button>
-                <button 
-                  onClick={scrollRight} 
+                <button
+                  onClick={scrollRight}
                   className="absolute top-1/2 -translate-y-1/2 right-0 translate-x-[1em] px-2 py-4 rounded-lg bg-secondaryAccent/10 backdrop-blur-lg text-lg font-medium transition-colors dark:text-white"
                 >
                   {">"}
@@ -238,7 +239,7 @@ export default function ChampionshipLayout({ children, year }: ChampionshipLayou
           <div className="hidden sm:block mt-4">
             <Divider />
           </div>
-          
+
           {/* Page Content */}
           <div className="w-full pl-2">
             {children}

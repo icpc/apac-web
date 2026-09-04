@@ -1,5 +1,6 @@
 import cn from "classnames";
 import Image from "next/image";
+import { getAssetUrl } from "@/lib/base-path";
 
 type Props = {
     title: string;
@@ -14,7 +15,7 @@ const CoverImage = ({ title, src, slug }: { title: string; src: string; slug?: s
 
     const image = (
         <Image
-            src={src}
+            src={getAssetUrl(src)}
             alt={`Cover Image for ${title}`}
             className={cn("w-full h-full object-cover")}
             layout="fill"

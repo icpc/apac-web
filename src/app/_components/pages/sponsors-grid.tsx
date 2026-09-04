@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { Card, CardContent } from '@/components/ui/card';
 import sponsorStyles from '@/app/_styles/sponsors-styles.module.css';
+import { getAssetUrl } from '@/lib/base-path';
 
 // Internal representation of a sponsor's properties
 interface Sponsor {
@@ -50,7 +51,7 @@ export default function SponsorsGrid({ year }: SponsorsGridProps) {
         const calculateMaxLength = () => {
             if (containerRef.current) {
                 let containerWidth = containerRef.current.offsetWidth;
-                let newMaxLength = Math.floor(containerWidth / initialMaxLength); 
+                let newMaxLength = Math.floor(containerWidth / initialMaxLength);
                 setMaxLength(newMaxLength < 12 ? 12 : newMaxLength);
             }
         };
@@ -64,7 +65,7 @@ export default function SponsorsGrid({ year }: SponsorsGridProps) {
     }, []);
 
     useEffect(() => {
-        fetch(`/pages/championship/${year}/sponsors/sponsors.json`)
+        fetch(getAssetUrl(`/pages/championship/${year}/sponsors/sponsors.json`))
             .then(response => response.json())
             .then((data: SponsorsData) => {
                 console.log('Loaded sponsors data:', data);
@@ -97,11 +98,11 @@ export default function SponsorsGrid({ year }: SponsorsGridProps) {
                         currentImageLine.push(sponsorEntry);
                         currentImageLineSizeSum += sponsor.size;
                     });
-                    
+
                     if (currentImageLine.length > 0) {
                         linesOfImagesForLevel.push(currentImageLine);
                     }
-                    
+
                     return {
                         levelKey: levelKey,
                         title: levelKey,
@@ -109,7 +110,7 @@ export default function SponsorsGrid({ year }: SponsorsGridProps) {
                         levelTotalSize: calculatedLevelTotalSize
                     };
                 }).filter((l): l is ProcessedLevelDetails => l !== null);
-                
+
                 console.log('All processed level details:', allProcessedLevels);
                 setDisplayableLevels(allProcessedLevels);
             })
@@ -142,7 +143,7 @@ export default function SponsorsGrid({ year }: SponsorsGridProps) {
                     return (
                         <div key={name} style={style}>
                             <Image
-                                src={sponsor.filename}
+                                src={getAssetUrl(sponsor.filename)}
                                 alt={`${name} logo`}
                                 width={0}
                                 height={0}
@@ -206,7 +207,7 @@ export default function SponsorsGrid({ year }: SponsorsGridProps) {
                                 // For a single card, it should take up the full width.
                                 className = `${cardBaseClasses} w-full`;
                             }
-                            
+
                             return (
                                 <Card key={levelDetails.levelKey} className={className} style={style}>
                                     <CardContent className="h-full p-4 flex flex-col">

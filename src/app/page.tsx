@@ -2,6 +2,7 @@ import Container from "@/components/common/container";
 import { Intro } from "@/app/_components/pages/intro";
 import { Content } from "@/app/_components/pages/content";
 import { getMarkdownContent } from "@/lib/get-markdown-content";
+import { getAssetUrl } from "@/lib/base-path";
 
 export const dynamic = "force-static";
 
@@ -15,7 +16,7 @@ export default async function Index() {
         {markdownContents.map((content, index) => {
           const coverImage = content.coverImage || "";
           const hasCoverImage = Boolean(coverImage);
-          const backgroundImage = coverImage.startsWith("/assets") ? `url(${coverImage})` : undefined;
+          const backgroundImage = coverImage.startsWith("/assets") ? `url('${getAssetUrl(coverImage)}')` : undefined;
           const backgroundColor =
             coverImage.startsWith("rgba") || /^#[0-9A-Fa-f]{6}$/.test(coverImage) ? coverImage : undefined;
 
