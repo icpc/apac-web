@@ -13,23 +13,25 @@ export default async function Index() {
       <Intro />
       <div>
         {markdownContents.map((content, index) => {
-          const coverImage = content.coverImage || "";
-          const hasCoverImage = Boolean(coverImage);
-          const isClassBased = coverImage.includes("bg-");
-          const backgroundImage = !isClassBased && coverImage.startsWith("/assets") ? `url(${coverImage})` : undefined;
+          const activeTheme = process.env.NEXT_PUBLIC_THEME || "blue";
+          const processedCoverImage = content.coverImage ? content.coverImage.replace("[theme]", activeTheme) : "";
+          const hasCoverImage = Boolean(processedCoverImage);
+          const isClassBased = processedCoverImage.includes("bg-");
+          const backgroundImage = !isClassBased && processedCoverImage.startsWith("/assets") ? `url(${processedCoverImage})` : undefined;
           const backgroundColor =
-            !isClassBased && (coverImage.startsWith("rgba") || /^#[0-9A-Fa-f]{6}$/.test(coverImage)) ? coverImage : undefined;
+            !isClassBased && (processedCoverImage.startsWith("rgba") || /^#[0-9A-Fa-f]{6}$/.test(processedCoverImage)) ? processedCoverImage : undefined;
 
           return (
-            <div key={index} className={hasCoverImage ? "pt-2 mt-8 pb-8 relative" : "mt-8"}>
+            <div key={index} className={hasCoverImage ? "pt-2 mt-8 pb-8 relative overflow-hidden" : "mt-8"}>
               {hasCoverImage && (
                 <div
-                  className={`absolute top-0 left-0 right-0 bottom-0 z-[-1] opacity-10 ${isClassBased ? coverImage : ''}`}
+                  className={`absolute top-0 left-0 right-0 bottom-0 z-[-1] opacity-10 ${isClassBased ? processedCoverImage : ''}`}
                   style={{
                     backgroundImage,
                     backgroundColor,
                     backgroundSize: "cover",
                     backgroundPosition: "center",
+                    transform: "scale(1.5)",
                   }}
                 />
               )}
