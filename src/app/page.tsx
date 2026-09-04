@@ -18,6 +18,7 @@ export default async function Index() {
           const hasCoverImage = Boolean(processedCoverImage);
           const isClassBased = processedCoverImage.includes("bg-");
           const backgroundImage = !isClassBased && processedCoverImage.startsWith("/assets") ? `url(${processedCoverImage})` : undefined;
+
           const backgroundColor =
             !isClassBased && (processedCoverImage.startsWith("rgba") || /^#[0-9A-Fa-f]{6}$/.test(processedCoverImage)) ? processedCoverImage : undefined;
 
@@ -30,7 +31,7 @@ export default async function Index() {
                     backgroundImage,
                     backgroundColor,
                     backgroundSize: "cover",
-                    backgroundPosition: "center",
+                    backgroundPosition: "calc(50% - 2rem) center",
                     transform: "scale(1.5)",
                   }}
                 />
