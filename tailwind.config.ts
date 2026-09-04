@@ -4,6 +4,22 @@ const ACTIVE_THEME = process.env.NEXT_PUBLIC_THEME || 'green';
 
 const themeColors = {
   green: {
+    primary: {
+      DEFAULT: "rgba(37, 61, 91, 1)", // Dark Blue
+      dark: "rgba(26, 43, 60, 1)",    // Darker Blue
+    },
+    background: {
+      DEFAULT: "rgba(249, 250, 252, 1)", // Off White
+      dark: "rgba(31, 41, 55, 1)",       // Dark Blue Gray
+    },
+    navbar: {
+      DEFAULT: "rgba(240, 240, 240, 0.7)",
+      dark: "rgba(20, 28, 40, 0.7)"
+    },
+    scrollbar: {
+      DEFAULT: "rgba(220, 220, 220, 1)",
+      dark: "rgba(51, 61, 75, 1)",
+    },
     primaryAccent: {
       DEFAULT: "rgba(110, 231, 183, 1)", // Light Green
       dark: "rgba(16, 185, 129, 1)",    // Dark Green
@@ -35,6 +51,22 @@ const themeColors = {
     }
   },
   blue: {
+    primary: {
+      DEFAULT: "rgba(37, 61, 91, 1)", // Dark Blue
+      dark: "rgba(26, 43, 60, 1)",    // Darker Blue
+    },
+    background: {
+      DEFAULT: "rgba(249, 250, 252, 1)", // Off White
+      dark: "rgba(31, 41, 55, 1)",       // Dark Blue Gray
+    },
+    navbar: {
+      DEFAULT: "rgba(240, 240, 240, 0.7)",
+      dark: "rgba(20, 28, 40, 0.7)"
+    },
+    scrollbar: {
+      DEFAULT: "rgba(220, 220, 220, 1)",
+      dark: "rgba(51, 61, 75, 1)",
+    },
     primaryAccent: {
       DEFAULT: "rgba(147, 197, 253, 1)", // Blue 300 (Vibrant light blue)
       dark: "rgba(96, 165, 250, 1)",    // Blue 400 (Vibrant medium blue)
@@ -66,6 +98,22 @@ const themeColors = {
     }
   },
   red: {
+    primary: {
+      DEFAULT: "rgba(102, 25, 15, 1)", // Very Dark Red
+      dark: "rgba(64, 15, 10, 1)",    // Extremely Dark Red
+    },
+    background: {
+      DEFAULT: "rgba(253, 250, 250, 1)", // Warm Off White
+      dark: "rgba(38, 35, 34, 1)",       // Warm Dark Gray (stone-800 ish)
+    },
+    navbar: {
+      DEFAULT: "rgba(245, 240, 240, 0.7)", // Warm Light Gray with Transparency
+      dark: "rgba(28, 25, 23, 0.7)"        // Warm Darker Gray with Transparency
+    },
+    scrollbar: {
+      DEFAULT: "rgba(225, 220, 220, 1)", // Warm Light Gray
+      dark: "rgba(68, 64, 60, 1)",       // Warm Medium Gray
+    },
     primaryAccent: {
       DEFAULT: "rgba(235, 137, 124, 1)", // Lighter custom red
       dark: "rgba(217, 85, 69, 1)",    // Light custom red
@@ -112,10 +160,7 @@ const config: Config = {
     extend: {
       colors: {
         // Primary Palette
-        primary: {
-          DEFAULT: "rgba(37, 61, 91, 1)", // Dark Blue
-          dark: "rgba(26, 43, 60, 1)",    // Darker Blue
-        },
+        primary: activeColors.primary,
         primaryAccent: activeColors.primaryAccent,
         // Secondary Palette
         secondary: {
@@ -124,18 +169,9 @@ const config: Config = {
         },
         secondaryAccent: activeColors.secondaryAccent,
         // Neutral Palette
-        background: {
-          DEFAULT: "rgba(249, 250, 252, 1)", // Off White
-          dark: "rgba(31, 41, 55, 1)",       // Dark Blue Gray
-        },
-        navbar: {
-          DEFAULT: "rgba(240, 240, 240, 0.7)", // Light Gray with Transparency
-          dark: "rgba(20, 28, 40, 0.7)"        // Dark Blue Gray with Transparency
-        },
-        scrollbar: {
-          DEFAULT: "rgba(220, 220, 220, 1)", // Light Gray
-          dark: "rgba(51, 61, 75, 1)",       // Lighter Dark Blue Gray
-        },
+        background: activeColors.background,
+        navbar: activeColors.navbar,
+        scrollbar: activeColors.scrollbar,
         // Other
         border: {
           DEFAULT: "rgba(165, 165, 165, 1)", // Medium Gray
