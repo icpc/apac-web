@@ -28,18 +28,18 @@ export function Footer() {
           {/* Left Section */}
           <Card className={`${styles.footerDescription}`}>
             <CardContent className="p-6">
-            <img
-              src="/assets/icpc-apac-logo/icpc-apac-logo-new.png"
-              alt={`${ICPC_APAC} Logo`}
-              className={styles.footerLogo}
-            />
-            <p className={styles.footerTitle}>
-              {ICPC_APAC}
-            </p>
-            {/* <p className={styles.footerText}>
+              <img
+                src="/assets/icpc-apac-logo/icpc-apac-logo-new-solid-blue.png"
+                alt={`${ICPC_APAC} Logo`}
+                className={styles.footerLogo}
+              />
+              <p className={styles.footerTitle}>
+                {ICPC_APAC}
+              </p>
+              {/* <p className={styles.footerText}>
               27 February - 02 March 2025
             </p> */}
-            {/* <p className={styles.footerText}>
+              {/* <p className={styles.footerText}>
               Hosted by the{" "}
               <strong>
                 <a
@@ -50,7 +50,7 @@ export function Footer() {
                 </a>
               </strong>
             </p> */}
-            {/*
+              {/*
             <p className={styles.footerText}>
               Organized by{" "}
               <strong>
@@ -62,27 +62,27 @@ export function Footer() {
                 </a>
               </strong>
             </p> */}
-            <div>
-              <p>Stay Informed, follow us on
-                <br></br>
-                <a
-                  href="https://instagram.com/icpcapac"
-                  className={styles.footerLink}
-                >
-                  <img
-                    src="/favicon/instagram-logo.png"
-                    alt="Instagram Logo"
-                    className="inline-block w-5 h-5 mr-1"
-                  />
-                  &nbsp;Instagram
-                </a>
-              </p>
-            </div>
+              <div>
+                <p>Stay Informed, follow us on
+                  <br></br>
+                  <a
+                    href="https://instagram.com/icpcapac"
+                    className={styles.footerLink}
+                  >
+                    <img
+                      src="/favicon/instagram-logo.png"
+                      alt="Instagram Logo"
+                      className="inline-block w-5 h-5 mr-1"
+                    />
+                    &nbsp;Instagram
+                  </a>
+                </p>
+              </div>
             </CardContent>
           </Card>
 
           {/* Global Sponsors Section */}
-          
+
           <Card className="col-span-2">
             <CardContent className="h-full w-full">
               <p className={styles.footerTitle + " text-center text-black"}>
@@ -96,7 +96,7 @@ export function Footer() {
                       key={name}
                       src={logo.filename}
                       alt={name}
-                      style={{ width: `${logo.size * 1.8}rem` }}
+                      style={{ width: `${logo.size * 1.6}rem` }}
                       title={name}
                     />
                   );

@@ -4,13 +4,13 @@
 .background {
     background-size: cover;
     background-position: center;
-    --intro-gradient-start: rgba(255, 255, 255, 0.7);
-    --intro-gradient-end: rgba(255, 255, 255, 0.6);
+    --intro-gradient-start: rgba(255, 255, 255, 0.9);
+    --intro-gradient-end: rgba(255, 255, 255, 0.5);
 }
 
 :global(.dark) .background {
     --intro-gradient-start: rgba(0, 0, 0, 0.6);
-    --intro-gradient-end: rgba(0, 0, 0, 0.3);
+    --intro-gradient-end: rgba(0, 0, 0, 0.5);
 }
 
 /* Content Styling */
