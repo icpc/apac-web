@@ -36,7 +36,7 @@ const themeColors = {
   },
   blue: {
     primaryAccent: {
-      DEFAULT: "rgba(138, 179, 226, 1)", // Light Blue
+      DEFAULT: "rgba(176, 212, 255, 1)", // Very Light Blue
       dark: "rgba(35, 84, 140, 1)",    // Dark Blue
     },
     secondaryAccent: {
