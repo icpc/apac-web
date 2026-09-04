@@ -64,6 +64,37 @@ const themeColors = {
         dark: "rgba(35, 84, 140, 0.1)"      // Dark Blue with Transparency
       }
     }
+  },
+  red: {
+    primaryAccent: {
+      DEFAULT: "rgba(252, 165, 165, 1)", // Red 300 (Vibrant light red)
+      dark: "rgba(248, 113, 113, 1)",    // Red 400 (Vibrant medium red)
+    },
+    secondaryAccent: {
+      DEFAULT: "rgba(254, 226, 226, 1)", // Red 100 (Pale Red)
+      dark: "rgba(127, 29, 29, 1)",      // Red 900 (Dark Red)
+    },
+    textHeaderSecondary: {
+      DEFAULT: "rgba(153, 27, 27, 1)",       // Red 800 (Dark Red)
+      dark: "rgba(254, 202, 202, 1)",        // Red 200 (Light Red)
+    },
+    textHeaderTernary: {
+      DEFAULT: "rgba(220, 38, 38, 1)", // Red 600 (Medium Red)
+      dark: "rgba(252, 165, 165, 1)",  // Red 300 (Light Red)
+    },
+    textHeaderOthersCyanalpha: "rgba(239, 68, 68, 0.1)", // Red 500 with Transparency
+    textLinks: {
+      DEFAULT: "rgba(220, 38, 38, 1)", // Red 600 (Red)
+      dark: "rgba(252, 165, 165, 1)",   // Red 300 (Light Red)
+      hover: {
+        DEFAULT: "rgba(153, 27, 27, 1)", // Red 800 (Dark Red)
+        dark: "rgba(254, 226, 226, 1)"   // Red 100 (Very Light Red)
+      },
+      highlight: {
+        DEFAULT: "rgba(252, 165, 165, 0.1)", // Light Red with Transparency
+        dark: "rgba(248, 113, 113, 0.1)"      // Medium Red with Transparency
+      }
+    }
   }
 };
 
