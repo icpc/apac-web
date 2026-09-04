@@ -1,5 +1,6 @@
 import { promises as fs } from 'fs';
 import path from 'path';
+import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { AVAILABLE_YEARS } from "@/lib/constants";
 import Divider from '@/app/_components/divider';
@@ -111,12 +112,12 @@ const ChangelogPage = ({ entries, year }: { entries: ChangelogEntry[], year: str
                     <tr key={index} className="border-y border-gray-300 dark:border-gray-600">
                       <td className="py-2 text-center min-w-[100px]">{entry.formattedDate}</td>
                       <td className="py-2">
-                        <a 
+                        <Link 
                           href={`/championship/${year}/${entry.section}${entry.section !== entry.subsection ? `#${entry.subsection}` : ''}`}
                           className="capitalize text-text-links dark:text-text-links-dark"
                         >
                           {entry.section} {entry.section !== entry.subsection ? ` / ${entry.subsection}` : ''}
-                        </a>
+                        </Link>
                       </td>
                     </tr>
                   ))}
