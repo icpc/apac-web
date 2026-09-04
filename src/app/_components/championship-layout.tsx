@@ -180,12 +180,12 @@ export default function ChampionshipLayout({ children, year }: ChampionshipLayou
               </div>
             </div>
             <div className="hidden sm:flex items-center gap-4">
-              <a
+              <Link
                 href={`${basePath}/changelogs`}
                 className="text-gray-400 text-sm sm:text-base whitespace-nowrap hover:text-gray-600 transition-colors"
               >
                 Change Logs
-              </a>
+              </Link>
             </div>
           </div>
 

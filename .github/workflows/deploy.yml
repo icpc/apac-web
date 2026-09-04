@@ -16,6 +16,7 @@ concurrency:
 
 jobs:
   build:
+    environment: github-pages
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -61,7 +62,7 @@ jobs:
         run: ${{ steps.detect-package-manager.outputs.runner }} next build
         env:
           NEXT_PUBLIC_BASE_PATH: ${{ steps.pages.outputs.base_path }}
-          NEXT_PUBLIC_THEME: ${{ vars.NEXT_PUBLIC_THEME || secrets.NEXT_PUBLIC_THEME || 'green' }}
+          NEXT_PUBLIC_THEME: ${{ vars.NEXT_PUBLIC_THEME || secrets.NEXT_PUBLIC_THEME || 'blue' }}
       - name: Disable Jekyll
         run: touch ./out/.nojekyll
       - name: Upload artifact
