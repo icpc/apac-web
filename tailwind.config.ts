@@ -170,20 +170,20 @@ const themeColors = {
       dark: "rgba(102, 72, 0, 1)",      // Dark custom yellow
     },
     textHeaderSecondary: {
-      DEFAULT: "rgba(180, 128, 0, 1)",       // Darker custom yellow
+      DEFAULT: "rgba(128, 91, 0, 1)",       // Even darker custom yellow
       dark: "rgba(255, 230, 153, 1)",        // Light custom yellow
     },
     textHeaderTernary: {
-      DEFAULT: "rgba(253, 186, 18, 1)", // Base #fdba12
-      dark: "rgba(254, 215, 102, 1)",  // Lighter custom yellow
+      DEFAULT: "rgba(180, 128, 0, 1)", // Darker custom yellow
+      dark: "rgba(253, 186, 18, 1)",  // Base #fdba12
     },
     textHeaderOthersCyanalpha: "rgba(253, 186, 18, 0.1)", // Base with Transparency
     textLinks: {
-      DEFAULT: "rgba(253, 186, 18, 1)", // Base #fdba12
-      dark: "rgba(254, 215, 102, 1)",   // Lighter custom yellow
+      DEFAULT: "rgba(180, 128, 0, 1)", // Darker custom yellow
+      dark: "rgba(253, 186, 18, 1)",   // Base #fdba12
       hover: {
-        DEFAULT: "rgba(180, 128, 0, 1)", // Darker custom yellow
-        dark: "rgba(255, 244, 204, 1)"   // Pale custom yellow
+        DEFAULT: "rgba(102, 72, 0, 1)", // Very Dark yellow
+        dark: "rgba(254, 215, 102, 1)"   // Lighter custom yellow
       },
       highlight: {
         DEFAULT: "rgba(254, 215, 102, 0.1)", // Light custom yellow with Transparency
