@@ -1,6 +1,6 @@
 ---
 title: "Prizes"
-coverImage: "rgba(110, 231, 183, 1)"
+coverImage: "bg-primaryAccent dark:bg-primaryAccent-dark"
 ---
 
 # Prizes

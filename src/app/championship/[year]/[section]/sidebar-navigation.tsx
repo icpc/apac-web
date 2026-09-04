@@ -329,7 +329,7 @@ export const SidebarNavigation = ({
                             }}
                             className={`${styles.championshipButton} 
                               ${isActive
-                              ? 'dark:text-primaryAccent-dark text-text-header-secondary border border-green-600 dark:border-primaryAccent-dark bg-primaryAccent/10 dark:bg-primaryAccent-dark/10 '
+                              ? 'dark:text-primaryAccent-dark text-text-header-secondary border border-text-header-secondary dark:border-primaryAccent-dark bg-primaryAccent/10 dark:bg-primaryAccent-dark/10 '
                                 : 'border border-transparent hover:border-gray-300 hover:bg-transparent dark:hover:border-white dark:hover:bg-transparent'
                               }`}
                           >

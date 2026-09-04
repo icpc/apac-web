@@ -1,6 +1,6 @@
 ---
 title: "About the ICPC Asia Pacific Championship"
-coverImage: "/assets/home/asia-pacific.png"
+coverImage: "/assets/home/asia-pacific-[theme].png"
 ---
 
 # About the ICPC Asia Pacific Championship

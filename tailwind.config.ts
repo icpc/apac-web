@@ -1,46 +1,224 @@
 import type { Config } from "tailwindcss";
 
+const ACTIVE_THEME = process.env.NEXT_PUBLIC_THEME || 'green';
+
+const themeColors = {
+  green: {
+    primary: {
+      DEFAULT: "rgba(37, 61, 91, 1)", // Dark Blue
+      dark: "rgba(26, 43, 60, 1)",    // Darker Blue
+    },
+    background: {
+      DEFAULT: "rgba(249, 250, 252, 1)", // Off White
+      dark: "rgba(31, 41, 55, 1)",       // Dark Blue Gray
+    },
+    navbar: {
+      DEFAULT: "rgba(240, 240, 240, 0.7)",
+      dark: "rgba(20, 28, 40, 0.7)"
+    },
+    scrollbar: {
+      DEFAULT: "rgba(220, 220, 220, 1)",
+      dark: "rgba(51, 61, 75, 1)",
+    },
+    primaryAccent: {
+      DEFAULT: "rgba(110, 231, 183, 1)", // Light Green
+      dark: "rgba(16, 185, 129, 1)",    // Dark Green
+    },
+    secondaryAccent: {
+      DEFAULT: "rgba(178, 255, 229, 1)", // Pale Cyan
+      dark: "rgba(26, 105, 76, 1)",      // Dark Teal
+    },
+    textHeaderSecondary: {
+      DEFAULT: "rgba(16, 115, 94, 1)",       // Dark Green
+      dark: "rgba(188, 237, 221, 1)",        // Light Cyan
+    },
+    textHeaderTernary: {
+      DEFAULT: "rgba(19, 141, 115, 1)", // Medium Green
+      dark: "rgba(160, 211, 208, 1)",  // Light Cyan
+    },
+    textHeaderOthersCyanalpha: "rgba(52, 211, 153, 0.1)", // Light Green with Transparency
+    textLinks: {
+      DEFAULT: "rgba(22, 166, 126, 1)", // Green
+      dark: "rgba(110, 231, 183, 1)",   // Light Green
+      hover: {
+        DEFAULT: "rgba(11, 91, 91, 1)", // Dark Teal
+        dark: "rgba(179, 244, 204, 1)"   // Light Green
+      },
+      highlight: {
+        DEFAULT: "rgba(110, 231, 183, 0.1)", // Light Green with Transparency
+        dark: "rgba(65, 187, 153, 0.1)"      // Dark Green with Transparency
+      }
+    }
+  },
+  blue: {
+    primary: {
+      DEFAULT: "rgba(37, 61, 91, 1)", // Dark Blue
+      dark: "rgba(26, 43, 60, 1)",    // Darker Blue
+    },
+    background: {
+      DEFAULT: "rgba(249, 250, 252, 1)", // Off White
+      dark: "rgba(31, 41, 55, 1)",       // Dark Blue Gray
+    },
+    navbar: {
+      DEFAULT: "rgba(240, 240, 240, 0.7)",
+      dark: "rgba(20, 28, 40, 0.7)"
+    },
+    scrollbar: {
+      DEFAULT: "rgba(220, 220, 220, 1)",
+      dark: "rgba(51, 61, 75, 1)",
+    },
+    primaryAccent: {
+      DEFAULT: "rgba(147, 197, 253, 1)", // Blue 300 (Vibrant light blue)
+      dark: "rgba(96, 165, 250, 1)",    // Blue 400 (Vibrant medium blue)
+    },
+    secondaryAccent: {
+      DEFAULT: "rgba(194, 219, 245, 1)", // Pale Blue
+      dark: "rgba(18, 55, 94, 1)",      // Darker Teal equivalent
+    },
+    textHeaderSecondary: {
+      DEFAULT: "rgba(28, 77, 135, 1)",       // Dark Blue
+      dark: "rgba(198, 224, 247, 1)",        // Light Blue
+    },
+    textHeaderTernary: {
+      DEFAULT: "rgba(42, 98, 163, 1)", // Medium Blue
+      dark: "rgba(164, 201, 237, 1)",  // Light Blue
+    },
+    textHeaderOthersCyanalpha: "rgba(76, 131, 195, 0.1)", // Light Blue with Transparency
+    textLinks: {
+      DEFAULT: "rgba(52, 114, 184, 1)", // Blue
+      dark: "rgba(138, 179, 226, 1)",   // Light Blue
+      hover: {
+        DEFAULT: "rgba(23, 67, 115, 1)", // Dark Blue
+        dark: "rgba(189, 217, 245, 1)"   // Very Light Blue
+      },
+      highlight: {
+        DEFAULT: "rgba(138, 179, 226, 0.1)", // Light Blue with Transparency
+        dark: "rgba(35, 84, 140, 0.1)"      // Dark Blue with Transparency
+      }
+    }
+  },
+  red: {
+    primary: {
+      DEFAULT: "rgba(102, 25, 15, 1)", // Very Dark Red
+      dark: "rgba(64, 15, 10, 1)",    // Extremely Dark Red
+    },
+    background: {
+      DEFAULT: "rgba(253, 250, 250, 1)", // Warm Off White
+      dark: "rgba(38, 35, 34, 1)",       // Warm Dark Gray (stone-800 ish)
+    },
+    navbar: {
+      DEFAULT: "rgba(245, 240, 240, 0.7)", // Warm Light Gray with Transparency
+      dark: "rgba(28, 25, 23, 0.7)"        // Warm Darker Gray with Transparency
+    },
+    scrollbar: {
+      DEFAULT: "rgba(225, 220, 220, 1)", // Warm Light Gray
+      dark: "rgba(68, 64, 60, 1)",       // Warm Medium Gray
+    },
+    primaryAccent: {
+      DEFAULT: "rgba(235, 137, 124, 1)", // Lighter custom red
+      dark: "rgba(217, 85, 69, 1)",    // Light custom red
+    },
+    secondaryAccent: {
+      DEFAULT: "rgba(250, 218, 212, 1)", // Pale custom red
+      dark: "rgba(102, 25, 15, 1)",      // Dark custom red
+    },
+    textHeaderSecondary: {
+      DEFAULT: "rgba(128, 32, 19, 1)",       // Darker custom red
+      dark: "rgba(245, 185, 176, 1)",        // Light custom red
+    },
+    textHeaderTernary: {
+      DEFAULT: "rgba(178, 44, 27, 1)", // Base #b22c1b
+      dark: "rgba(235, 137, 124, 1)",  // Lighter custom red
+    },
+    textHeaderOthersCyanalpha: "rgba(178, 44, 27, 0.1)", // Base with Transparency
+    textLinks: {
+      DEFAULT: "rgba(178, 44, 27, 1)", // Base #b22c1b
+      dark: "rgba(235, 137, 124, 1)",   // Lighter custom red
+      hover: {
+        DEFAULT: "rgba(128, 32, 19, 1)", // Darker custom red
+        dark: "rgba(250, 218, 212, 1)"   // Pale custom red
+      },
+      highlight: {
+        DEFAULT: "rgba(235, 137, 124, 0.1)", // Light custom red with Transparency
+        dark: "rgba(217, 85, 69, 0.1)"      // Medium custom red with Transparency
+      }
+    }
+  },
+  yellow: {
+    primary: {
+      DEFAULT: "rgba(102, 72, 0, 1)", // Very Dark Yellow/Brown
+      dark: "rgba(64, 45, 0, 1)",    // Extremely Dark Yellow/Brown
+    },
+    background: {
+      DEFAULT: "rgba(254, 253, 250, 1)", // Warm Yellowish Off White
+      dark: "rgba(38, 36, 32, 1)",       // Warm Dark Gray (yellow-tinted)
+    },
+    navbar: {
+      DEFAULT: "rgba(247, 245, 237, 0.7)", // Warm Light Gray with Transparency
+      dark: "rgba(28, 26, 23, 0.7)"        // Warm Darker Gray with Transparency
+    },
+    scrollbar: {
+      DEFAULT: "rgba(230, 225, 215, 1)", // Warm Light Gray
+      dark: "rgba(68, 64, 55, 1)",       // Warm Medium Gray
+    },
+    primaryAccent: {
+      DEFAULT: "rgba(254, 215, 102, 1)", // Lighter custom yellow
+      dark: "rgba(230, 160, 15, 1)",    // Light custom yellow
+    },
+    secondaryAccent: {
+      DEFAULT: "rgba(255, 244, 204, 1)", // Pale custom yellow
+      dark: "rgba(102, 72, 0, 1)",      // Dark custom yellow
+    },
+    textHeaderSecondary: {
+      DEFAULT: "rgba(128, 91, 0, 1)",       // Even darker custom yellow
+      dark: "rgba(255, 230, 153, 1)",        // Light custom yellow
+    },
+    textHeaderTernary: {
+      DEFAULT: "rgba(180, 128, 0, 1)", // Darker custom yellow
+      dark: "rgba(253, 186, 18, 1)",  // Base #fdba12
+    },
+    textHeaderOthersCyanalpha: "rgba(253, 186, 18, 0.1)", // Base with Transparency
+    textLinks: {
+      DEFAULT: "rgba(180, 128, 0, 1)", // Darker custom yellow
+      dark: "rgba(253, 186, 18, 1)",   // Base #fdba12
+      hover: {
+        DEFAULT: "rgba(102, 72, 0, 1)", // Very Dark yellow
+        dark: "rgba(254, 215, 102, 1)"   // Lighter custom yellow
+      },
+      highlight: {
+        DEFAULT: "rgba(254, 215, 102, 0.1)", // Light custom yellow with Transparency
+        dark: "rgba(230, 160, 15, 0.1)"      // Medium custom yellow with Transparency
+      }
+    }
+  }
+};
+
+const activeColors = themeColors[ACTIVE_THEME as keyof typeof themeColors] || themeColors.blue;
+
 const config: Config = {
   darkMode: "class",
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./public/pages/**/*.md",
   ],
   theme: {
     extend: {
       colors: {
         // Primary Palette
-        primary: {
-          DEFAULT: "rgba(37, 61, 91, 1)", // Dark Blue
-          dark: "rgba(26, 43, 60, 1)",    // Darker Blue
-        },
-        primaryAccent: {
-          DEFAULT: "rgba(110, 231, 183, 1)", // Light Green
-          dark: "rgba(16, 185, 129, 1)",    // Dark Green
-        },
+        primary: activeColors.primary,
+        primaryAccent: activeColors.primaryAccent,
         // Secondary Palette
         secondary: {
           DEFAULT: "rgba(204, 204, 204, 1)", // Light Gray
           dark: "rgba(153, 153, 153, 1)",    // Medium Gray
         },
-        secondaryAccent: {
-          DEFAULT: "rgba(178, 255, 229, 1)", // Pale Cyan
-          dark: "rgba(26, 105, 76, 1)",      // Dark Teal
-        },
+        secondaryAccent: activeColors.secondaryAccent,
         // Neutral Palette
-        background: {
-          DEFAULT: "rgba(249, 250, 252, 1)", // Off White
-          dark: "rgba(31, 41, 55, 1)",       // Dark Blue Gray
-        },
-        navbar: {
-          DEFAULT: "rgba(240, 240, 240, 0.7)", // Light Gray with Transparency
-          dark: "rgba(20, 28, 40, 0.7)"        // Dark Blue Gray with Transparency
-        },
-        scrollbar:{
-          DEFAULT: "rgba(220, 220, 220, 1)", // Light Gray
-          dark: "rgba(51, 61, 75, 1)",       // Lighter Dark Blue Gray
-        },
+        background: activeColors.background,
+        navbar: activeColors.navbar,
+        scrollbar: activeColors.scrollbar,
         // Other
         border: {
           DEFAULT: "rgba(165, 165, 165, 1)", // Medium Gray
@@ -55,30 +233,13 @@ const config: Config = {
               DEFAULT: "theme('colors.background.dark')",       // Dark Blue Gray
               dark: "theme('colors.background.DEFAULT')",        // Off White
             },
-            secondary: {
-              DEFAULT: "rgba(16, 115, 94, 1)",       // Dark Green
-              dark: "rgba(188, 237, 221, 1)",        // Light Cyan
-            },
-            ternary: {
-              DEFAULT: "rgba(19, 141, 115, 1)", // Medium Green
-              dark: "rgba(160, 211, 208, 1)",  // Light Cyan
-            },
+            secondary: activeColors.textHeaderSecondary,
+            ternary: activeColors.textHeaderTernary,
             others: {
-              cyanalpha: "rgba(52, 211, 153, 0.1)", // Light Green with Transparency
+              cyanalpha: activeColors.textHeaderOthersCyanalpha,
             }
           },
-          links: {
-            DEFAULT: "rgba(22, 166, 126, 1)", // Green
-            dark: "rgba(110, 231, 183, 1)",   // Light Green
-            hover: {
-              DEFAULT: "rgba(11, 91, 91, 1)", // Dark Teal
-              dark: "rgba(179, 244, 204, 1)"   // Light Green
-            },
-            highlight: {
-              DEFAULT: "rgba(110, 231, 183, 0.1)", // Light Green with Transparency
-              dark: "rgba(65, 187, 153, 0.1)"      // Dark Green with Transparency
-            },
-          }
+          links: activeColors.textLinks
         },
       },
       textColor: {
