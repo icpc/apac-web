@@ -1,5 +1,74 @@
 import type { Config } from "tailwindcss";
 
+const ACTIVE_THEME = process.env.NEXT_PUBLIC_THEME || 'blue';
+
+const themeColors = {
+  green: {
+    primaryAccent: {
+      DEFAULT: "rgba(110, 231, 183, 1)", // Light Green
+      dark: "rgba(16, 185, 129, 1)",    // Dark Green
+    },
+    secondaryAccent: {
+      DEFAULT: "rgba(178, 255, 229, 1)", // Pale Cyan
+      dark: "rgba(26, 105, 76, 1)",      // Dark Teal
+    },
+    textHeaderSecondary: {
+      DEFAULT: "rgba(16, 115, 94, 1)",       // Dark Green
+      dark: "rgba(188, 237, 221, 1)",        // Light Cyan
+    },
+    textHeaderTernary: {
+      DEFAULT: "rgba(19, 141, 115, 1)", // Medium Green
+      dark: "rgba(160, 211, 208, 1)",  // Light Cyan
+    },
+    textHeaderOthersCyanalpha: "rgba(52, 211, 153, 0.1)", // Light Green with Transparency
+    textLinks: {
+      DEFAULT: "rgba(22, 166, 126, 1)", // Green
+      dark: "rgba(110, 231, 183, 1)",   // Light Green
+      hover: {
+        DEFAULT: "rgba(11, 91, 91, 1)", // Dark Teal
+        dark: "rgba(179, 244, 204, 1)"   // Light Green
+      },
+      highlight: {
+        DEFAULT: "rgba(110, 231, 183, 0.1)", // Light Green with Transparency
+        dark: "rgba(65, 187, 153, 0.1)"      // Dark Green with Transparency
+      }
+    }
+  },
+  blue: {
+    primaryAccent: {
+      DEFAULT: "rgba(138, 179, 226, 1)", // Light Blue
+      dark: "rgba(35, 84, 140, 1)",    // Dark Blue
+    },
+    secondaryAccent: {
+      DEFAULT: "rgba(194, 219, 245, 1)", // Pale Blue
+      dark: "rgba(18, 55, 94, 1)",      // Darker Teal equivalent
+    },
+    textHeaderSecondary: {
+      DEFAULT: "rgba(28, 77, 135, 1)",       // Dark Blue
+      dark: "rgba(198, 224, 247, 1)",        // Light Blue
+    },
+    textHeaderTernary: {
+      DEFAULT: "rgba(42, 98, 163, 1)", // Medium Blue
+      dark: "rgba(164, 201, 237, 1)",  // Light Blue
+    },
+    textHeaderOthersCyanalpha: "rgba(76, 131, 195, 0.1)", // Light Blue with Transparency
+    textLinks: {
+      DEFAULT: "rgba(52, 114, 184, 1)", // Blue
+      dark: "rgba(138, 179, 226, 1)",   // Light Blue
+      hover: {
+        DEFAULT: "rgba(23, 67, 115, 1)", // Dark Blue
+        dark: "rgba(189, 217, 245, 1)"   // Very Light Blue
+      },
+      highlight: {
+        DEFAULT: "rgba(138, 179, 226, 0.1)", // Light Blue with Transparency
+        dark: "rgba(35, 84, 140, 0.1)"      // Dark Blue with Transparency
+      }
+    }
+  }
+};
+
+const activeColors = themeColors[ACTIVE_THEME as keyof typeof themeColors] || themeColors.blue;
+
 const config: Config = {
   darkMode: "class",
   content: [
@@ -15,19 +84,13 @@ const config: Config = {
           DEFAULT: "rgba(37, 61, 91, 1)", // Dark Blue
           dark: "rgba(26, 43, 60, 1)",    // Darker Blue
         },
-        primaryAccent: {
-          DEFAULT: "rgba(110, 231, 183, 1)", // Light Green
-          dark: "rgba(16, 185, 129, 1)",    // Dark Green
-        },
+        primaryAccent: activeColors.primaryAccent,
         // Secondary Palette
         secondary: {
           DEFAULT: "rgba(204, 204, 204, 1)", // Light Gray
           dark: "rgba(153, 153, 153, 1)",    // Medium Gray
         },
-        secondaryAccent: {
-          DEFAULT: "rgba(178, 255, 229, 1)", // Pale Cyan
-          dark: "rgba(26, 105, 76, 1)",      // Dark Teal
-        },
+        secondaryAccent: activeColors.secondaryAccent,
         // Neutral Palette
         background: {
           DEFAULT: "rgba(249, 250, 252, 1)", // Off White
@@ -55,30 +118,13 @@ const config: Config = {
               DEFAULT: "theme('colors.background.dark')",       // Dark Blue Gray
               dark: "theme('colors.background.DEFAULT')",        // Off White
             },
-            secondary: {
-              DEFAULT: "rgba(16, 115, 94, 1)",       // Dark Green
-              dark: "rgba(188, 237, 221, 1)",        // Light Cyan
-            },
-            ternary: {
-              DEFAULT: "rgba(19, 141, 115, 1)", // Medium Green
-              dark: "rgba(160, 211, 208, 1)",  // Light Cyan
-            },
+            secondary: activeColors.textHeaderSecondary,
+            ternary: activeColors.textHeaderTernary,
             others: {
-              cyanalpha: "rgba(52, 211, 153, 0.1)", // Light Green with Transparency
+              cyanalpha: activeColors.textHeaderOthersCyanalpha, 
             }
           },
-          links: {
-            DEFAULT: "rgba(22, 166, 126, 1)", // Green
-            dark: "rgba(110, 231, 183, 1)",   // Light Green
-            hover: {
-              DEFAULT: "rgba(11, 91, 91, 1)", // Dark Teal
-              dark: "rgba(179, 244, 204, 1)"   // Light Green
-            },
-            highlight: {
-              DEFAULT: "rgba(110, 231, 183, 0.1)", // Light Green with Transparency
-              dark: "rgba(65, 187, 153, 0.1)"      // Dark Green with Transparency
-            },
-          }
+          links: activeColors.textLinks
         },
       },
       textColor: {
