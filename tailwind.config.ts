@@ -1,6 +1,6 @@
 import type { Config } from "tailwindcss";
 
-const ACTIVE_THEME = process.env.NEXT_PUBLIC_THEME || 'blue';
+const ACTIVE_THEME = process.env.NEXT_PUBLIC_THEME || 'green';
 
 const themeColors = {
   green: {
@@ -67,32 +67,32 @@ const themeColors = {
   },
   red: {
     primaryAccent: {
-      DEFAULT: "rgba(252, 165, 165, 1)", // Red 300 (Vibrant light red)
-      dark: "rgba(248, 113, 113, 1)",    // Red 400 (Vibrant medium red)
+      DEFAULT: "rgba(235, 137, 124, 1)", // Lighter custom red
+      dark: "rgba(217, 85, 69, 1)",    // Light custom red
     },
     secondaryAccent: {
-      DEFAULT: "rgba(254, 226, 226, 1)", // Red 100 (Pale Red)
-      dark: "rgba(127, 29, 29, 1)",      // Red 900 (Dark Red)
+      DEFAULT: "rgba(250, 218, 212, 1)", // Pale custom red
+      dark: "rgba(102, 25, 15, 1)",      // Dark custom red
     },
     textHeaderSecondary: {
-      DEFAULT: "rgba(153, 27, 27, 1)",       // Red 800 (Dark Red)
-      dark: "rgba(254, 202, 202, 1)",        // Red 200 (Light Red)
+      DEFAULT: "rgba(128, 32, 19, 1)",       // Darker custom red
+      dark: "rgba(245, 185, 176, 1)",        // Light custom red
     },
     textHeaderTernary: {
-      DEFAULT: "rgba(220, 38, 38, 1)", // Red 600 (Medium Red)
-      dark: "rgba(252, 165, 165, 1)",  // Red 300 (Light Red)
+      DEFAULT: "rgba(178, 44, 27, 1)", // Base #b22c1b
+      dark: "rgba(235, 137, 124, 1)",  // Lighter custom red
     },
-    textHeaderOthersCyanalpha: "rgba(239, 68, 68, 0.1)", // Red 500 with Transparency
+    textHeaderOthersCyanalpha: "rgba(178, 44, 27, 0.1)", // Base with Transparency
     textLinks: {
-      DEFAULT: "rgba(220, 38, 38, 1)", // Red 600 (Red)
-      dark: "rgba(252, 165, 165, 1)",   // Red 300 (Light Red)
+      DEFAULT: "rgba(178, 44, 27, 1)", // Base #b22c1b
+      dark: "rgba(235, 137, 124, 1)",   // Lighter custom red
       hover: {
-        DEFAULT: "rgba(153, 27, 27, 1)", // Red 800 (Dark Red)
-        dark: "rgba(254, 226, 226, 1)"   // Red 100 (Very Light Red)
+        DEFAULT: "rgba(128, 32, 19, 1)", // Darker custom red
+        dark: "rgba(250, 218, 212, 1)"   // Pale custom red
       },
       highlight: {
-        DEFAULT: "rgba(252, 165, 165, 0.1)", // Light Red with Transparency
-        dark: "rgba(248, 113, 113, 0.1)"      // Medium Red with Transparency
+        DEFAULT: "rgba(235, 137, 124, 0.1)", // Light custom red with Transparency
+        dark: "rgba(217, 85, 69, 0.1)"      // Medium custom red with Transparency
       }
     }
   }
@@ -132,7 +132,7 @@ const config: Config = {
           DEFAULT: "rgba(240, 240, 240, 0.7)", // Light Gray with Transparency
           dark: "rgba(20, 28, 40, 0.7)"        // Dark Blue Gray with Transparency
         },
-        scrollbar:{
+        scrollbar: {
           DEFAULT: "rgba(220, 220, 220, 1)", // Light Gray
           dark: "rgba(51, 61, 75, 1)",       // Lighter Dark Blue Gray
         },
@@ -153,7 +153,7 @@ const config: Config = {
             secondary: activeColors.textHeaderSecondary,
             ternary: activeColors.textHeaderTernary,
             others: {
-              cyanalpha: activeColors.textHeaderOthersCyanalpha, 
+              cyanalpha: activeColors.textHeaderOthersCyanalpha,
             }
           },
           links: activeColors.textLinks
