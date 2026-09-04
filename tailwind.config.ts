@@ -143,6 +143,53 @@ const themeColors = {
         dark: "rgba(217, 85, 69, 0.1)"      // Medium custom red with Transparency
       }
     }
+  },
+  yellow: {
+    primary: {
+      DEFAULT: "rgba(102, 72, 0, 1)", // Very Dark Yellow/Brown
+      dark: "rgba(64, 45, 0, 1)",    // Extremely Dark Yellow/Brown
+    },
+    background: {
+      DEFAULT: "rgba(254, 253, 250, 1)", // Warm Yellowish Off White
+      dark: "rgba(38, 36, 32, 1)",       // Warm Dark Gray (yellow-tinted)
+    },
+    navbar: {
+      DEFAULT: "rgba(247, 245, 237, 0.7)", // Warm Light Gray with Transparency
+      dark: "rgba(28, 26, 23, 0.7)"        // Warm Darker Gray with Transparency
+    },
+    scrollbar: {
+      DEFAULT: "rgba(230, 225, 215, 1)", // Warm Light Gray
+      dark: "rgba(68, 64, 55, 1)",       // Warm Medium Gray
+    },
+    primaryAccent: {
+      DEFAULT: "rgba(254, 215, 102, 1)", // Lighter custom yellow
+      dark: "rgba(230, 160, 15, 1)",    // Light custom yellow
+    },
+    secondaryAccent: {
+      DEFAULT: "rgba(255, 244, 204, 1)", // Pale custom yellow
+      dark: "rgba(102, 72, 0, 1)",      // Dark custom yellow
+    },
+    textHeaderSecondary: {
+      DEFAULT: "rgba(180, 128, 0, 1)",       // Darker custom yellow
+      dark: "rgba(255, 230, 153, 1)",        // Light custom yellow
+    },
+    textHeaderTernary: {
+      DEFAULT: "rgba(253, 186, 18, 1)", // Base #fdba12
+      dark: "rgba(254, 215, 102, 1)",  // Lighter custom yellow
+    },
+    textHeaderOthersCyanalpha: "rgba(253, 186, 18, 0.1)", // Base with Transparency
+    textLinks: {
+      DEFAULT: "rgba(253, 186, 18, 1)", // Base #fdba12
+      dark: "rgba(254, 215, 102, 1)",   // Lighter custom yellow
+      hover: {
+        DEFAULT: "rgba(180, 128, 0, 1)", // Darker custom yellow
+        dark: "rgba(255, 244, 204, 1)"   // Pale custom yellow
+      },
+      highlight: {
+        DEFAULT: "rgba(254, 215, 102, 0.1)", // Light custom yellow with Transparency
+        dark: "rgba(230, 160, 15, 0.1)"      // Medium custom yellow with Transparency
+      }
+    }
   }
 };
 
