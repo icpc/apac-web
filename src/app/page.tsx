@@ -15,15 +15,16 @@ export default async function Index() {
         {markdownContents.map((content, index) => {
           const coverImage = content.coverImage || "";
           const hasCoverImage = Boolean(coverImage);
-          const backgroundImage = coverImage.startsWith("/assets") ? `url(${coverImage})` : undefined;
+          const isClassBased = coverImage.includes("bg-");
+          const backgroundImage = !isClassBased && coverImage.startsWith("/assets") ? `url(${coverImage})` : undefined;
           const backgroundColor =
-            coverImage.startsWith("rgba") || /^#[0-9A-Fa-f]{6}$/.test(coverImage) ? coverImage : undefined;
+            !isClassBased && (coverImage.startsWith("rgba") || /^#[0-9A-Fa-f]{6}$/.test(coverImage)) ? coverImage : undefined;
 
           return (
             <div key={index} className={hasCoverImage ? "pt-2 mt-8 pb-8 relative" : "mt-8"}>
               {hasCoverImage && (
                 <div
-                  className="absolute top-0 left-0 right-0 bottom-0 z-[-1] opacity-10"
+                  className={`absolute top-0 left-0 right-0 bottom-0 z-[-1] opacity-10 ${isClassBased ? coverImage : ''}`}
                   style={{
                     backgroundImage,
                     backgroundColor,
