@@ -31,6 +31,9 @@ export default async function RegionalsPage() {
             <p className="text-lg text-text-body dark:text-text-body-dark max-w-3xl leading-relaxed">
               This guide outlines the regional contest pathways, domestic preliminary requirements, and foreign team participation rules for universities across the Asia Pacific region during the {cycleData.academicYear} cycle.
             </p>
+            <p className="text-lg text-text-body dark:text-text-body-dark max-w-3xl leading-relaxed">
+              The top teams from each regionals will be invited to the 2027 Asia Pacific Championship in Tokyo, Japan.
+            </p>
           </div>
 
           {/* Official Contest Rules banner at the top before the subpage */}
@@ -49,7 +52,7 @@ export default async function RegionalsPage() {
           </div>
 
           {/* 2-Column Subpage Layout */}
-          <div className="w-full">
+          <div className="w-full pl-2">
             <ContestFinder cycleData={cycleData} countries={countries} />
           </div>
         </div>
