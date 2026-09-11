@@ -1,8 +1,14 @@
 {
   "year": "2026",
-  "academicYear": "2026/2027",
+  "academicYear": "2026–2027",
   "rulesUrl": "https://icpc.jp/apac/2026-27/rules/",
-  "hostCountryCodes": ["KR", "ID", "JP", "VN", "TW"],
+  "hostCountryCodes": [
+    "KR",
+    "ID",
+    "JP",
+    "VN",
+    "TW"
+  ],
   "contests": [
     {
       "id": "seoul",
@@ -15,7 +21,7 @@
       "startDate": "2026-11-13",
       "endDate": "2026-11-14",
       "websiteUrl": "https://icpckorea.org/",
-      "websiteLabel": "ICPC Korea / Seoul Regional",
+      "websiteLabel": "ICPC Korea / Seoul",
       "notes": "First regional of the 2026 cycle."
     },
     {
@@ -25,11 +31,11 @@
       "location": "Jakarta, Indonesia",
       "hostCountryCode": "ID",
       "hostCountryName": "Indonesia",
-      "date": "Sat, 28 Nov – Sun, 29 Nov 2026",
+      "date": "Sat, 28 Nov – Sun, 30 Nov 2026",
       "startDate": "2026-11-28",
       "endDate": "2026-11-29",
       "websiteUrl": "https://competition.binus.ac.id/icpc2026/",
-      "websiteLabel": "ICPC Jakarta (BINUS)",
+      "websiteLabel": "ICPC Indonesia / Jakarta",
       "notes": "Hosted by BINUS University."
     },
     {
@@ -42,8 +48,8 @@
       "date": "Sat, 05 Dec – Sun, 06 Dec 2026",
       "startDate": "2026-12-05",
       "endDate": "2026-12-06",
-      "websiteUrl": "https://icpc.global/regionals/finder/Yokohama",
-      "websiteLabel": "ICPC Yokohama Contest Page",
+      "websiteUrl": "https://icpc.jp/2026/",
+      "websiteLabel": "ICPC Japan / Yokohama",
       "notes": "Follows one week after Jakarta Regional."
     },
     {
@@ -70,8 +76,8 @@
       "date": "Sat, 12 Dec – Mon, 14 Dec 2026",
       "startDate": "2026-12-12",
       "endDate": "2026-12-14",
-      "websiteUrl": "https://icpc.global/regionals/finder/Taipei",
-      "websiteLabel": "ICPC Yunlin Regional Contest Page",
+      "websiteUrl": "https://www.icpc.tw/2026/registration/",
+      "websiteLabel": "ICPC Taiwan / Yunlin",
       "notes": "Starts on the Saturday immediately following Danang Regional."
     }
   ],
@@ -123,7 +129,7 @@
           "summary": "Regionals accept foreign teams from other Asia Pacific countries up to an upper bound set by each regional director."
         },
         {
-          "ruleCode": "Rule D4(3) - Wildcard",
+          "ruleCode": "Rule D4(3) – Wildcard",
           "summary": "At least one team from every Asia Pacific country (solving ≥1 problem) is guaranteed qualification to the Asia Pacific Championship."
         }
       ]

@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { CopyTooltip } from "@/components/ui/tooltip";
 import styles from "@/app/_styles/sidebar-nav-styles.module.css";
+import markdownStyles from "@/app/_styles/markdown-styles.module.css";
 import {
   RegionalsCycleData,
   CountryInfo,
@@ -132,40 +133,37 @@ export function ContestFinder({ cycleData, countries }: ContestFinderProps) {
   };
 
   const renderContestTable = (contests: RegionalContest[]) => (
-    <div className="overflow-x-auto my-4">
-      <table className="w-full border-collapse border border-border/60 dark:border-border/40 text-sm">
+    <div className="overflow-x-auto my-6">
+      <table className="w-full border-collapse border border-border !table-auto min-w-full">
         <thead>
           <tr className="bg-text-header-others-cyanalpha">
-            <th className="border border-border/60 dark:border-border/40 px-4 py-2.5 text-left font-bold text-text-header-secondary dark:text-text-header-secondary-dark">
+            <th className="border border-border px-2 py-2.5 lg:px-4 text-left font-bold text-text-header-secondary dark:text-text-header-secondary-dark whitespace-nowrap">
               Name
             </th>
-            <th className="border border-border/60 dark:border-border/40 px-4 py-2.5 text-left font-bold text-text-header-secondary dark:text-text-header-secondary-dark whitespace-nowrap">
+            <th className="border border-border px-2 py-2.5 lg:px-4 text-left font-bold text-text-header-secondary dark:text-text-header-secondary-dark whitespace-nowrap">
               Location
             </th>
-            <th className="border border-border/60 dark:border-border/40 px-4 py-2.5 text-left font-bold text-text-header-secondary dark:text-text-header-secondary-dark whitespace-nowrap">
+            <th className="border border-border px-2 py-2.5 lg:px-4 text-left font-bold text-text-header-secondary dark:text-text-header-secondary-dark whitespace-nowrap">
               Date
             </th>
-            <th className="border border-border/60 dark:border-border/40 px-4 py-2.5 text-left font-bold text-text-header-secondary dark:text-text-header-secondary-dark">
+            <th className="border border-border px-2 py-2.5 lg:px-4 text-left font-bold text-text-header-secondary dark:text-text-header-secondary-dark">
               Website / Contest Link
             </th>
           </tr>
         </thead>
         <tbody>
           {contests.map((contest) => (
-            <tr
-              key={contest.id}
-              className="hover:bg-text-header-others-cyanalpha/30 transition-colors"
-            >
-              <td className="border border-border/40 dark:border-border/30 px-4 py-2.5 font-medium text-text-body dark:text-text-body-dark">
+            <tr key={contest.id}>
+              <td className="border border-border px-2 py-2.5 lg:px-4 font-medium text-text-body dark:text-text-body-dark">
                 {contest.name}
               </td>
-              <td className="border border-border/40 dark:border-border/30 px-4 py-2.5 text-text-body dark:text-text-body-dark whitespace-nowrap">
+              <td className="border border-border px-2 py-2.5 lg:px-4 text-text-body dark:text-text-body-dark whitespace-nowrap">
                 {contest.location}
               </td>
-              <td className="border border-border/40 dark:border-border/30 px-4 py-2.5 text-text-body dark:text-text-body-dark whitespace-nowrap">
+              <td className="border border-border px-2 py-2.5 lg:px-4 text-text-body dark:text-text-body-dark whitespace-nowrap">
                 {contest.date}
               </td>
-              <td className="border border-border/40 dark:border-border/30 px-4 py-2.5">
+              <td className="border border-border px-2 py-2.5 lg:px-4">
                 <Link
                   href={contest.websiteUrl}
                   target="_blank"
@@ -306,46 +304,48 @@ export function ContestFinder({ cycleData, countries }: ContestFinderProps) {
           </div>
           <Divider className={styles.contentSectionDivider} />
 
-          <p className="text-base text-text-body dark:text-text-body-dark mb-4 leading-relaxed">
-            Participation pathways and contest eligibility are determined by the country where your institution is located during the {cycleData.academicYear} academic year.
-          </p>
-
-          <div className="max-w-md my-4">
-            <select
-              id="country-select"
-              value={selectedCountryCode}
-              onChange={(e) => setSelectedCountryCode(e.target.value)}
-              className="w-full rounded border border-border/70 dark:border-border/40 bg-white dark:bg-[#1f2937] px-3 py-2 text-sm text-text-body dark:text-text-body-dark focus:outline-none focus:ring-1 focus:ring-text-header-secondary"
-            >
-              <option value="">Select country of institution...</option>
-              <optgroup label="Regional Host Countries">
-                {hostCountries.map((c) => (
-                  <option key={c.code} value={c.code} className="dark:bg-[#1f2937]">
-                    {c.name}
-                  </option>
-                ))}
-              </optgroup>
-              <optgroup label="Other Asia Pacific Countries">
-                {nonHostCountries.map((c) => (
-                  <option key={c.code} value={c.code} className="dark:bg-[#1f2937]">
-                    {c.name}
-                  </option>
-                ))}
-              </optgroup>
-            </select>
-          </div>
-
-          {/* Immediate Status */}
-          {eligibility && (
-            <p className="mt-2 text-base font-semibold text-text-header-secondary dark:text-text-header-secondary-dark">
-              {eligibility.statusTitle}
+          <div className={`${markdownStyles.markdown} markdown`}>
+            <p>
+              Participation pathways and contest eligibility are determined by the country where your institution is located during the {cycleData.academicYear} academic year.
             </p>
-          )}
 
-          {/* Disclaimer for South Pacific and other regions */}
-          <p className="mt-3 text-xs text-gray-500 dark:text-gray-400 leading-relaxed max-w-3xl">
-            <strong>Note:</strong> This tool focuses on institutions in the Asia Pacific region. Teams from the South Pacific (Australia, New Zealand, etc.) qualify for the World Finals through the South Pacific Independent Regional Contest (SPIRC). Teams from other super-regions qualify through their respective regional contests.
-          </p>
+            <div className="max-w-md my-4">
+              <select
+                id="country-select"
+                value={selectedCountryCode}
+                onChange={(e) => setSelectedCountryCode(e.target.value)}
+                className="w-full rounded border border-border bg-white dark:bg-[#1f2937] px-3 py-2 text-base text-text-body dark:text-text-body-dark focus:outline-none focus:ring-1 focus:ring-text-header-secondary"
+              >
+                <option value="">Select country of institution...</option>
+                <optgroup label="Regional Host Countries">
+                  {hostCountries.map((c) => (
+                    <option key={c.code} value={c.code} className="dark:bg-[#1f2937]">
+                      {c.name}
+                    </option>
+                  ))}
+                </optgroup>
+                <optgroup label="Other Asia Pacific Countries">
+                  {nonHostCountries.map((c) => (
+                    <option key={c.code} value={c.code} className="dark:bg-[#1f2937]">
+                      {c.name}
+                    </option>
+                  ))}
+                </optgroup>
+              </select>
+            </div>
+
+            {/* Immediate Status */}
+            {eligibility && (
+              <p className="font-semibold text-text-header-secondary dark:text-text-header-secondary-dark">
+                {eligibility.statusTitle}
+              </p>
+            )}
+
+            {/* Disclaimer for South Pacific and other regions */}
+            <p className="text-sm text-gray-500 dark:text-gray-400 max-w-3xl">
+              <strong>Note:</strong> This tool focuses on institutions in the Asia Pacific region. Teams from the South Pacific (Australia, New Zealand, etc.) qualify for the World Finals through the South Pacific Independent Regional Contest (SPIRC). Teams from other super-regions qualify through their respective regional contests.
+            </p>
+          </div>
         </div>
 
         {/* When no country is selected yet: list all available contests without domestic/foreign distinction */}
@@ -364,11 +364,13 @@ export function ContestFinder({ cycleData, countries }: ContestFinderProps) {
             </div>
             <Divider className={styles.contentSectionDivider} />
 
-            <p className="text-base text-text-body dark:text-text-body-dark leading-relaxed">
-              The following {cycleData.contests.length} regional contests are scheduled for the {cycleData.academicYear} Asia Pacific cycle:
-            </p>
+            <div className={`${markdownStyles.markdown} markdown`}>
+              <p>
+                The following {cycleData.contests.length} regional contests are scheduled for the {cycleData.academicYear} Asia Pacific cycle:
+              </p>
 
-            {renderContestTable(cycleData.contests)}
+              {renderContestTable(cycleData.contests)}
+            </div>
           </div>
         ) : (
           <>
@@ -388,11 +390,13 @@ export function ContestFinder({ cycleData, countries }: ContestFinderProps) {
                 </div>
                 <Divider className={styles.contentSectionDivider} />
 
-                <ul className="list-disc pl-5 space-y-2 text-base text-text-body dark:text-text-body-dark leading-relaxed">
-                  {eligibility.recommendations.map((rec, index) => (
-                    <li key={index}>{rec}</li>
-                  ))}
-                </ul>
+                <div className={`${markdownStyles.markdown} markdown`}>
+                  <ul>
+                    {eligibility.recommendations.map((rec, index) => (
+                      <li key={index}>{rec}</li>
+                    ))}
+                  </ul>
+                </div>
               </div>
             )}
 
@@ -415,11 +419,13 @@ export function ContestFinder({ cycleData, countries }: ContestFinderProps) {
                     </div>
                     <Divider className={styles.contentSectionDivider} />
 
-                    <p className="text-base text-text-body dark:text-text-body-dark leading-relaxed">
-                      Teams studying in {eligibility.country.name} must participate in this regional through its domestic preliminary contests (Rule A3).
-                    </p>
+                    <div className={`${markdownStyles.markdown} markdown`}>
+                      <p>
+                        Teams studying in {eligibility.country.name} must participate in this regional through its domestic preliminary contests (Rule A3).
+                      </p>
 
-                    {renderContestTable([eligibility.domesticRegional])}
+                      {renderContestTable([eligibility.domesticRegional])}
+                    </div>
                   </div>
                 )}
 
@@ -438,11 +444,13 @@ export function ContestFinder({ cycleData, countries }: ContestFinderProps) {
                   </div>
                   <Divider className={styles.contentSectionDivider} />
 
-                  <p className="text-base text-text-body dark:text-text-body-dark leading-relaxed">
-                    Under Rule A6, teams from a country hosting a regional cannot compete in two foreign regionals. If your team wishes to participate in a second regional, you may choose at most <strong>one</strong> of the following foreign regionals:
-                  </p>
+                  <div className={`${markdownStyles.markdown} markdown`}>
+                    <p>
+                      Under Rule A6, teams from a country hosting a regional cannot compete in two foreign regionals. If your team wishes to participate in a second regional, you may choose at most <strong>one</strong> of the following foreign regionals:
+                    </p>
 
-                  {renderContestTable(eligibility.availableForeignRegionals)}
+                    {renderContestTable(eligibility.availableForeignRegionals)}
+                  </div>
                 </div>
               </>
             ) : (
@@ -462,11 +470,13 @@ export function ContestFinder({ cycleData, countries }: ContestFinderProps) {
                   </div>
                   <Divider className={styles.contentSectionDivider} />
 
-                  <p className="text-base text-text-body dark:text-text-body-dark leading-relaxed">
-                    Since your university is in {eligibility.country.name} (which does not host a regional contest), your team may apply to participate in up to <strong>two</strong> of the following regional contests (Rule A1 & Rule A4):
-                  </p>
+                  <div className={`${markdownStyles.markdown} markdown`}>
+                    <p>
+                      Since your university is in {eligibility.country.name} (which does not host a regional contest), your team may apply to participate in up to <strong>two</strong> of the following regional contests (Rule A1 & Rule A4):
+                    </p>
 
-                  {renderContestTable(cycleData.contests)}
+                    {renderContestTable(cycleData.contests)}
+                  </div>
                 </div>
               )
             )}
@@ -488,27 +498,29 @@ export function ContestFinder({ cycleData, countries }: ContestFinderProps) {
           </div>
           <Divider className={styles.contentSectionDivider} />
 
-          <ul className="list-disc pl-5 space-y-2 text-base text-text-body dark:text-text-body-dark leading-relaxed">
-            {(eligibility ? eligibility.importantRules : cycleData.rules.apac_non_host.importantRules).map((rule, idx) => (
-              <li key={idx}>
-                <strong>{rule.ruleCode}:</strong> {rule.summary}
-              </li>
-            ))}
-          </ul>
+          <div className={`${markdownStyles.markdown} markdown`}>
+            <ul>
+              {(eligibility ? eligibility.importantRules : cycleData.rules.apac_non_host.importantRules).map((rule, idx) => (
+                <li key={idx}>
+                  <strong>{rule.ruleCode}:</strong> {rule.summary}
+                </li>
+              ))}
+            </ul>
 
-          {/* Official Contest Rules Disclaimer */}
-          <div className="mt-6 p-4 rounded border border-border/50 dark:border-border/30 bg-text-header-others-cyanalpha/20 text-sm text-text-body dark:text-text-body-dark leading-relaxed">
-            <strong>Official Contest Rules:</strong> Please refer to the official{" "}
-            <Link
-              href={cycleData.rulesUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-text-links dark:text-text-links-dark underline font-semibold inline-flex items-center gap-1"
-            >
-              <span>ICPC Asia Pacific Rules ({cycleData.academicYear})</span>
-              <ExternalLink className="w-3.5 h-3.5 inline" />
-            </Link>{" "}
-            for the complete set of regulations, including detailed formulas for site scores, university quotas, Championship selection, and World Finals qualification.
+            {/* Official Contest Rules Disclaimer */}
+            <div className="mt-6 p-4 rounded border border-border bg-text-header-others-cyanalpha/20 text-base leading-relaxed">
+              <strong>Official Contest Rules:</strong> Please refer to the official{" "}
+              <Link
+                href={cycleData.rulesUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-text-links dark:text-text-links-dark underline font-semibold inline-flex items-center gap-1"
+              >
+                <span>ICPC Asia Pacific Rules ({cycleData.academicYear})</span>
+                <ExternalLink className="w-3.5 h-3.5 inline" />
+              </Link>{" "}
+              for the complete set of regulations, including detailed formulas for site scores, university quotas, Championship selection, and World Finals qualification.
+            </div>
           </div>
         </div>
       </main>

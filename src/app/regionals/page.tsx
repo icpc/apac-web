@@ -10,7 +10,7 @@ export const dynamic = "force-static";
 export const metadata: Metadata = {
   title: "Participate in 2026 ICPC Asia Pacific Regionals | ICPC Asia Pacific",
   description:
-    "Find which 2026/2027 ICPC Asia Pacific regional contests your university team is eligible to participate in, and plan your competition schedule based on official rules.",
+    "Find which 2026–2027 ICPC Asia Pacific regional contests your university team is eligible to participate in, and plan your competition schedule based on official rules.",
 };
 
 export default async function RegionalsPage() {
@@ -28,13 +28,13 @@ export default async function RegionalsPage() {
             <h1 className="text-4xl font-bold text-text-header-secondary mb-8">
               Participate in the 2026 ICPC Regionals
             </h1>
-            <p className="text-base text-text-body dark:text-text-body-dark max-w-3xl leading-relaxed">
+            <p className="text-lg text-text-body dark:text-text-body-dark max-w-3xl leading-relaxed">
               This guide outlines the regional contest pathways, domestic preliminary requirements, and foreign team participation rules for universities across the Asia Pacific region during the {cycleData.academicYear} cycle.
             </p>
           </div>
 
           {/* Official Contest Rules banner at the top before the subpage */}
-          <div className="p-4 rounded border border-border/50 dark:border-border/30 bg-text-header-others-cyanalpha/20 text-sm text-text-body dark:text-text-body-dark leading-relaxed mb-8 ml-6 sm:ml-0">
+          <div className="p-4 rounded border border-border/50 dark:border-border/30 bg-text-header-others-cyanalpha/20 text-base text-text-body dark:text-text-body-dark leading-relaxed mb-8 ml-6 sm:ml-0">
             <strong>Official Contest Rules:</strong> Please refer to the official{" "}
             <Link
               href={cycleData.rulesUrl}
