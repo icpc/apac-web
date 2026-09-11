@@ -1,0 +1,184 @@
+[
+  {
+    "code": "KR",
+    "name": "South Korea",
+    "flag": "🇰🇷",
+    "category": "host",
+    "regionName": "Asia Pacific (Host Country)"
+  },
+  {
+    "code": "ID",
+    "name": "Indonesia",
+    "flag": "🇮🇩",
+    "category": "host",
+    "regionName": "Asia Pacific (Host Country)"
+  },
+  {
+    "code": "JP",
+    "name": "Japan",
+    "flag": "🇯🇵",
+    "category": "host",
+    "regionName": "Asia Pacific (Host Country)"
+  },
+  {
+    "code": "VN",
+    "name": "Vietnam",
+    "flag": "🇻🇳",
+    "category": "host",
+    "regionName": "Asia Pacific (Host Country)"
+  },
+  {
+    "code": "TW",
+    "name": "Taiwan",
+    "flag": "🇹🇼",
+    "category": "host",
+    "regionName": "Asia Pacific (Host Country)"
+  },
+  {
+    "code": "SG",
+    "name": "Singapore",
+    "flag": "🇸🇬",
+    "category": "apac_non_host",
+    "regionName": "Asia Pacific"
+  },
+  {
+    "code": "MY",
+    "name": "Malaysia",
+    "flag": "🇲🇾",
+    "category": "apac_non_host",
+    "regionName": "Asia Pacific"
+  },
+  {
+    "code": "TH",
+    "name": "Thailand",
+    "flag": "🇹🇭",
+    "category": "apac_non_host",
+    "regionName": "Asia Pacific"
+  },
+  {
+    "code": "PH",
+    "name": "Philippines",
+    "flag": "🇵🇭",
+    "category": "apac_non_host",
+    "regionName": "Asia Pacific"
+  },
+  {
+    "code": "KH",
+    "name": "Cambodia",
+    "flag": "🇰🇭",
+    "category": "apac_non_host",
+    "regionName": "Asia Pacific"
+  },
+  {
+    "code": "LA",
+    "name": "Laos",
+    "flag": "🇱🇦",
+    "category": "apac_non_host",
+    "regionName": "Asia Pacific"
+  },
+  {
+    "code": "MM",
+    "name": "Myanmar",
+    "flag": "🇲🇲",
+    "category": "apac_non_host",
+    "regionName": "Asia Pacific"
+  },
+  {
+    "code": "BN",
+    "name": "Brunei",
+    "flag": "🇧🇳",
+    "category": "apac_non_host",
+    "regionName": "Asia Pacific"
+  },
+  {
+    "code": "MN",
+    "name": "Mongolia",
+    "flag": "🇲🇳",
+    "category": "apac_non_host",
+    "regionName": "Asia Pacific"
+  },
+  {
+    "code": "TL",
+    "name": "Timor-Leste",
+    "flag": "🇹🇱",
+    "category": "apac_non_host",
+    "regionName": "Asia Pacific"
+  },
+  {
+    "code": "AU",
+    "name": "Australia",
+    "flag": "🇦🇺",
+    "category": "south_pacific",
+    "regionName": "South Pacific"
+  },
+  {
+    "code": "NZ",
+    "name": "New Zealand",
+    "flag": "🇳🇿",
+    "category": "south_pacific",
+    "regionName": "South Pacific"
+  },
+  {
+    "code": "FJ",
+    "name": "Fiji",
+    "flag": "🇫🇯",
+    "category": "south_pacific",
+    "regionName": "South Pacific"
+  },
+  {
+    "code": "PG",
+    "name": "Papua New Guinea",
+    "flag": "🇵🇬",
+    "category": "south_pacific",
+    "regionName": "South Pacific"
+  },
+  {
+    "code": "WS",
+    "name": "Samoa",
+    "flag": "🇼🇸",
+    "category": "south_pacific",
+    "regionName": "South Pacific"
+  },
+  {
+    "code": "CN",
+    "name": "China",
+    "flag": "🇨🇳",
+    "category": "other_region",
+    "regionName": "Asia East"
+  },
+  {
+    "code": "HK",
+    "name": "Hong Kong",
+    "flag": "🇭🇰",
+    "category": "other_region",
+    "regionName": "Asia East"
+  },
+  {
+    "code": "MO",
+    "name": "Macau",
+    "flag": "🇲🇴",
+    "category": "other_region",
+    "regionName": "Asia East"
+  },
+  {
+    "code": "IN",
+    "name": "India",
+    "flag": "🇮🇳",
+    "category": "other_region",
+    "regionName": "Asia West"
+  },
+  {
+    "code": "BD",
+    "name": "Bangladesh",
+    "flag": "🇧🇩",
+    "category": "other_region",
+    "regionName": "Asia West"
+  },
+  {
+    "code": "OTHER",
+    "name": "Other Super-Region (Europe, Americas, etc.)",
+    "flag": "🌐",
+    "category": "other_region",
+    "regionName": "Other Super-Region"
+  }
+]
