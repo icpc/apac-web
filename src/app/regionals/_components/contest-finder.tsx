@@ -128,7 +128,7 @@ export function ContestFinder({ cycleData, countries }: ContestFinderProps) {
   };
 
   return (
-    <div className="container mx-auto px-4 overflow-x-clip">
+    <div className="w-full overflow-x-clip">
       <div className="flex flex-col md:flex-row">
         {/* Mobile Sidebar Toggle Button */}
         <button
@@ -235,7 +235,7 @@ export function ContestFinder({ cycleData, countries }: ContestFinderProps) {
             )}
 
             {/* Disclaimer for South Pacific and other regions */}
-            <p className="text-sm text-gray-500 dark:text-gray-400 max-w-3xl">
+            <p className="text-sm text-gray-500 dark:text-gray-400">
               <strong>Note:</strong> This tool focuses on institutions in the Asia Pacific region. Teams from the South Pacific (Australia, New Zealand, etc.) qualify for the World Finals through the South Pacific Independent Regional Contest (SPIRC). Teams from other super-regions qualify through their respective regional contests.
             </p>
           </FinderSection>

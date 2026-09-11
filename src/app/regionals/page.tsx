@@ -28,10 +28,10 @@ export default async function RegionalsPage() {
             <h1 className="text-4xl font-bold text-text-header-secondary mb-8">
               Participate in the 2026 ICPC Regionals
             </h1>
-            <p className="text-lg text-text-body dark:text-text-body-dark max-w-3xl leading-relaxed">
+            <p className="text-lg text-text-body dark:text-text-body-dark leading-relaxed mb-4">
               This guide outlines the regional contest pathways, domestic preliminary requirements, and foreign team participation rules for universities across the Asia Pacific region during the {cycleData.academicYear} cycle.
             </p>
-            <p className="text-lg text-text-body dark:text-text-body-dark max-w-3xl leading-relaxed">
+            <p className="text-lg text-text-body dark:text-text-body-dark leading-relaxed">
               The top teams from each regionals will be invited to the 2027 Asia Pacific Championship in Tokyo, Japan.
             </p>
           </div>
@@ -52,7 +52,7 @@ export default async function RegionalsPage() {
           </div>
 
           {/* 2-Column Subpage Layout */}
-          <div className="w-full pl-2">
+          <div className="w-full">
             <ContestFinder cycleData={cycleData} countries={countries} />
           </div>
         </div>
