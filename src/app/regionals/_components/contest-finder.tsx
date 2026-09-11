@@ -2,7 +2,7 @@
 
 import React, { useState, useMemo, useEffect } from "react";
 import Link from "next/link";
-import { ExternalLink, Menu, X } from "lucide-react";
+import { ExternalLink, ChevronRight, X } from "lucide-react";
 import Divider from "@/app/_components/divider";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -26,13 +26,14 @@ interface NavSection {
 }
 
 export function ContestFinder({ cycleData, countries }: ContestFinderProps) {
-  // Default to Japan (first host country)
-  const [selectedCountryCode, setSelectedCountryCode] = useState<string>("JP");
+  // Empty default country selection
+  const [selectedCountryCode, setSelectedCountryCode] = useState<string>("");
   const [activeSectionId, setActiveSectionId] = useState<string>("country-selection");
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
   const [copiedSection, setCopiedSection] = useState<string | null>(null);
 
   const eligibility = useMemo(() => {
+    if (!selectedCountryCode) return null;
     return evaluateEligibility(selectedCountryCode, cycleData, countries);
   }, [selectedCountryCode, cycleData, countries]);
 
@@ -44,14 +45,23 @@ export function ContestFinder({ cycleData, countries }: ContestFinderProps) {
     return countries.filter((c) => c.category === "apac_non_host");
   }, [countries]);
 
-  const isHostCountry = eligibility.category === "host";
+  const isHostCountry = eligibility?.category === "host";
 
   // Sidebar navigation items based on selected country
   const navSections: NavSection[] = useMemo(() => {
     const base: NavSection[] = [
       { id: "country-selection", label: "Country of Study" },
-      { id: "guidelines", label: "Participation Guidelines" },
     ];
+
+    if (!selectedCountryCode) {
+      base.push(
+        { id: "available-regionals", label: "Available Regional Contests" },
+        { id: "contest-rules", label: "Applicable Contest Rules" }
+      );
+      return base;
+    }
+
+    base.push({ id: "guidelines", label: "Participation Guidelines" });
 
     if (isHostCountry) {
       base.push(
@@ -64,7 +74,7 @@ export function ContestFinder({ cycleData, countries }: ContestFinderProps) {
 
     base.push({ id: "contest-rules", label: "Applicable Contest Rules" });
     return base;
-  }, [isHostCountry]);
+  }, [selectedCountryCode, isHostCountry]);
 
   // Scrollspy observer to highlight active section in sidebar
   useEffect(() => {
@@ -175,16 +185,18 @@ export function ContestFinder({ cycleData, countries }: ContestFinderProps) {
 
   return (
     <div className="flex flex-col md:flex-row">
-      {/* Mobile Toggle Button */}
-      <Button
-        variant="outline"
-        size="icon"
-        className={styles.mobileToggleButton}
-        onClick={() => setIsSidebarOpen(true)}
-        aria-label="Open Navigation"
+      {/* Mobile Sidebar Toggle Button */}
+      <button
+        onClick={() => setIsSidebarOpen((prev) => !prev)}
+        type="button"
+        className="fixed top-24 -left-2 h-10 w-10 flex items-center justify-center rounded-md border border-border-navbar/50 bg-navbar/70 hover:bg-navbar/90 transition-all duration-200 backdrop-blur-lg z-[45] dark:border-border-navbar-dark/50 dark:bg-navbar-dark/70 dark:hover:bg-navbar-dark/90 md:hidden"
+        aria-label="Toggle sidebar"
       >
-        <Menu className="h-5 w-5" />
-      </Button>
+        <ChevronRight
+          className={`h-5 w-5 text-text-header-primary dark:text-text-header-primary-dark transition-transform duration-200 ${isSidebarOpen ? "rotate-180" : "rotate-0"
+            }`}
+        />
+      </button>
 
       {/* Mobile Drawer Modal */}
       {isSidebarOpen && (
@@ -226,11 +238,10 @@ export function ContestFinder({ cycleData, countries }: ContestFinderProps) {
                         }}
                       >
                         <span
-                          className={`${styles.mainNavTitle} ${
-                            isActive
-                              ? "text-text-header-secondary dark:text-text-header-secondary-dark"
-                              : ""
-                          }`}
+                          className={`${styles.mainNavTitle} ${isActive
+                            ? "text-text-header-secondary dark:text-text-header-secondary-dark"
+                            : ""
+                            }`}
                         >
                           {section.label}
                         </span>
@@ -262,11 +273,10 @@ export function ContestFinder({ cycleData, countries }: ContestFinderProps) {
                       onClick={(e) => scrollToSection(e, section.id)}
                     >
                       <span
-                        className={`${styles.mainNavTitle} ${
-                          isActive
-                            ? "text-text-header-secondary dark:text-text-header-secondary-dark"
-                            : ""
-                        }`}
+                        className={`${styles.mainNavTitle} ${isActive
+                          ? "text-text-header-secondary dark:text-text-header-secondary-dark"
+                          : ""
+                          }`}
                       >
                         {section.label}
                       </span>
@@ -280,7 +290,7 @@ export function ContestFinder({ cycleData, countries }: ContestFinderProps) {
       </aside>
 
       {/* Right Main Content Area */}
-      <main className="flex-1 md:ml-8 min-w-0">
+      <main className="flex-1 md:ml-8 min-w-0 ml-6 sm:ml-0">
         {/* Section 1: Country of Study */}
         <div id="country-selection" className={styles.contentSection}>
           <div className={styles.contentSectionHeader}>
@@ -301,18 +311,13 @@ export function ContestFinder({ cycleData, countries }: ContestFinderProps) {
           </p>
 
           <div className="max-w-md my-4">
-            <label
-              htmlFor="country-select"
-              className="block text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-1.5"
-            >
-              Country of Institution
-            </label>
             <select
               id="country-select"
               value={selectedCountryCode}
               onChange={(e) => setSelectedCountryCode(e.target.value)}
               className="w-full rounded border border-border/70 dark:border-border/40 bg-white dark:bg-[#1f2937] px-3 py-2 text-sm text-text-body dark:text-text-body-dark focus:outline-none focus:ring-1 focus:ring-text-header-secondary"
             >
+              <option value="">Select country of institution...</option>
               <optgroup label="Regional Host Countries">
                 {hostCountries.map((c) => (
                   <option key={c.code} value={c.code} className="dark:bg-[#1f2937]">
@@ -331,9 +336,11 @@ export function ContestFinder({ cycleData, countries }: ContestFinderProps) {
           </div>
 
           {/* Immediate Status */}
-          <p className="mt-2 text-base font-semibold text-text-header-secondary dark:text-text-header-secondary-dark">
-            {eligibility.statusTitle}
-          </p>
+          {eligibility && (
+            <p className="mt-2 text-base font-semibold text-text-header-secondary dark:text-text-header-secondary-dark">
+              {eligibility.statusTitle}
+            </p>
+          )}
 
           {/* Disclaimer for South Pacific and other regions */}
           <p className="mt-3 text-xs text-gray-500 dark:text-gray-400 leading-relaxed max-w-3xl">
@@ -341,79 +348,8 @@ export function ContestFinder({ cycleData, countries }: ContestFinderProps) {
           </p>
         </div>
 
-        {/* Section 2: Participation Guidelines */}
-        <div id="guidelines" className={styles.contentSection}>
-          <div className={styles.contentSectionHeader}>
-            <h2 className={styles.contentSectionTitle}>
-              Participation Guidelines{" "}
-              <CopyTooltip
-                onCopy={(e) => handleCopyUrl(e, "guidelines")}
-                showCopiedTooltip={copiedSection === "guidelines"}
-              >
-                🔗
-              </CopyTooltip>
-            </h2>
-          </div>
-          <Divider className={styles.contentSectionDivider} />
-
-          <ul className="list-disc pl-5 space-y-2 text-base text-text-body dark:text-text-body-dark leading-relaxed">
-            {eligibility.recommendations.map((rec, index) => (
-              <li key={index}>{rec}</li>
-            ))}
-          </ul>
-        </div>
-
-        {/* Section 3 & 4: Regional Contests Breakdown */}
-        {isHostCountry ? (
-          <>
-            {/* Primary Domestic Regional */}
-            {eligibility.domesticRegional && (
-              <div id="primary-regional" className={styles.contentSection}>
-                <div className={styles.contentSectionHeader}>
-                  <h2 className={styles.contentSectionTitle}>
-                    Primary Regional Contest (Domestic){" "}
-                    <CopyTooltip
-                      onCopy={(e) => handleCopyUrl(e, "primary-regional")}
-                      showCopiedTooltip={copiedSection === "primary-regional"}
-                    >
-                      🔗
-                    </CopyTooltip>
-                  </h2>
-                </div>
-                <Divider className={styles.contentSectionDivider} />
-
-                <p className="text-base text-text-body dark:text-text-body-dark leading-relaxed">
-                  Teams studying in {eligibility.country.name} must participate in this regional through its domestic preliminary contests (Rule A3).
-                </p>
-
-                {renderContestTable([eligibility.domesticRegional])}
-              </div>
-            )}
-
-            {/* Optional Foreign Regional */}
-            <div id="optional-regional" className={styles.contentSection}>
-              <div className={styles.contentSectionHeader}>
-                <h2 className={styles.contentSectionTitle}>
-                  Optional Second Regional (Foreign){" "}
-                  <CopyTooltip
-                    onCopy={(e) => handleCopyUrl(e, "optional-regional")}
-                    showCopiedTooltip={copiedSection === "optional-regional"}
-                  >
-                    🔗
-                  </CopyTooltip>
-                </h2>
-              </div>
-              <Divider className={styles.contentSectionDivider} />
-
-              <p className="text-base text-text-body dark:text-text-body-dark leading-relaxed">
-                Under Rule A6, teams from a country hosting a regional cannot compete in two foreign regionals. If your team wishes to participate in a second regional, you may choose at most <strong>one</strong> of the following foreign regionals:
-              </p>
-
-              {renderContestTable(eligibility.availableForeignRegionals)}
-            </div>
-          </>
-        ) : (
-          /* Single section for non-host countries */
+        {/* When no country is selected yet: list all available contests without domestic/foreign distinction */}
+        {!selectedCountryCode ? (
           <div id="available-regionals" className={styles.contentSection}>
             <div className={styles.contentSectionHeader}>
               <h2 className={styles.contentSectionTitle}>
@@ -429,14 +365,115 @@ export function ContestFinder({ cycleData, countries }: ContestFinderProps) {
             <Divider className={styles.contentSectionDivider} />
 
             <p className="text-base text-text-body dark:text-text-body-dark leading-relaxed">
-              Since your university is in {eligibility.country.name} (which does not host a regional contest), your team may apply to participate in up to <strong>two</strong> of the following regional contests (Rule A1 & Rule A4):
+              The following {cycleData.contests.length} regional contests are scheduled for the {cycleData.academicYear} Asia Pacific cycle:
             </p>
 
             {renderContestTable(cycleData.contests)}
           </div>
+        ) : (
+          <>
+            {/* Section 2: Participation Guidelines */}
+            {eligibility && (
+              <div id="guidelines" className={styles.contentSection}>
+                <div className={styles.contentSectionHeader}>
+                  <h2 className={styles.contentSectionTitle}>
+                    Participation Guidelines{" "}
+                    <CopyTooltip
+                      onCopy={(e) => handleCopyUrl(e, "guidelines")}
+                      showCopiedTooltip={copiedSection === "guidelines"}
+                    >
+                      🔗
+                    </CopyTooltip>
+                  </h2>
+                </div>
+                <Divider className={styles.contentSectionDivider} />
+
+                <ul className="list-disc pl-5 space-y-2 text-base text-text-body dark:text-text-body-dark leading-relaxed">
+                  {eligibility.recommendations.map((rec, index) => (
+                    <li key={index}>{rec}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {/* Section 3 & 4: Regional Contests Breakdown */}
+            {isHostCountry && eligibility ? (
+              <>
+                {/* Primary Domestic Regional */}
+                {eligibility.domesticRegional && (
+                  <div id="primary-regional" className={styles.contentSection}>
+                    <div className={styles.contentSectionHeader}>
+                      <h2 className={styles.contentSectionTitle}>
+                        Primary Regional Contest (Domestic){" "}
+                        <CopyTooltip
+                          onCopy={(e) => handleCopyUrl(e, "primary-regional")}
+                          showCopiedTooltip={copiedSection === "primary-regional"}
+                        >
+                          🔗
+                        </CopyTooltip>
+                      </h2>
+                    </div>
+                    <Divider className={styles.contentSectionDivider} />
+
+                    <p className="text-base text-text-body dark:text-text-body-dark leading-relaxed">
+                      Teams studying in {eligibility.country.name} must participate in this regional through its domestic preliminary contests (Rule A3).
+                    </p>
+
+                    {renderContestTable([eligibility.domesticRegional])}
+                  </div>
+                )}
+
+                {/* Optional Foreign Regional */}
+                <div id="optional-regional" className={styles.contentSection}>
+                  <div className={styles.contentSectionHeader}>
+                    <h2 className={styles.contentSectionTitle}>
+                      Optional Second Regional (Foreign){" "}
+                      <CopyTooltip
+                        onCopy={(e) => handleCopyUrl(e, "optional-regional")}
+                        showCopiedTooltip={copiedSection === "optional-regional"}
+                      >
+                        🔗
+                      </CopyTooltip>
+                    </h2>
+                  </div>
+                  <Divider className={styles.contentSectionDivider} />
+
+                  <p className="text-base text-text-body dark:text-text-body-dark leading-relaxed">
+                    Under Rule A6, teams from a country hosting a regional cannot compete in two foreign regionals. If your team wishes to participate in a second regional, you may choose at most <strong>one</strong> of the following foreign regionals:
+                  </p>
+
+                  {renderContestTable(eligibility.availableForeignRegionals)}
+                </div>
+              </>
+            ) : (
+              /* Single section for non-host countries */
+              eligibility && (
+                <div id="available-regionals" className={styles.contentSection}>
+                  <div className={styles.contentSectionHeader}>
+                    <h2 className={styles.contentSectionTitle}>
+                      Available Regional Contests{" "}
+                      <CopyTooltip
+                        onCopy={(e) => handleCopyUrl(e, "available-regionals")}
+                        showCopiedTooltip={copiedSection === "available-regionals"}
+                      >
+                        🔗
+                      </CopyTooltip>
+                    </h2>
+                  </div>
+                  <Divider className={styles.contentSectionDivider} />
+
+                  <p className="text-base text-text-body dark:text-text-body-dark leading-relaxed">
+                    Since your university is in {eligibility.country.name} (which does not host a regional contest), your team may apply to participate in up to <strong>two</strong> of the following regional contests (Rule A1 & Rule A4):
+                  </p>
+
+                  {renderContestTable(cycleData.contests)}
+                </div>
+              )
+            )}
+          </>
         )}
 
-        {/* Section 5: Applicable Contest Rules */}
+        {/* Section: Applicable Contest Rules */}
         <div id="contest-rules" className={styles.contentSection}>
           <div className={styles.contentSectionHeader}>
             <h2 className={styles.contentSectionTitle}>
@@ -452,7 +489,7 @@ export function ContestFinder({ cycleData, countries }: ContestFinderProps) {
           <Divider className={styles.contentSectionDivider} />
 
           <ul className="list-disc pl-5 space-y-2 text-base text-text-body dark:text-text-body-dark leading-relaxed">
-            {eligibility.importantRules.map((rule, idx) => (
+            {(eligibility ? eligibility.importantRules : cycleData.rules.apac_non_host.importantRules).map((rule, idx) => (
               <li key={idx}>
                 <strong>{rule.ruleCode}:</strong> {rule.summary}
               </li>
@@ -474,7 +511,7 @@ export function ContestFinder({ cycleData, countries }: ContestFinderProps) {
             for the complete set of regulations, including detailed formulas for site scores, university quotas, Championship selection, and World Finals qualification.
           </div>
         </div>
-        </main>
-      </div>
+      </main>
+    </div>
   );
 }
