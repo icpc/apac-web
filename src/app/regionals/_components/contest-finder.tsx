@@ -1,26 +1,18 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import Link from "next/link";
-import {
-  Calendar,
-  MapPin,
-  ExternalLink,
-  AlertTriangle,
-  CheckCircle2,
-  BookOpen,
-  Info,
-  Sparkles,
-  Plane,
-  Building,
-  Check,
-  Search,
-  Globe,
-} from "lucide-react";
+import { ExternalLink, Menu, X } from "lucide-react";
+import Divider from "@/app/_components/divider";
+import { Button } from "@/components/ui/button";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { CopyTooltip } from "@/components/ui/tooltip";
+import styles from "@/app/_styles/sidebar-nav-styles.module.css";
 import {
   RegionalsCycleData,
   CountryInfo,
   evaluateEligibility,
+  RegionalContest,
 } from "@/lib/regionals";
 
 interface ContestFinderProps {
@@ -28,572 +20,461 @@ interface ContestFinderProps {
   countries: CountryInfo[];
 }
 
+interface NavSection {
+  id: string;
+  label: string;
+}
+
 export function ContestFinder({ cycleData, countries }: ContestFinderProps) {
-  // Default to Indonesia or first host country
+  // Default to Japan (first host country)
   const [selectedCountryCode, setSelectedCountryCode] = useState<string>("JP");
-  const [selectedContestIds, setSelectedContestIds] = useState<string[]>([
-    "yokohama",
-  ]);
-  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [activeSectionId, setActiveSectionId] = useState<string>("country-selection");
+  const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
+  const [copiedSection, setCopiedSection] = useState<string | null>(null);
 
   const eligibility = useMemo(() => {
     return evaluateEligibility(selectedCountryCode, cycleData, countries);
   }, [selectedCountryCode, cycleData, countries]);
 
-  // Host countries for quick pill selection
   const hostCountries = useMemo(() => {
     return countries.filter((c) => c.category === "host");
   }, [countries]);
 
-  const popularNonHostCountries = useMemo(() => {
-    const codes = ["SG", "MY", "TH", "PH", "AU"];
-    return countries.filter((c) => codes.includes(c.code));
+  const nonHostCountries = useMemo(() => {
+    return countries.filter((c) => c.category === "apac_non_host");
   }, [countries]);
 
-  const filteredCountries = useMemo(() => {
-    if (!searchQuery.trim()) return countries;
-    const q = searchQuery.toLowerCase();
-    return countries.filter(
-      (c) =>
-        c.name.toLowerCase().includes(q) ||
-        c.code.toLowerCase().includes(q) ||
-        c.regionName.toLowerCase().includes(q)
-    );
-  }, [countries, searchQuery]);
+  const isHostCountry = eligibility.category === "host";
 
-  const toggleContestSelection = (contestId: string) => {
-    if (selectedContestIds.includes(contestId)) {
-      setSelectedContestIds((prev) => prev.filter((id) => id !== contestId));
+  // Sidebar navigation items based on selected country
+  const navSections: NavSection[] = useMemo(() => {
+    const base: NavSection[] = [
+      { id: "country-selection", label: "Country of Study" },
+      { id: "guidelines", label: "Participation Guidelines" },
+    ];
+
+    if (isHostCountry) {
+      base.push(
+        { id: "primary-regional", label: "Primary Regional (Domestic)" },
+        { id: "optional-regional", label: "Optional Second Regional (Foreign)" }
+      );
     } else {
-      if (selectedContestIds.length >= 2) {
-        // Replace the second one or shift
-        setSelectedContestIds([selectedContestIds[1], contestId]);
-      } else {
-        setSelectedContestIds((prev) => [...prev, contestId]);
+      base.push({ id: "available-regionals", label: "Available Regional Contests" });
+    }
+
+    base.push({ id: "contest-rules", label: "Applicable Contest Rules" });
+    return base;
+  }, [isHostCountry]);
+
+  // Scrollspy observer to highlight active section in sidebar
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            setActiveSectionId(entry.target.id);
+          }
+        }
+      },
+      {
+        rootMargin: "-90px 0px -60% 0px",
+        threshold: 0.1,
       }
+    );
+
+    navSections.forEach(({ id }) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+
+    return () => observer.disconnect();
+  }, [navSections]);
+
+  const scrollToSection = (e: React.MouseEvent<HTMLElement>, id: string) => {
+    e.preventDefault();
+    const el = document.getElementById(id);
+    if (el) {
+      const offset = 90;
+      const bodyRect = document.body.getBoundingClientRect().top;
+      const elementRect = el.getBoundingClientRect().top;
+      const elementPosition = elementRect - bodyRect;
+      const offsetPosition = elementPosition - offset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth",
+      });
+      window.history.replaceState(null, "", `#${id}`);
+      setActiveSectionId(id);
     }
   };
 
-  // Rule validations for the 2-contest plan
-  const planValidation = useMemo(() => {
-    const selectedContests = cycleData.contests.filter((c) =>
-      selectedContestIds.includes(c.id)
-    );
-
-    const hasDomestic =
-      eligibility.domesticRegional &&
-      selectedContestIds.includes(eligibility.domesticRegional.id);
-
-    const foreignCount = selectedContests.filter(
-      (c) => c.hostCountryCode !== eligibility.country.code
-    ).length;
-
-    let error: string | null = null;
-    let warning: string | null = null;
-    let success: string | null = null;
-
-    if (eligibility.category === "host") {
-      if (foreignCount > 1) {
-        error = `Rule A6 Restriction: Teams studying in ${eligibility.country.name} cannot compete in two foreign regionals. If you participate in two regionals, one must be your domestic regional (${eligibility.domesticRegional?.shortName}).`;
-      }
-    }
-
-    if (!error && selectedContestIds.length === 2) {
-      success =
-        "Your 2-contest combination complies with regional rules! Ensure your team uses the exact same team name and 3 team members in both contests (Rule A1 & A2).";
-    }
-
-    return {
-      selectedContests,
-      hasDomestic,
-      foreignCount,
-      error,
-      warning,
-      success,
-    };
-  }, [selectedContestIds, eligibility, cycleData.contests]);
-
-  const handleCountryChange = (code: string) => {
-    setSelectedCountryCode(code);
-    const newEligibility = evaluateEligibility(code, cycleData, countries);
-    // If new country has a domestic regional, pre-select it
-    if (newEligibility.domesticRegional) {
-      setSelectedContestIds([newEligibility.domesticRegional.id]);
-    } else {
-      setSelectedContestIds([]);
+  const handleCopyUrl = async (e: React.MouseEvent, slug: string) => {
+    e.preventDefault();
+    const url = `${window.location.origin}${window.location.pathname}#${slug}`;
+    try {
+      await navigator.clipboard.writeText(url);
+      setCopiedSection(slug);
+      setTimeout(() => setCopiedSection(null), 2000);
+    } catch (err) {
+      console.error("Failed to copy URL:", err);
     }
   };
+
+  const renderContestTable = (contests: RegionalContest[]) => (
+    <div className="overflow-x-auto my-4">
+      <table className="w-full border-collapse border border-border/60 dark:border-border/40 text-sm">
+        <thead>
+          <tr className="bg-text-header-others-cyanalpha">
+            <th className="border border-border/60 dark:border-border/40 px-4 py-2.5 text-left font-bold text-text-header-secondary dark:text-text-header-secondary-dark">
+              Name
+            </th>
+            <th className="border border-border/60 dark:border-border/40 px-4 py-2.5 text-left font-bold text-text-header-secondary dark:text-text-header-secondary-dark whitespace-nowrap">
+              Location
+            </th>
+            <th className="border border-border/60 dark:border-border/40 px-4 py-2.5 text-left font-bold text-text-header-secondary dark:text-text-header-secondary-dark whitespace-nowrap">
+              Date
+            </th>
+            <th className="border border-border/60 dark:border-border/40 px-4 py-2.5 text-left font-bold text-text-header-secondary dark:text-text-header-secondary-dark">
+              Website / Contest Link
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {contests.map((contest) => (
+            <tr
+              key={contest.id}
+              className="hover:bg-text-header-others-cyanalpha/30 transition-colors"
+            >
+              <td className="border border-border/40 dark:border-border/30 px-4 py-2.5 font-medium text-text-body dark:text-text-body-dark">
+                {contest.name}
+              </td>
+              <td className="border border-border/40 dark:border-border/30 px-4 py-2.5 text-text-body dark:text-text-body-dark whitespace-nowrap">
+                {contest.location}
+              </td>
+              <td className="border border-border/40 dark:border-border/30 px-4 py-2.5 text-text-body dark:text-text-body-dark whitespace-nowrap">
+                {contest.date}
+              </td>
+              <td className="border border-border/40 dark:border-border/30 px-4 py-2.5">
+                <Link
+                  href={contest.websiteUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-text-links dark:text-text-links-dark hover:underline inline-flex items-center gap-1 font-medium"
+                >
+                  <span>{contest.websiteLabel}</span>
+                  <ExternalLink className="w-3.5 h-3.5 shrink-0" />
+                </Link>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
 
   return (
-    <div className="space-y-10 pb-16">
-      {/* Official Rules Reference Banner */}
-      <div className="rounded-xl border border-blue-200 dark:border-blue-900/50 bg-blue-50/70 dark:bg-blue-950/30 p-5 transition-all shadow-sm">
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <div className="flex items-start gap-3.5">
-            <div className="p-2.5 rounded-lg bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 shrink-0 mt-0.5 sm:mt-0">
-              <BookOpen className="w-5 h-5" />
-            </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <h3 className="font-semibold text-gray-900 dark:text-gray-100 text-base">
-                  Official Asia Pacific Rules ({cycleData.academicYear})
-                </h3>
-                <span className="text-xs px-2 py-0.5 rounded-full bg-blue-100 dark:bg-blue-900/60 text-blue-700 dark:text-blue-300 font-medium">
-                  Official Reference
-                </span>
+    <div className="flex flex-col md:flex-row">
+      {/* Mobile Toggle Button */}
+      <Button
+        variant="outline"
+        size="icon"
+        className={styles.mobileToggleButton}
+        onClick={() => setIsSidebarOpen(true)}
+        aria-label="Open Navigation"
+      >
+        <Menu className="h-5 w-5" />
+      </Button>
+
+      {/* Mobile Drawer Modal */}
+      {isSidebarOpen && (
+        <div
+          className={styles.sidebarOverlay}
+          onClick={() => setIsSidebarOpen(false)}
+        />
+      )}
+      <div className={`${styles.sidebarModal} ${isSidebarOpen ? styles.sidebarModalOpen : ""}`}>
+        <aside className={styles.sidebarModalContent}>
+          <div className={styles.sidebarContainer}>
+            <div className={styles.sidebarHeader}>
+              <div className="flex items-center justify-between w-full">
+                <h2 className={`${styles.sidebarTitle} whitespace-nowrap text-xl font-bold flex-1 mt-[20px]`}>
+                  The {cycleData.year} Regionals
+                </h2>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => setIsSidebarOpen(false)}
+                  aria-label="Close Navigation"
+                >
+                  <X className="h-5 w-5" />
+                </Button>
               </div>
-              <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">
-                Full guidelines on site scores, university quotas, Championship
-                selection, and World Finals qualification are available on the
-                official rules page.
-              </p>
             </div>
+            <ScrollArea className={styles.scrollArea}>
+              <div className={styles.sidebarContent}>
+                {navSections.map((section) => {
+                  const isActive = activeSectionId === section.id;
+                  return (
+                    <div key={section.id} className={styles.sidebarSection}>
+                      <Button
+                        variant="ghost"
+                        className={`${styles.mainNavButton} focus-visible:ring-0 focus-visible:ring-offset-0`}
+                        onClick={(e) => {
+                          scrollToSection(e, section.id);
+                          setIsSidebarOpen(false);
+                        }}
+                      >
+                        <span
+                          className={`${styles.mainNavTitle} ${
+                            isActive
+                              ? "text-text-header-secondary dark:text-text-header-secondary-dark"
+                              : ""
+                          }`}
+                        >
+                          {section.label}
+                        </span>
+                      </Button>
+                    </div>
+                  );
+                })}
+              </div>
+            </ScrollArea>
           </div>
-          <Link
-            href={cycleData.rulesUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium rounded-lg text-white bg-blue-600 hover:bg-blue-700 transition shadow-sm shrink-0"
-          >
-            <span>Read Official Rules</span>
-            <ExternalLink className="w-4 h-4" />
-          </Link>
-        </div>
+        </aside>
       </div>
 
-      {/* Step 1: Country Selector Section */}
-      <section className="bg-white dark:bg-slate-900/70 border border-gray-200 dark:border-slate-800 rounded-2xl p-6 sm:p-8 shadow-sm">
-        <div className="max-w-3xl">
-          <div className="flex items-center gap-2 text-sm font-semibold text-blue-600 dark:text-blue-400 tracking-wide uppercase mb-2">
-            <Globe className="w-4 h-4" />
-            Step 1: Your University Location
+      {/* Desktop Sidebar - Always visible on desktop */}
+      <aside className={styles.sidebarAside}>
+        <div className={styles.sidebarContainer}>
+          <div className={styles.sidebarHeader}>
+            <h2 className={styles.sidebarTitle}>The {cycleData.year} Regionals</h2>
           </div>
-          <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
-            Where are you studying this {cycleData.academicYear} academic year?
-          </h2>
-          <p className="text-gray-600 dark:text-gray-300 text-sm mt-1.5">
-            ICPC participation eligibility is based on the country where your
-            institution is located. Select your country to view contest pathways
-            and rules that apply to your team.
+          <ScrollArea className={styles.scrollArea}>
+            <div className={styles.sidebarContent}>
+              {navSections.map((section) => {
+                const isActive = activeSectionId === section.id;
+                return (
+                  <div key={section.id} className={styles.sidebarSection}>
+                    <Button
+                      variant="ghost"
+                      className={`${styles.mainNavButton} focus-visible:ring-0 focus-visible:ring-offset-0`}
+                      onClick={(e) => scrollToSection(e, section.id)}
+                    >
+                      <span
+                        className={`${styles.mainNavTitle} ${
+                          isActive
+                            ? "text-text-header-secondary dark:text-text-header-secondary-dark"
+                            : ""
+                        }`}
+                      >
+                        {section.label}
+                      </span>
+                    </Button>
+                  </div>
+                );
+              })}
+            </div>
+          </ScrollArea>
+        </div>
+      </aside>
+
+      {/* Right Main Content Area */}
+      <main className="flex-1 md:ml-8 min-w-0">
+        {/* Section 1: Country of Study */}
+        <div id="country-selection" className={styles.contentSection}>
+          <div className={styles.contentSectionHeader}>
+            <h2 className={styles.contentSectionTitle}>
+              Country of Study{" "}
+              <CopyTooltip
+                onCopy={(e) => handleCopyUrl(e, "country-selection")}
+                showCopiedTooltip={copiedSection === "country-selection"}
+              >
+                🔗
+              </CopyTooltip>
+            </h2>
+          </div>
+          <Divider className={styles.contentSectionDivider} />
+
+          <p className="text-base text-text-body dark:text-text-body-dark mb-4 leading-relaxed">
+            Participation pathways and contest eligibility are determined by the country where your institution is located during the {cycleData.academicYear} academic year.
           </p>
-        </div>
 
-        {/* Quick selection pills */}
-        <div className="mt-6">
-          <label className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider block mb-2.5">
-            Host Countries & Quick Select
-          </label>
-          <div className="flex flex-wrap gap-2">
-            {hostCountries.map((c) => {
-              const isSelected = selectedCountryCode === c.code;
-              return (
-                <button
-                  key={c.code}
-                  type="button"
-                  onClick={() => handleCountryChange(c.code)}
-                  className={`inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-sm font-medium transition-all ${isSelected
-                    ? "bg-blue-600 text-white shadow-sm ring-2 ring-blue-500/30"
-                    : "bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-slate-700"
-                    }`}
-                >
-                  <span className="text-base">{c.flag}</span>
-                  <span>{c.name}</span>
-                  <span
-                    className={`text-xs px-1.5 py-0.5 rounded ${isSelected
-                      ? "bg-blue-500 text-white"
-                      : "bg-gray-200 dark:bg-slate-700 text-gray-600 dark:text-gray-300"
-                      }`}
-                  >
-                    Host
-                  </span>
-                </button>
-              );
-            })}
-            {popularNonHostCountries.map((c) => {
-              const isSelected = selectedCountryCode === c.code;
-              return (
-                <button
-                  key={c.code}
-                  type="button"
-                  onClick={() => handleCountryChange(c.code)}
-                  className={`inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-sm font-medium transition-all ${isSelected
-                    ? "bg-blue-600 text-white shadow-sm ring-2 ring-blue-500/30"
-                    : "bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-slate-700"
-                    }`}
-                >
-                  <span className="text-base">{c.flag}</span>
-                  <span>{c.name}</span>
-                </button>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* Dropdown Selector with search */}
-        <div className="mt-6 pt-6 border-t border-gray-100 dark:border-slate-800/80 flex flex-col sm:flex-row gap-4 items-start sm:items-center">
-          <div className="w-full sm:w-80 relative">
+          <div className="max-w-md my-4">
             <label
               htmlFor="country-select"
-              className="text-xs font-semibold text-gray-500 dark:text-gray-400 block mb-1.5"
+              className="block text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-1.5"
             >
-              Or pick any country:
+              Country of Institution
             </label>
             <select
               id="country-select"
               value={selectedCountryCode}
-              onChange={(e) => handleCountryChange(e.target.value)}
-              className="w-full rounded-lg border border-gray-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-gray-900 dark:text-white px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              onChange={(e) => setSelectedCountryCode(e.target.value)}
+              className="w-full rounded border border-border/70 dark:border-border/40 bg-white dark:bg-[#1f2937] px-3 py-2 text-sm text-text-body dark:text-text-body-dark focus:outline-none focus:ring-1 focus:ring-text-header-secondary"
             >
               <optgroup label="Regional Host Countries">
                 {hostCountries.map((c) => (
-                  <option key={c.code} value={c.code}>
-                    {c.flag} {c.name} (Host)
+                  <option key={c.code} value={c.code} className="dark:bg-[#1f2937]">
+                    {c.name}
                   </option>
                 ))}
               </optgroup>
-              <optgroup label="Asia Pacific (Non-Host)">
-                {countries
-                  .filter((c) => c.category === "apac_non_host")
-                  .map((c) => (
-                    <option key={c.code} value={c.code}>
-                      {c.flag} {c.name}
-                    </option>
-                  ))}
-              </optgroup>
-              <optgroup label="South Pacific">
-                {countries
-                  .filter((c) => c.category === "south_pacific")
-                  .map((c) => (
-                    <option key={c.code} value={c.code}>
-                      {c.flag} {c.name}
-                    </option>
-                  ))}
-              </optgroup>
-              <optgroup label="Other Regions">
-                {countries
-                  .filter((c) => c.category === "other_region")
-                  .map((c) => (
-                    <option key={c.code} value={c.code}>
-                      {c.flag} {c.name}
-                    </option>
-                  ))}
+              <optgroup label="Other Asia Pacific Countries">
+                {nonHostCountries.map((c) => (
+                  <option key={c.code} value={c.code} className="dark:bg-[#1f2937]">
+                    {c.name}
+                  </option>
+                ))}
               </optgroup>
             </select>
           </div>
 
-          <div className="flex-1 text-xs text-gray-500 dark:text-gray-400 sm:pt-5">
-            Currently selected:{" "}
-            <span className="font-semibold text-gray-800 dark:text-gray-200">
-              {eligibility.country.flag} {eligibility.country.name}
-            </span>{" "}
-            ({eligibility.country.regionName})
-          </div>
-        </div>
-      </section>
+          {/* Immediate Status */}
+          <p className="mt-2 text-base font-semibold text-text-header-secondary dark:text-text-header-secondary-dark">
+            {eligibility.statusTitle}
+          </p>
 
-      {/* Step 2: Eligibility & Recommendations Card */}
-      <section className="bg-white dark:bg-slate-900/70 border border-gray-200 dark:border-slate-800 rounded-2xl p-6 sm:p-8 shadow-sm">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-gray-100 dark:border-slate-800">
-          <div>
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 mb-2">
-              <Sparkles className="w-3.5 h-3.5" />
-              {eligibility.statusBadge}
-            </div>
-            <h2 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">
-              {eligibility.statusTitle}
+          {/* Disclaimer for South Pacific and other regions */}
+          <p className="mt-3 text-xs text-gray-500 dark:text-gray-400 leading-relaxed max-w-3xl">
+            <strong>Note:</strong> This tool focuses on institutions in the Asia Pacific region. Teams from the South Pacific (Australia, New Zealand, etc.) qualify for the World Finals through the South Pacific Independent Regional Contest (SPIRC). Teams from other super-regions qualify through their respective regional contests.
+          </p>
+        </div>
+
+        {/* Section 2: Participation Guidelines */}
+        <div id="guidelines" className={styles.contentSection}>
+          <div className={styles.contentSectionHeader}>
+            <h2 className={styles.contentSectionTitle}>
+              Participation Guidelines{" "}
+              <CopyTooltip
+                onCopy={(e) => handleCopyUrl(e, "guidelines")}
+                showCopiedTooltip={copiedSection === "guidelines"}
+              >
+                🔗
+              </CopyTooltip>
             </h2>
           </div>
+          <Divider className={styles.contentSectionDivider} />
 
-          <div className="flex items-center gap-3">
-            <div className="text-right">
-              <div className="text-xs text-gray-500 dark:text-gray-400">
-                Max Regionals Limit
-              </div>
-              <div className="text-lg font-bold text-gray-900 dark:text-white">
-                {eligibility.maxTotalRegionals} Regionals Total
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Guidance Bullet Points */}
-        <div className="mt-6 space-y-3">
-          <h3 className="text-sm font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">
-            Participation Guidance & Guidelines
-          </h3>
-          <ul className="space-y-2.5">
+          <ul className="list-disc pl-5 space-y-2 text-base text-text-body dark:text-text-body-dark leading-relaxed">
             {eligibility.recommendations.map((rec, index) => (
-              <li
-                key={index}
-                className="flex items-start gap-3 text-sm text-gray-700 dark:text-gray-200 leading-relaxed"
-              >
-                <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5" />
-                <span>{rec}</span>
-              </li>
+              <li key={index}>{rec}</li>
             ))}
           </ul>
         </div>
 
-        {/* Important Rules Cards */}
-        <div className="mt-6 pt-6 border-t border-gray-100 dark:border-slate-800">
-          <h3 className="text-sm font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-3">
-            Key Rules from the Official Regulation
-          </h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-            {eligibility.importantRules.map((rule, idx) => (
-              <div
-                key={idx}
-                className="rounded-xl border border-gray-100 dark:border-slate-800 bg-gray-50/70 dark:bg-slate-800/40 p-4"
-              >
-                <div className="text-xs font-bold text-blue-600 dark:text-blue-400 mb-1">
-                  {rule.ruleCode}
+        {/* Section 3 & 4: Regional Contests Breakdown */}
+        {isHostCountry ? (
+          <>
+            {/* Primary Domestic Regional */}
+            {eligibility.domesticRegional && (
+              <div id="primary-regional" className={styles.contentSection}>
+                <div className={styles.contentSectionHeader}>
+                  <h2 className={styles.contentSectionTitle}>
+                    Primary Regional Contest (Domestic){" "}
+                    <CopyTooltip
+                      onCopy={(e) => handleCopyUrl(e, "primary-regional")}
+                      showCopiedTooltip={copiedSection === "primary-regional"}
+                    >
+                      🔗
+                    </CopyTooltip>
+                  </h2>
                 </div>
-                <div className="text-xs text-gray-600 dark:text-gray-300 leading-relaxed">
-                  {rule.summary}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+                <Divider className={styles.contentSectionDivider} />
 
-        {/* Wildcard announcement for non-host APAC */}
-        {eligibility.wildcardEligible && (
-          <div className="mt-6 p-4 rounded-xl border border-emerald-200 dark:border-emerald-800/50 bg-emerald-50 dark:bg-emerald-950/20 text-emerald-900 dark:text-emerald-200 flex items-start gap-3">
-            <Sparkles className="w-5 h-5 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5" />
-            <div className="text-sm">
-              <span className="font-semibold">
-                Guaranteed Championship Wild-Card Pathway (Rule D4(3)):
-              </span>{" "}
-              At least one team from {eligibility.country.name} will qualify for
-              the Asia Pacific Championship! As long as your team is the highest
-              ranked from your country across the regionals and solves at least
-              one problem, you earn a spot at the Championship.
+                <p className="text-base text-text-body dark:text-text-body-dark leading-relaxed">
+                  Teams studying in {eligibility.country.name} must participate in this regional through its domestic preliminary contests (Rule A3).
+                </p>
+
+                {renderContestTable([eligibility.domesticRegional])}
+              </div>
+            )}
+
+            {/* Optional Foreign Regional */}
+            <div id="optional-regional" className={styles.contentSection}>
+              <div className={styles.contentSectionHeader}>
+                <h2 className={styles.contentSectionTitle}>
+                  Optional Second Regional (Foreign){" "}
+                  <CopyTooltip
+                    onCopy={(e) => handleCopyUrl(e, "optional-regional")}
+                    showCopiedTooltip={copiedSection === "optional-regional"}
+                  >
+                    🔗
+                  </CopyTooltip>
+                </h2>
+              </div>
+              <Divider className={styles.contentSectionDivider} />
+
+              <p className="text-base text-text-body dark:text-text-body-dark leading-relaxed">
+                Under Rule A6, teams from a country hosting a regional cannot compete in two foreign regionals. If your team wishes to participate in a second regional, you may choose at most <strong>one</strong> of the following foreign regionals:
+              </p>
+
+              {renderContestTable(eligibility.availableForeignRegionals)}
             </div>
+          </>
+        ) : (
+          /* Single section for non-host countries */
+          <div id="available-regionals" className={styles.contentSection}>
+            <div className={styles.contentSectionHeader}>
+              <h2 className={styles.contentSectionTitle}>
+                Available Regional Contests{" "}
+                <CopyTooltip
+                  onCopy={(e) => handleCopyUrl(e, "available-regionals")}
+                  showCopiedTooltip={copiedSection === "available-regionals"}
+                >
+                  🔗
+                </CopyTooltip>
+              </h2>
+            </div>
+            <Divider className={styles.contentSectionDivider} />
+
+            <p className="text-base text-text-body dark:text-text-body-dark leading-relaxed">
+              Since your university is in {eligibility.country.name} (which does not host a regional contest), your team may apply to participate in up to <strong>two</strong> of the following regional contests (Rule A1 & Rule A4):
+            </p>
+
+            {renderContestTable(cycleData.contests)}
           </div>
         )}
-      </section>
 
-      {/* Step 3: Five Regional Contests Grid */}
-      <section className="space-y-5">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-          <div>
-            <div className="flex items-center gap-2 text-sm font-semibold text-blue-600 dark:text-blue-400 tracking-wide uppercase mb-1">
-              Step 2: Explore Available Contests
-            </div>
-            <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
-              The Five 2026 Asia Pacific Regional Contests
+        {/* Section 5: Applicable Contest Rules */}
+        <div id="contest-rules" className={styles.contentSection}>
+          <div className={styles.contentSectionHeader}>
+            <h2 className={styles.contentSectionTitle}>
+              Applicable Contest Rules{" "}
+              <CopyTooltip
+                onCopy={(e) => handleCopyUrl(e, "contest-rules")}
+                showCopiedTooltip={copiedSection === "contest-rules"}
+              >
+                🔗
+              </CopyTooltip>
             </h2>
           </div>
-          <p className="text-xs text-gray-500 dark:text-gray-400">
-            Click &ldquo;Add to Team Plan&rdquo; to test your 2-contest schedule
-          </p>
-        </div>
+          <Divider className={styles.contentSectionDivider} />
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-          {cycleData.contests.map((contest) => {
-            const isDomestic =
-              eligibility.domesticRegional?.id === contest.id;
-            const isSelected = selectedContestIds.includes(contest.id);
+          <ul className="list-disc pl-5 space-y-2 text-base text-text-body dark:text-text-body-dark leading-relaxed">
+            {eligibility.importantRules.map((rule, idx) => (
+              <li key={idx}>
+                <strong>{rule.ruleCode}:</strong> {rule.summary}
+              </li>
+            ))}
+          </ul>
 
-            return (
-              <div
-                key={contest.id}
-                className={`rounded-2xl border transition-all p-6 flex flex-col justify-between ${isSelected
-                  ? "border-blue-500 ring-2 ring-blue-500/20 bg-blue-50/30 dark:bg-blue-950/20"
-                  : isDomestic
-                    ? "border-emerald-300 dark:border-emerald-800/80 bg-emerald-50/20 dark:bg-emerald-950/10"
-                    : "border-gray-200 dark:border-slate-800 bg-white dark:bg-slate-900/70"
-                  } shadow-sm hover:shadow-md`}
-              >
-                <div>
-                  <div className="flex items-start justify-between gap-3 mb-3">
-                    <div className="flex flex-wrap items-center gap-2">
-                      {isDomestic ? (
-                        <span className="px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-100 dark:bg-emerald-900/60 text-emerald-800 dark:text-emerald-200 flex items-center gap-1">
-                          <Building className="w-3.5 h-3.5" />
-                          Your Domestic Regional (Primary)
-                        </span>
-                      ) : (
-                        <span className="px-2.5 py-1 rounded-full text-xs font-semibold bg-gray-100 dark:bg-slate-800 text-gray-600 dark:text-gray-300 flex items-center gap-1">
-                          <Plane className="w-3.5 h-3.5" />
-                          Foreign Regional
-                        </span>
-                      )}
-                      {contest.id === "danang" && (
-                        <span className="px-2 py-0.5 rounded text-[11px] font-medium bg-amber-100 dark:bg-amber-900/50 text-amber-800 dark:text-amber-200">
-                          Thu–Fri Contest
-                        </span>
-                      )}
-                    </div>
-
-                    <button
-                      type="button"
-                      onClick={() => toggleContestSelection(contest.id)}
-                      className={`text-xs px-3 py-1.5 rounded-lg font-medium transition flex items-center gap-1.5 ${isSelected
-                        ? "bg-blue-600 text-white hover:bg-blue-700"
-                        : "bg-gray-100 dark:bg-slate-800 hover:bg-gray-200 dark:hover:bg-slate-700 text-gray-700 dark:text-gray-200"
-                        }`}
-                    >
-                      {isSelected ? (
-                        <>
-                          <Check className="w-3.5 h-3.5" />
-                          Selected
-                        </>
-                      ) : (
-                        "+ Add to Plan"
-                      )}
-                    </button>
-                  </div>
-
-                  <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">
-                    {contest.name}
-                  </h3>
-
-                  <div className="space-y-2 text-sm text-gray-600 dark:text-gray-300 mb-4">
-                    <div className="flex items-center gap-2.5">
-                      <MapPin className="w-4 h-4 text-gray-400 shrink-0" />
-                      <span>{contest.location}</span>
-                    </div>
-                    <div className="flex items-center gap-2.5">
-                      <Calendar className="w-4 h-4 text-blue-500 shrink-0" />
-                      <span className="font-medium text-gray-900 dark:text-gray-100">
-                        {contest.date}
-                      </span>
-                    </div>
-                    {contest.notes && (
-                      <div className="text-xs text-gray-500 dark:text-gray-400 pt-1 italic">
-                        {contest.notes}
-                      </div>
-                    )}
-                  </div>
-                </div>
-
-                <div className="pt-4 border-t border-gray-100 dark:border-slate-800/80 flex items-center justify-between">
-                  <span className="text-xs text-gray-500 dark:text-gray-400">
-                    Host: {contest.hostCountryName}
-                  </span>
-                  <Link
-                    href={contest.websiteUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 text-xs font-semibold text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition"
-                  >
-                    <span>{contest.websiteLabel}</span>
-                    <ExternalLink className="w-3.5 h-3.5" />
-                  </Link>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </section>
-
-      {/* Step 4: Interactive 2-Contest Planner Card */}
-      <section className="bg-white dark:bg-slate-900/70 border border-gray-200 dark:border-slate-800 rounded-2xl p-6 sm:p-8 shadow-sm">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-5 border-b border-gray-100 dark:border-slate-800">
-          <div>
-            <div className="flex items-center gap-2 text-sm font-semibold text-blue-600 dark:text-blue-400 tracking-wide uppercase mb-1">
-              Step 3: Team Participation Planner
-            </div>
-            <h2 className="text-xl font-bold text-gray-900 dark:text-white">
-              Your Team Contest Combination (Rule A1: Max 2 Contests)
-            </h2>
-          </div>
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-gray-100 dark:bg-slate-800 text-xs font-semibold text-gray-700 dark:text-gray-300">
-            Selected: {selectedContestIds.length} / 2 Regionals
+          {/* Official Contest Rules Disclaimer */}
+          <div className="mt-6 p-4 rounded border border-border/50 dark:border-border/30 bg-text-header-others-cyanalpha/20 text-sm text-text-body dark:text-text-body-dark leading-relaxed">
+            <strong>Official Contest Rules:</strong> Please refer to the official{" "}
+            <Link
+              href={cycleData.rulesUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-text-links dark:text-text-links-dark underline font-semibold inline-flex items-center gap-1"
+            >
+              <span>ICPC Asia Pacific Rules ({cycleData.academicYear})</span>
+              <ExternalLink className="w-3.5 h-3.5 inline" />
+            </Link>{" "}
+            for the complete set of regulations, including detailed formulas for site scores, university quotas, Championship selection, and World Finals qualification.
           </div>
         </div>
-
-        {/* Selected Contests List */}
-        <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {[0, 1].map((slotIndex) => {
-            const contest = planValidation.selectedContests[slotIndex];
-            if (!contest) {
-              return (
-                <div
-                  key={slotIndex}
-                  className="rounded-xl border-2 border-dashed border-gray-200 dark:border-slate-800 p-5 flex flex-col items-center justify-center text-center text-gray-400 dark:text-gray-500 min-h-[110px]"
-                >
-                  <p className="text-xs font-medium">Slot #{slotIndex + 1} Empty</p>
-                  <p className="text-[11px] mt-1 text-gray-400">
-                    Click &ldquo;+ Add to Plan&rdquo; on any regional above
-                  </p>
-                </div>
-              );
-            }
-
-            const isDomestic =
-              eligibility.domesticRegional?.id === contest.id;
-
-            return (
-              <div
-                key={contest.id}
-                className="rounded-xl border border-gray-200 dark:border-slate-800 bg-gray-50/80 dark:bg-slate-800/40 p-4 flex items-center justify-between"
-              >
-                <div>
-                  <div className="flex items-center gap-2 mb-1">
-                    <span className="text-xs font-bold text-blue-600 dark:text-blue-400">
-                      Slot #{slotIndex + 1}
-                    </span>
-                    {isDomestic ? (
-                      <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-900/50 text-emerald-700 dark:text-emerald-300 font-medium">
-                        Domestic
-                      </span>
-                    ) : (
-                      <span className="text-[10px] px-2 py-0.5 rounded-full bg-gray-200 dark:bg-slate-700 text-gray-600 dark:text-gray-300 font-medium">
-                        Foreign
-                      </span>
-                    )}
-                  </div>
-                  <h4 className="text-sm font-bold text-gray-900 dark:text-white">
-                    {contest.shortName}
-                  </h4>
-                  <p className="text-xs text-gray-500 dark:text-gray-400">
-                    {contest.date} • {contest.location}
-                  </p>
-                </div>
-                <button
-                  type="button"
-                  onClick={() => toggleContestSelection(contest.id)}
-                  className="text-xs text-red-600 dark:text-red-400 hover:underline px-2 py-1"
-                >
-                  Remove
-                </button>
-              </div>
-            );
-          })}
-        </div>
-
-        {/* Validation Feedback Messages */}
-        <div className="mt-5 space-y-3">
-          {planValidation.error && (
-            <div className="p-4 rounded-xl border border-red-200 dark:border-red-900/60 bg-red-50 dark:bg-red-950/30 text-red-900 dark:text-red-200 flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-red-600 shrink-0 mt-0.5" />
-              <div className="text-xs sm:text-sm leading-relaxed">
-                {planValidation.error}
-              </div>
-            </div>
-          )}
-
-          {planValidation.warning && (
-            <div className="p-4 rounded-xl border border-amber-200 dark:border-amber-900/60 bg-amber-50 dark:bg-amber-950/30 text-amber-900 dark:text-amber-200 flex items-start gap-3">
-              <Info className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
-              <div className="text-xs sm:text-sm leading-relaxed">
-                {planValidation.warning}
-              </div>
-            </div>
-          )}
-
-          {planValidation.success && (
-            <div className="p-4 rounded-xl border border-emerald-200 dark:border-emerald-900/60 bg-emerald-50 dark:bg-emerald-950/30 text-emerald-900 dark:text-emerald-200 flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
-              <div className="text-xs sm:text-sm leading-relaxed">
-                {planValidation.success}
-              </div>
-            </div>
-          )}
-        </div>
-      </section>
-    </div>
+        </main>
+      </div>
   );
 }

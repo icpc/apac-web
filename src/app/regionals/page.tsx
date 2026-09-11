@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import Container from "@/components/common/container";
+import Link from "next/link";
+import { ExternalLink } from "lucide-react";
 import { ContestFinder } from "./_components/contest-finder";
 import { getRegionalsData, getCountries } from "@/lib/get-regionals-data";
 
@@ -19,19 +20,35 @@ export default async function RegionalsPage() {
 
   return (
     <main className="py-6">
-      <Container>
-        <div className="mb-8">
-          <h1 className="text-3xl sm:text-4xl font-extrabold text-gray-900 dark:text-white tracking-tight">
+      <div className="container mx-auto px-4 overflow-x-clip" style={{ maxWidth: "1200px" }}>
+        {/* Title and Subtitle outside the subpage */}
+        <div className="mb-6">
+          <h1 className="text-4xl font-bold text-text-header-secondary mb-8">
             Participate in the 2026 ICPC Regionals
           </h1>
-          <p className="mt-3 text-base sm:text-lg text-gray-600 dark:text-gray-300 max-w-3xl leading-relaxed">
-            Select the country where you are studying during the {cycleData.academicYear} academic year
-            to see contest eligibility, domestic qualification paths, foreign team options, and official participation rules.
+          <p className="text-base text-text-body dark:text-text-body-dark max-w-3xl leading-relaxed">
+            This guide outlines the regional contest pathways, domestic preliminary requirements, and foreign team participation rules for universities across the Asia Pacific region during the {cycleData.academicYear} cycle.
           </p>
         </div>
 
+        {/* Official Contest Rules banner at the top before the subpage */}
+        <div className="p-4 rounded border border-border/50 dark:border-border/30 bg-text-header-others-cyanalpha/20 text-sm text-text-body dark:text-text-body-dark leading-relaxed mb-8">
+          <strong>Official Contest Rules:</strong> Please refer to the official{" "}
+          <Link
+            href={cycleData.rulesUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-text-links dark:text-text-links-dark underline font-semibold inline-flex items-center gap-1"
+          >
+            <span>ICPC Asia Pacific Rules ({cycleData.academicYear})</span>
+            <ExternalLink className="w-3.5 h-3.5 inline" />
+          </Link>{" "}
+          for the complete set of regulations, including detailed formulas for site scores, university quotas, Championship selection, and World Finals qualification.
+        </div>
+
+        {/* 2-Column Subpage Layout */}
         <ContestFinder cycleData={cycleData} countries={countries} />
-      </Container>
+      </div>
     </main>
   );
 }

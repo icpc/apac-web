@@ -43,7 +43,6 @@ export interface RegionalsCycleData {
 export interface CountryInfo {
   code: string;
   name: string;
-  flag: string;
   category: "host" | "apac_non_host" | "south_pacific" | "other_region";
   regionName: string;
 }
@@ -72,17 +71,16 @@ export function evaluateEligibility(
   countries: CountryInfo[]
 ): EligibilityResult {
   const country = countries.find((c) => c.code === countryCode) || {
-    code: "OTHER",
-    name: "Other Super-Region",
-    flag: "🌐",
-    category: "other_region" as const,
-    regionName: "Other Super-Region",
+    code: countryCode,
+    name: countryCode,
+    category: "apac_non_host" as const,
+    regionName: "Asia Pacific",
   };
 
   const domesticRegional = cycleData.contests.find((r) => r.hostCountryCode === country.code);
   const foreignRegionals = cycleData.contests.filter((r) => r.hostCountryCode !== country.code);
 
-  const ruleConfig = cycleData.rules[country.category] || cycleData.rules.other_region;
+  const ruleConfig = cycleData.rules[country.category] || cycleData.rules.apac_non_host;
 
   const replacePlaceholders = (text: string) =>
     text
