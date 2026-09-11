@@ -32,7 +32,7 @@ export function ContestFinder({ cycleData, countries }: ContestFinderProps) {
   // Default to Indonesia or first host country
   const [selectedCountryCode, setSelectedCountryCode] = useState<string>("JP");
   const [selectedContestIds, setSelectedContestIds] = useState<string[]>([
-    "tokyo",
+    "yokohama",
   ]);
   const [searchQuery, setSearchQuery] = useState<string>("");
 
@@ -96,14 +96,6 @@ export function ContestFinder({ cycleData, countries }: ContestFinderProps) {
       if (foreignCount > 1) {
         error = `Rule A6 Restriction: Teams studying in ${eligibility.country.name} cannot compete in two foreign regionals. If you participate in two regionals, one must be your domestic regional (${eligibility.domesticRegional?.shortName}).`;
       }
-    }
-
-    // Schedule proximity notice for Danang and Yunlin
-    const hasDanang = selectedContestIds.includes("danang");
-    const hasYunlin = selectedContestIds.includes("yunlin");
-    if (hasDanang && hasYunlin) {
-      warning =
-        "Tight Schedule Notice: Danang Regional (10–11 Dec) and Yunlin Regional (12–14 Dec) are consecutive. Please account for international travel, visa processing, and transit time.";
     }
 
     if (!error && selectedContestIds.length === 2) {
