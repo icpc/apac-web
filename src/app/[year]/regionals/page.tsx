@@ -86,7 +86,7 @@ export default async function RegionalsYearPage({
           </div>
 
           {/* 2-Column Subpage Layout */}
-          <div className="w-full ml-6">
+          <div className="w-full px-6">
             <ContestFinder cycleData={cycleData} countries={countries} />
           </div>
         </div>
