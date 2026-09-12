@@ -88,5 +88,23 @@
     "name": "Timor-Leste",
     "category": "apac_non_host",
     "regionName": "Asia Pacific"
+  },
+  {
+    "code": "AU",
+    "name": "Australia",
+    "category": "south_pacific",
+    "regionName": "South Pacific"
+  },
+  {
+    "code": "NZ",
+    "name": "New Zealand",
+    "category": "south_pacific",
+    "regionName": "South Pacific"
+  },
+  {
+    "code": "OTHER",
+    "name": "Other Super-Region (Guest)",
+    "category": "other_region",
+    "regionName": "Other Super-Region"
   }
 ]
