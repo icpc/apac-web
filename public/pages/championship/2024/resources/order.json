@@ -1,4 +1,8 @@
 {
+  "gallery": {
+    "order": 0,
+    "display_name": "Photos Gallery"
+  },
   "livestream": {
     "order": 1,
     "display_name": "Live Stream"
