@@ -1,0 +1,110 @@
+[
+  {
+    "code": "KR",
+    "name": "South Korea",
+    "category": "host",
+    "regionName": "Asia Pacific (Host Country)"
+  },
+  {
+    "code": "ID",
+    "name": "Indonesia",
+    "category": "host",
+    "regionName": "Asia Pacific (Host Country)"
+  },
+  {
+    "code": "JP",
+    "name": "Japan",
+    "category": "host",
+    "regionName": "Asia Pacific (Host Country)"
+  },
+  {
+    "code": "VN",
+    "name": "Vietnam",
+    "category": "host",
+    "regionName": "Asia Pacific (Host Country)"
+  },
+  {
+    "code": "TW",
+    "name": "Taiwan",
+    "category": "host",
+    "regionName": "Asia Pacific (Host Country)"
+  },
+  {
+    "code": "SG",
+    "name": "Singapore",
+    "category": "apac_non_host",
+    "regionName": "Asia Pacific"
+  },
+  {
+    "code": "MY",
+    "name": "Malaysia",
+    "category": "apac_non_host",
+    "regionName": "Asia Pacific"
+  },
+  {
+    "code": "TH",
+    "name": "Thailand",
+    "category": "apac_non_host",
+    "regionName": "Asia Pacific"
+  },
+  {
+    "code": "PH",
+    "name": "Philippines",
+    "category": "apac_non_host",
+    "regionName": "Asia Pacific"
+  },
+  {
+    "code": "KH",
+    "name": "Cambodia",
+    "category": "apac_non_host",
+    "regionName": "Asia Pacific"
+  },
+  {
+    "code": "LA",
+    "name": "Laos",
+    "category": "apac_non_host",
+    "regionName": "Asia Pacific"
+  },
+  {
+    "code": "MM",
+    "name": "Myanmar",
+    "category": "apac_non_host",
+    "regionName": "Asia Pacific"
+  },
+  {
+    "code": "BN",
+    "name": "Brunei",
+    "category": "apac_non_host",
+    "regionName": "Asia Pacific"
+  },
+  {
+    "code": "MN",
+    "name": "Mongolia",
+    "category": "apac_non_host",
+    "regionName": "Asia Pacific"
+  },
+  {
+    "code": "TL",
+    "name": "Timor-Leste",
+    "category": "apac_non_host",
+    "regionName": "Asia Pacific"
+  },
+  {
+    "code": "AU",
+    "name": "Australia",
+    "category": "south_pacific",
+    "regionName": "South Pacific"
+  },
+  {
+    "code": "NZ",
+    "name": "New Zealand",
+    "category": "south_pacific",
+    "regionName": "South Pacific"
+  },
+  {
+    "code": "OTHER",
+    "name": "Other Super-Region (Guest)",
+    "category": "other_region",
+    "regionName": "Other Super-Region"
+  }
+]

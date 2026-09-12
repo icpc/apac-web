@@ -31,7 +31,7 @@ export const navItems: MenuItem[] = [
         ],
     },
     {
-        label: "Participate in the Regionals", url: "https://icpc.global/"
+        label: "Participate in the Regionals", url: "/regionals"
     },
     {
         label: "Contact Us",
