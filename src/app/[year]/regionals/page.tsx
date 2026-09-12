@@ -58,7 +58,7 @@ export default async function RegionalsYearPage({
       <Container>
         <div className="flex flex-col w-full">
           {/* Title and Subtitle outside the subpage */}
-          <div className="mb-6 ml-6 sm:ml-0">
+          <div className="ml-6 mb-6 sm:ml-0">
             <h1 className="text-4xl font-bold text-text-header-secondary mb-8">
               Participate in the {year} ICPC Regionals
             </h1>
@@ -71,7 +71,7 @@ export default async function RegionalsYearPage({
           </div>
 
           {/* Official Contest Rules banner at the top before the subpage */}
-          <div className="p-4 rounded border border-border/50 dark:border-border/30 bg-text-header-others-cyanalpha/20 text-base text-text-body dark:text-text-body-dark leading-relaxed mb-8 ml-6 sm:ml-0">
+          <div className="p-4 ml-6 rounded border border-border/50 dark:border-border/30 bg-text-header-others-cyanalpha/20 text-base text-text-body dark:text-text-body-dark leading-relaxed mb-8 ml-6 sm:ml-0">
             <strong>Official Contest Rules:</strong> Please refer to the official{" "}
             <Link
               href={cycleData.rulesUrl}
@@ -86,7 +86,7 @@ export default async function RegionalsYearPage({
           </div>
 
           {/* 2-Column Subpage Layout */}
-          <div className="w-full">
+          <div className="w-full ml-6">
             <ContestFinder cycleData={cycleData} countries={countries} />
           </div>
         </div>
