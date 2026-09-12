@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { SponsorsCarousel } from "./sponsors-carousel";
 import { getAssetUrl } from "@/lib/base-path";
+import { ArrowRight } from "lucide-react";
 
 export function Intro() {
   const { theme } = useTheme();
@@ -33,13 +34,24 @@ export function Intro() {
             <p className={`${styles.subtitle} mt-4 max-w-2xl`}>
               The premier programming competition for students in the Asia-Pacific region, a gateway to the ICPC World Finals.
             </p>
-            {/* <div className="flex flex-col sm:flex-row gap-4 mt-8">
-              <Button asChild variant="ghost" className="px-6 py-3 text-lg font-medium rounded-lg transition-colors dark:text-white dark:text-primaryAccent-dark text-text-header-secondary border border-text-header-secondary dark:border-primaryAccent-dark bg-primaryAccent/10 dark:bg-primaryAccent-dark/10 hover:bg-primaryAccent/20 dark:hover:bg-primaryAccent-dark/20">
+            <div className="flex flex-wrap items-center gap-4 sm:gap-6 mt-8">
+              <Button
+                asChild
+                size="lg"
+                className="h-11 px-6 text-base font-semibold rounded-lg transition-all bg-neutral-900 text-white hover:bg-neutral-800 dark:bg-white dark:text-neutral-900 dark:hover:bg-neutral-100 shadow-sm"
+              >
                 <Link href="/championship/latest/information">
-                  Get Ready for the Asia Pacific Championship
+                  Championship Details
                 </Link>
               </Button>
-            </div> */}
+              <Link
+                href="/latest/regionals"
+                className="inline-flex items-center gap-1.5 text-base font-medium text-black dark:text-white hover:text-text-links dark:hover:text-text-links-dark transition-colors group"
+              >
+                <span className="group-hover:underline underline-offset-4">Explore the regionals</span>
+                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+              </Link>
+            </div>
           </div>
           <img src={getAssetUrl(`/assets/icpc-apac-logo/icpc-apac-logo-new-solid-${dark ? "white" : "blue"}.png`)} alt="ICPC APAC Logo" className="w-2/3 max-w-[300px] pb-12 md:w-1/3 order-1 lg:order-2 lg:pb-0" />
         </WideContainer>
