@@ -91,14 +91,26 @@ export function Footer() {
               <div className="p-6 flex flex-wrap gap-6 items-center justify-center">
                 {sponsors?.map((sponsorObj: SponsorGroup) => {
                   const [name, logo] = Object.entries(sponsorObj)[0] as [string, any];
-                  return (
+                  const img = (
                     <img
-                      key={name}
                       src={getAssetUrl(logo.filename)}
                       alt={name}
                       style={{ width: `${logo.size * 1.6}rem` }}
                       title={name}
                     />
+                  );
+                  return logo.url ? (
+                    <a
+                      key={name}
+                      href={logo.url}
+                      target="_blank"
+                      rel="noopener"
+                      className="hover:opacity-80 transition-opacity"
+                    >
+                      {img}
+                    </a>
+                  ) : (
+                    <span key={name}>{img}</span>
                   );
                 })}
               </div>

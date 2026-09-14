@@ -93,6 +93,7 @@ interface Sponsor {
     size: number;
     filename: string;
     year?: string;
+    url?: string;
   };
 }
 
@@ -173,14 +174,10 @@ export const SponsorsCarousel = React.memo(function SponsorsCarousel({
             >
               {displayItems.map((sponsor, index) => {
                 const [sponsorName, sponsorData] = Object.entries(sponsor || {})[0] || [];
-                const { filename = '', size = 0 } = sponsorData || {};
+                const { filename = '', size = 0, url } = sponsorData || {};
 
-                return (
-                  <div
-                    key={`${sponsorName}-${index}`}
-                    className="flex-shrink-0 flex flex-col items-center justify-center"
-                    style={{ width: '300px' }}
-                  >
+                const logoContent = (
+                  <>
                     <div
                       className="relative flex items-center justify-center"
                       style={{
@@ -202,6 +199,28 @@ export const SponsorsCarousel = React.memo(function SponsorsCarousel({
                     <p className={`mt-2 text-center opacity-80 max-w-[120px] md:max-w-none text-text-header-primary ${sizeMultiplier < 1.5 ? 'text-xxs' : 'text-xs'}`}>
                       {sponsorName}
                     </p>
+                  </>
+                );
+
+                return (
+                  <div
+                    key={`${sponsorName}-${index}`}
+                    className="flex-shrink-0 flex flex-col items-center justify-center"
+                    style={{ width: '300px' }}
+                  >
+                    {url ? (
+                      <a
+                        href={url}
+                        target="_blank"
+                        rel="noopener"
+                        className="flex flex-col items-center justify-center hover:opacity-80 transition-opacity"
+                        title={`Visit ${sponsorName}`}
+                      >
+                        {logoContent}
+                      </a>
+                    ) : (
+                      logoContent
+                    )}
                   </div>
                 );
               })}

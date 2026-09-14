@@ -10,6 +10,7 @@ import { getAssetUrl } from '@/lib/base-path';
 interface Sponsor {
     size: number;
     filename: string;
+    url?: string;
 }
 
 // Format of a single sponsor entry in the new JSON array
@@ -140,22 +141,38 @@ export default function SponsorsGrid({ year }: SponsorsGridProps) {
                         flexShrink: 0,
                     };
 
+                    const imageElement = (
+                        <Image
+                            src={getAssetUrl(sponsor.filename)}
+                            alt={`${name} logo`}
+                            width={0}
+                            height={0}
+                            sizes="100vw"
+                            style={{
+                                objectFit: 'contain',
+                                width: '100%',
+                                height: 'auto',
+                                marginTop: '0.5rem',
+                                marginBottom: '0.5rem',
+                            }}
+                        />
+                    );
+
                     return (
                         <div key={name} style={style}>
-                            <Image
-                                src={getAssetUrl(sponsor.filename)}
-                                alt={`${name} logo`}
-                                width={0}
-                                height={0}
-                                sizes="100vw"
-                                style={{
-                                    objectFit: 'contain',
-                                    width: '100%',
-                                    height: 'auto',
-                                    marginTop: '0.5rem',
-                                    marginBottom: '0.5rem',
-                                }}
-                            />
+                            {sponsor.url ? (
+                                <a
+                                    href={sponsor.url}
+                                    target="_blank"
+                                    rel="noopener"
+                                    className="transition-opacity duration-200 hover:opacity-80 inline-flex items-center justify-center w-full"
+                                    title={`Visit ${name}`}
+                                >
+                                    {imageElement}
+                                </a>
+                            ) : (
+                                imageElement
+                            )}
                         </div>
                     );
                 })}
