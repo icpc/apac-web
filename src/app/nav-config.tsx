@@ -1,9 +1,26 @@
+import { AVAILABLE_YEARS } from "@/lib/constants";
+
 type MenuItem = {
     label: string;
     url?: string;
     enabled?: boolean;
     children?: MenuItem[];
 };
+
+const pastYears = AVAILABLE_YEARS
+    .map(Number)
+    .slice(1);
+
+const archiveMenuItem: MenuItem | null =
+    pastYears.length > 0
+        ? {
+            label: "Archive",
+            children: pastYears.map((year) => ({
+                label: `${year}`,
+                url: `/championship/${year}/information`,
+            })),
+        }
+        : null;
 
 export const navItems: MenuItem[] = [
     {
@@ -30,6 +47,7 @@ export const navItems: MenuItem[] = [
             { label: "Committee", url: "/championship/latest/committee" }
         ],
     },
+    ...(archiveMenuItem ? [archiveMenuItem] : []),
     {
         label: "Participate in the Regionals", url: "/regionals"
     },
@@ -38,3 +56,4 @@ export const navItems: MenuItem[] = [
         url: "/contact-us",
     },
 ];
+

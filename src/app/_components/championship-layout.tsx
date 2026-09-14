@@ -169,7 +169,7 @@ export default function ChampionshipLayout({ children, year }: ChampionshipLayou
                 <StyledDropdown
                   value={year}
                   onValueChange={handleYearChange}
-                  options={AVAILABLE_YEARS.sort((a, b) => Number(b) - Number(a)).map(y => ({ value: y, label: y }))}
+                  options={AVAILABLE_YEARS.map(y => ({ value: y, label: y }))}
                   placeholder={year}
                   triggerClassName="text-2xl sm:text-2xl font-bold bg-white"
                   itemsClassName="text-lg font-medium"

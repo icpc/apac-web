@@ -8,13 +8,13 @@ export const dynamic = "force-static";
 // If no extra path segments are provided, we assume `information` by default.
 export default async function ChampionshipLatestPage({ params }: { params: Promise<{ slug?: string[] }> }) {
   const resolvedParams = await params;
-  const newestYear = Math.max(...AVAILABLE_YEARS.map(Number));
+  const newestYear = AVAILABLE_YEARS[0];
   const slugPath = resolvedParams.slug && resolvedParams.slug.length > 0 ? resolvedParams.slug.join('/') : 'information';
   redirect(`/championship/${newestYear}/${slugPath}`);
 }
 
 export async function generateStaticParams() {
-  const newestYear = Math.max(...AVAILABLE_YEARS.map(Number)).toString();
+  const newestYear = AVAILABLE_YEARS[0];
   const sections = await getChampionshipSections(newestYear);
   return sections.map((section) => ({ slug: [section] as string[] }));
 }
