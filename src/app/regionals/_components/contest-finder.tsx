@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useMemo, useEffect } from "react";
-import { ChevronRight, X } from "lucide-react";
+import { ChevronRight, ExternalLink, X } from "lucide-react";
 import StyledDropdown from "@/components/ui/styled-dropdown";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -43,6 +43,7 @@ export function ContestFinder({ cycleData, countries }: ContestFinderProps) {
   }, [selectedCountryCode, cycleData, countries]);
 
   const isHostCountry = eligibility?.category === "host";
+  const isSouthPacific = eligibility?.category === "south_pacific";
 
   // Sidebar navigation items based on selected country
   const navSections: NavSection[] = useMemo(() => {
@@ -65,13 +66,15 @@ export function ContestFinder({ cycleData, countries }: ContestFinderProps) {
         { id: "primary-regional", label: "Primary Regional (Domestic)" },
         { id: "optional-regional", label: "Optional Second Regional (Foreign)" }
       );
+    } else if (isSouthPacific) {
+      base.push({ id: "south-pacific-regional", label: "South Pacific Regional Contest" });
     } else {
       base.push({ id: "available-regionals", label: "Available Regional Contests" });
     }
 
     base.push({ id: "contest-rules", label: "Applicable Contest Rules" });
     return base;
-  }, [selectedCountryCode, isHostCountry]);
+  }, [selectedCountryCode, isHostCountry, isSouthPacific]);
 
   // Scrollspy observer to highlight active section in sidebar
   useEffect(() => {
@@ -138,9 +141,8 @@ export function ContestFinder({ cycleData, countries }: ContestFinderProps) {
           aria-label="Toggle sidebar"
         >
           <ChevronRight
-            className={`h-5 w-5 text-text-header-primary dark:text-text-header-primary-dark transition-transform duration-200 ${
-              isSidebarOpen ? "rotate-180" : "rotate-0"
-            }`}
+            className={`h-5 w-5 text-text-header-primary dark:text-text-header-primary-dark transition-transform duration-200 ${isSidebarOpen ? "rotate-180" : "rotate-0"
+              }`}
           />
         </button>
 
@@ -290,8 +292,37 @@ export function ContestFinder({ cycleData, countries }: ContestFinderProps) {
             </>
           )}
 
-          {/* Available Regional Contests (Shown when no country is selected or for non-host countries) */}
-          {(!selectedCountryCode || (!isHostCountry && eligibility)) && (
+          {/* South Pacific Regional Contest Referral */}
+          {isSouthPacific && eligibility && (
+            <FinderSection
+              id="south-pacific-regional"
+              title="South Pacific Regional Contest"
+              showDivider={true}
+              onCopyUrl={handleCopyUrl}
+              isCopied={copiedSection === "south-pacific-regional"}
+            >
+              <p>
+                Universities in {eligibility.country.name} participate in the South Pacific regional contests rather than the Asia Pacific regional contests.
+              </p>
+              <p className="mt-2">
+                For complete details on contest schedules, preliminary rounds, and registration, please refer to the official South Pacific website:
+              </p>
+              <p className="mt-4">
+                <a
+                  href="https://sppcontests.org/icpc-2026/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 font-medium text-text-link hover:underline dark:text-text-link-dark"
+                >
+                  <span>ICPC South Pacific 2026 (sppcontests.org)</span>
+                  <ExternalLink className="w-4 h-4 inline flex-shrink-0" />
+                </a>
+              </p>
+            </FinderSection>
+          )}
+
+          {/* Available Regional Contests (Shown when no country is selected or for non-host APAC countries) */}
+          {(!selectedCountryCode || (!isHostCountry && !isSouthPacific && eligibility)) && (
             <FinderSection
               id="available-regionals"
               title="Available Regional Contests"
