@@ -159,20 +159,23 @@ export default function SponsorsGrid({ year }: SponsorsGridProps) {
                     );
 
                     return (
-                        <div key={name} style={style}>
+                        <div key={name} style={style} className="relative group">
                             {sponsor.url ? (
                                 <a
                                     href={sponsor.url}
                                     target="_blank"
                                     rel="noopener"
                                     className="transition-opacity duration-200 hover:opacity-80 inline-flex items-center justify-center w-full"
-                                    title={`Visit ${name}`}
+                                    title={name}
                                 >
                                     {imageElement}
                                 </a>
                             ) : (
                                 imageElement
                             )}
+                            <span className="absolute left-1/2 -translate-x-1/2 bottom-0 translate-y-full mb-[-4px] px-2.5 py-1 text-xs font-medium text-white bg-gray-900/90 dark:bg-gray-800/95 backdrop-blur-sm rounded-md shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-50 whitespace-nowrap">
+                                {name}
+                            </span>
                         </div>
                     );
                 })}
