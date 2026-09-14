@@ -1,19 +1,18 @@
-
-
-
 [
   {
     "ICPC Global Sponsors": [
       {
         "Huawei": {
-        "size": 4,
-          "filename": "/assets/sponsors/huawei-logo.png"
+          "size": 4,
+          "filename": "/assets/sponsors/huawei-logo.png",
+          "url": "https://www.huawei.com/"
         }
       },
       {
         "Jane Street": {
           "size": 8,
-          "filename": "/assets/sponsors/jane-street-logo.png"
+          "filename": "/assets/sponsors/jane-street-logo.png",
+          "url": "https://www.janestreet.com/"
         }
       }
     ]
@@ -23,7 +22,8 @@
       {
         "Jetbrains": {
           "size": 8,
-          "filename": "/assets/sponsors/jetbrains-logo.png"
+          "filename": "/assets/sponsors/jetbrains-logo.png",
+          "url": "https://www.jetbrains.com/"
         }
       }
     ]
@@ -33,13 +33,15 @@
       {
         "Viettel": {
           "size": 6,
-          "filename": "/assets/sponsors/viettel-logo.png"
+          "filename": "/assets/sponsors/viettel-logo.png",
+          "url": "https://viettel.com.vn/"
         }
       },
       {
         "Samsung": {
           "size": 6,
-          "filename": "/assets/sponsors/samsung-logo.png"
+          "filename": "/assets/sponsors/samsung-logo.png",
+          "url": "https://www.samsung.com/vn/"
         }
       }
     ]
@@ -49,19 +51,22 @@
       {
         "Pendle": {
           "size": 6,
-          "filename": "/assets/sponsors/pendle-logo.png"
+          "filename": "/assets/sponsors/pendle-logo.png",
+          "url": "https://www.pendle.finance/"
         }
       },
       {
         "Phygital Labs": {
           "size": 8,
-          "filename": "/assets/sponsors/phygital-labs-logo.png"
+          "filename": "/assets/sponsors/phygital-labs-logo.png",
+          "url": "https://phygital.vn/"
         }
       },
       {
         "FPT": {
           "size": 4,
-          "filename": "/assets/sponsors/fpt-logo.png"
+          "filename": "/assets/sponsors/fpt-logo.png",
+          "url": "https://fpt.com/"
         }
       }
     ]
@@ -69,9 +74,10 @@
   {
     "Bronze Sponsors": [
       {
-        "Sky Mavis": {
+        "Skymavis": {
           "size": 5,
-          "filename": "/assets/sponsors/sky-mavis-logo.png"
+          "filename": "/assets/sponsors/sky-mavis-logo.png",
+          "url": "https://skymavis.com/"
         }
       }
     ]
@@ -81,25 +87,29 @@
       {
         "Cohost AI": {
           "size": 4,
-          "filename": "/assets/sponsors/cohost-ai-logo.png"
+          "filename": "/assets/sponsors/cohost-ai-logo.png",
+          "url": "https://cohost.ai/"
         }
       },
       {
         "Dagoras": {
           "size": 3,
-          "filename": "/assets/sponsors/dagoras-logo.png"
+          "filename": "/assets/sponsors/dagoras-logo.png",
+          "url": "https://dagoras.io/"
         }
       },
       {
         "Intelligent Integration": {
           "size": 5,
-          "filename": "/assets/sponsors/intelligent-integration-logo.png"
+          "filename": "/assets/sponsors/intelligent-integration-logo.png",
+          "url": "https://www.int2.vn/"
         }
       },
       {
         "VNPT Technology": {
           "size": 6,
-          "filename": "/assets/sponsors/vnpt-technology-logo.png"
+          "filename": "/assets/sponsors/vnpt-technology-logo.png",
+          "url": "https://www.vnpt-technology.vn/en"
         }
       }
     ]
@@ -109,13 +119,15 @@
       {
         "Thanh Giong": {
           "size": 4,
-          "filename": "/assets/sponsors/thanh-giong-logo.png"
+          "filename": "/assets/sponsors/thanh-giong-logo.png",
+          "url": "https://thanhgiong.vn/"
         }
       },
       {
         "May Chu Ha Noi": {
           "size": 3,
-          "filename": "/assets/sponsors/may-chu-ha-noi-logo.png"
+          "filename": "/assets/sponsors/may-chu-ha-noi-logo.png",
+          "url": "https://maychuhanoi.vn/"
         }
       }
     ]
