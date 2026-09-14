@@ -1,4 +1,4 @@
-import { AVAILABLE_YEARS } from "@/lib/constants";
+import { CHAMPIONSHIPS } from "@/lib/constants";
 
 type MenuItem = {
     label: string;
@@ -7,17 +7,15 @@ type MenuItem = {
     children?: MenuItem[];
 };
 
-const pastYears = AVAILABLE_YEARS
-    .map(Number)
-    .slice(1);
+const pastChampionships = CHAMPIONSHIPS.slice(1);
 
 const archiveMenuItem: MenuItem | null =
-    pastYears.length > 0
+    pastChampionships.length > 0
         ? {
             label: "Archive",
-            children: pastYears.map((year) => ({
-                label: `${year}`,
-                url: `/championship/${year}/information`,
+            children: pastChampionships.map((edition) => ({
+                label: `${edition.year} - ${edition.location}`,
+                url: `/championship/${edition.year}/information`,
             })),
         }
         : null;
