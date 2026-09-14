@@ -6,6 +6,7 @@ import WideContainer from "@/components/common/wide-container";
 import styles from "@/app/_styles/footer-styles.module.css";
 import { Card, CardContent } from "@/components/ui/card";
 import { getAssetUrl } from "@/lib/base-path";
+import { getSponsorUrl } from "@/lib/sponsor-utils";
 
 interface SponsorInfo { filename: string; size: number; }
 interface SponsorGroup { [name: string]: SponsorInfo }
@@ -102,7 +103,7 @@ export function Footer() {
                   return logo.url ? (
                     <a
                       key={name}
-                      href={logo.url}
+                      href={getSponsorUrl(logo.url)}
                       target="_blank"
                       rel="noopener"
                       className="hover:opacity-80 transition-opacity"

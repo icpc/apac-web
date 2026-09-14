@@ -3,6 +3,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { getAssetUrl } from '@/lib/base-path';
+import { getSponsorUrl } from '@/lib/sponsor-utils';
 
 // Preload images function
 const preloadImages = (sponsors: Sponsor[]) => {
@@ -210,7 +211,7 @@ export const SponsorsCarousel = React.memo(function SponsorsCarousel({
                   >
                     {url ? (
                       <a
-                        href={url}
+                        href={getSponsorUrl(url)}
                         target="_blank"
                         rel="noopener"
                         className="flex flex-col items-center justify-center hover:opacity-80 transition-opacity"

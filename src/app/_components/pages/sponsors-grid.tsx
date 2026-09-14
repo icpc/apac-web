@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { Card, CardContent } from '@/components/ui/card';
 import sponsorStyles from '@/app/_styles/sponsors-styles.module.css';
 import { getAssetUrl } from '@/lib/base-path';
+import { getSponsorUrl } from '@/lib/sponsor-utils';
 
 // Internal representation of a sponsor's properties
 interface Sponsor {
@@ -162,7 +163,7 @@ export default function SponsorsGrid({ year }: SponsorsGridProps) {
                         <div key={name} style={style} className="relative group">
                             {sponsor.url ? (
                                 <a
-                                    href={sponsor.url}
+                                    href={getSponsorUrl(sponsor.url)}
                                     target="_blank"
                                     rel="noopener"
                                     className="transition-opacity duration-200 hover:opacity-80 inline-flex items-center justify-center w-full"

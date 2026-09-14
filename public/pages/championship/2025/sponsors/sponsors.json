@@ -5,21 +5,21 @@
         "Huawei": {
           "size": 4,
           "filename": "/assets/sponsors/huawei-logo.png",
-          "url": "https://www.huawei.com/?ref=icpc-apac"
+          "url": "https://www.huawei.com/"
         }
       },
       {
         "Jane Street": {
           "size": 8,
           "filename": "/assets/sponsors/jane-street-logo.png",
-          "url": "https://www.janestreet.com/?ref=icpc-apac"
+          "url": "https://www.janestreet.com/"
         }
       },
       {
         "Jump Trading": {
           "size": 6,
           "filename": "/assets/sponsors/jump-trading-logo.png",
-          "url": "https://www.jumptrading.com/?ref=icpc-apac"
+          "url": "https://www.jumptrading.com/"
         }
       }
     ]
@@ -30,7 +30,7 @@
         "Jetbrains": {
           "size": 8,
           "filename": "/assets/sponsors/jetbrains-logo.png",
-          "url": "https://www.jetbrains.com/?ref=icpc-apac"
+          "url": "https://www.jetbrains.com/"
         }
       }
     ]
@@ -41,21 +41,21 @@
         "HRT": {
           "size": 5,
           "filename": "/assets/sponsors/hrt-logo.png",
-          "url": "https://www.hudsonrivertrading.com/?ref=icpc-apac"
+          "url": "https://www.hudsonrivertrading.com/"
         }
       },
       {
         "Optiver": {
           "size": 6,
           "filename": "/assets/sponsors/optiver-logo.png",
-          "url": "https://www.optiver.com/?ref=icpc-apac"
+          "url": "https://www.optiver.com/"
         }
       },
       {
         "Citadel": {
           "size": 10,
           "filename": "/assets/sponsors/citadel-logo.png",
-          "url": "https://www.citadelsecurities.com/?ref=icpc-apac"
+          "url": "https://www.citadelsecurities.com/"
         }
       }
     ]
