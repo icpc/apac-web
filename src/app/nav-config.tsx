@@ -51,9 +51,9 @@ export const navItems: MenuItem[] = [
     {
         label: "Participate in the Regionals", url: "/regionals"
     },
-    {
-        label: "Contact Us",
-        url: "/contact-us",
-    },
+    // {
+    //     label: "Contact Us",
+    //     url: "/contact-us",
+    // },
 ];
 

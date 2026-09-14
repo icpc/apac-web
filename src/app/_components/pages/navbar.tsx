@@ -83,7 +83,7 @@ export default function Navbar() {
                     const { label, url, enabled = true, children } = item;
                     if (children && children.length > 0) {
                         return (
-                            <li 
+                            <li
                                 key={label}
                                 style={{ paddingLeft: `${level * remPaddingSize}rem` }}
                             >
@@ -100,7 +100,7 @@ export default function Navbar() {
                                                 {label} <ChevronDownIcon className={styles.chevronIcon} />
                                             </NavigationMenu.Trigger>
                                             <NavigationMenu.Content>
-                                                {renderDesktopMenuItems(children, level+1)}
+                                                {renderDesktopMenuItems(children, level + 1)}
                                             </NavigationMenu.Content>
                                         </NavigationMenu.Item>
                                     </NavigationMenu.List>
