@@ -100,6 +100,82 @@ export function ContestFinder({ cycleData, countries }: ContestFinderProps) {
     return () => observer.disconnect();
   }, [navSections]);
 
+  const findCountryCode = React.useCallback(
+    (param: string | null): string => {
+      if (!param) return "";
+      const cleanParam = param.trim().toLowerCase();
+      const match = countries.find(
+        (c) =>
+          c.code.toLowerCase() === cleanParam ||
+          c.name.toLowerCase() === cleanParam ||
+          c.name.toLowerCase().replace(/\s+/g, "-") === cleanParam
+      );
+      return match ? match.code : "";
+    },
+    [countries]
+  );
+
+  // Sync country selection from URL query param on initial mount and handle initial anchor scroll
+  useEffect(() => {
+    const url = new URL(window.location.href);
+    const countryParam = url.searchParams.get("country");
+    if (countryParam) {
+      const matched = findCountryCode(countryParam);
+      if (matched) {
+        setSelectedCountryCode(matched);
+      }
+    }
+
+    const hash = window.location.hash.replace("#", "");
+    if (hash) {
+      const timer = setTimeout(() => {
+        const el = document.getElementById(hash);
+        if (el) {
+          const offset = 90;
+          const bodyRect = document.body.getBoundingClientRect().top;
+          const elementRect = el.getBoundingClientRect().top;
+          const elementPosition = elementRect - bodyRect;
+          const offsetPosition = elementPosition - offset;
+
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: "smooth",
+          });
+          setActiveSectionId(hash);
+        }
+      }, 150);
+      return () => clearTimeout(timer);
+    }
+  }, [findCountryCode]);
+
+  // Keep state in sync with browser back / forward buttons
+  useEffect(() => {
+    const handlePopState = () => {
+      const url = new URL(window.location.href);
+      const countryParam = url.searchParams.get("country");
+      setSelectedCountryCode(findCountryCode(countryParam));
+
+      const hash = window.location.hash.replace("#", "");
+      if (hash) {
+        setActiveSectionId(hash);
+      }
+    };
+
+    window.addEventListener("popstate", handlePopState);
+    return () => window.removeEventListener("popstate", handlePopState);
+  }, [findCountryCode]);
+
+  const handleCountryChange = (code: string) => {
+    setSelectedCountryCode(code);
+    const url = new URL(window.location.href);
+    if (code) {
+      url.searchParams.set("country", code);
+    } else {
+      url.searchParams.delete("country");
+    }
+    window.history.replaceState(null, "", url.toString());
+  };
+
   const scrollToSection = (id: string) => {
     const el = document.getElementById(id);
     if (el) {
@@ -113,16 +189,24 @@ export function ContestFinder({ cycleData, countries }: ContestFinderProps) {
         top: offsetPosition,
         behavior: "smooth",
       });
-      window.history.replaceState(null, "", `#${id}`);
+      const url = new URL(window.location.href);
+      url.hash = id;
+      window.history.replaceState(null, "", url.toString());
       setActiveSectionId(id);
     }
   };
 
   const handleCopyUrl = async (e: React.MouseEvent, slug: string) => {
     e.preventDefault();
-    const url = `${window.location.origin}${window.location.pathname}#${slug}`;
+    const url = new URL(window.location.href);
+    if (selectedCountryCode) {
+      url.searchParams.set("country", selectedCountryCode);
+    } else {
+      url.searchParams.delete("country");
+    }
+    url.hash = slug;
     try {
-      await navigator.clipboard.writeText(url);
+      await navigator.clipboard.writeText(url.toString());
       setCopiedSection(slug);
       setTimeout(() => setCopiedSection(null), 2000);
     } catch (err) {
@@ -218,7 +302,7 @@ export function ContestFinder({ cycleData, countries }: ContestFinderProps) {
             <div className="my-4">
               <StyledDropdown
                 value={selectedCountryCode}
-                onValueChange={setSelectedCountryCode}
+                onValueChange={handleCountryChange}
                 options={countryOptions}
                 placeholder="Select country of institution..."
                 size="default"
