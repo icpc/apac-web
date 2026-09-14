@@ -57,11 +57,11 @@
 }
 
 .markdown ins {
-  @apply bg-primaryAccent dark:bg-primaryAccent-dark text-black dark:text-white no-underline;
+  @apply bg-green-200 text-green-950 dark:bg-green-900/50 dark:text-green-200 no-underline;
 }
 
 .markdown del {
-  @apply bg-red-200 text-black;
+  @apply bg-red-200 text-red-950 dark:bg-red-900/50 dark:text-red-200;
 }
 
 .markdown a {
