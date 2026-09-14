@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { Content } from '@/app/_components/pages/content';
 import { marked } from 'marked';
 import Divider from '@/app/_components/divider';
-import diff from 'html-diff-ts';
+import diffHtml from '@/lib/diff-html';
 import matter from 'gray-matter';
 import modifyHtmlContent from '@/lib/modify-html-content';
 import VersionControls from '@/app/_components/VersionControls';
@@ -271,7 +271,7 @@ const SubfolderContent = ({ item, showTitle }: SubfolderContentProps) => {
     const parsedSelectedContent = parseMatter(selectedVersionData.content)
     const latestSelectedContent = parseMatter(item.content)
 
-    const diffHtml = diff(
+    const diffResult = diffHtml(
       marked.parse(parsedSelectedContent.content) as string,
       marked.parse(latestSelectedContent.content) as string
     );
@@ -289,7 +289,7 @@ const SubfolderContent = ({ item, showTitle }: SubfolderContentProps) => {
           </>
         )}
         <div className="mt-6 sm:mt-0">
-          <Content content={modifyHtmlContent(diffHtml)} />
+          <Content content={modifyHtmlContent(diffResult)} />
         </div>
       </section>
     );

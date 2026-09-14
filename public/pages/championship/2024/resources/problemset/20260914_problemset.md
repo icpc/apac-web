@@ -1,4 +1,4 @@
 - [Practice Problemset](/assets/championship/2024/practice-problemset.pdf)
 - [Contest Problemset](/assets/championship/2024/problemset.pdf)
 - [Contest Problemset Analysis](/assets/championship/2024/problem-analysis.pdf)
-- [Test Data Files](https://github.com/icpc-apac-org/icpc-apc-problem-archive/tree/master/2024) (Updated on 2026-09-14)
+- [Test Data Files](https://github.com/icpc-apac-org/icpc-apc-problem-archive/tree/master/2024) (Updated on September 14, 2026)

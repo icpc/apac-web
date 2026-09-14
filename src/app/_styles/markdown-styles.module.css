@@ -40,7 +40,8 @@
   @apply block mx-auto;
 }
 
-.markdown td[colspan="3"] { /* data headers */
+.markdown td[colspan="3"] {
+  /* data headers */
   @apply bg-text-header-others-cyanalpha;
 }
 
@@ -64,22 +65,72 @@
   @apply bg-red-200 text-red-950 dark:bg-red-900/50 dark:text-red-200;
 }
 
+/* Image diff highlights and badges */
+.markdown ins:has(img),
+.markdown del:has(img) {
+  @apply relative inline-block my-2 max-w-full bg-transparent;
+}
+
+.markdown ins:has(img)::before {
+  @apply absolute top-2 left-2 z-10 px-2 py-0.5 text-xs font-semibold bg-green-600 text-white rounded shadow pointer-events-none;
+}
+
+.markdown ins img {
+  @apply ring-4 ring-green-200 ring-offset-2 dark:ring-offset-gray-900 rounded-lg shadow-md;
+}
+
+.markdown del:has(img)::before {
+  @apply absolute top-2 left-2 z-10 px-2 py-0.5 text-xs font-semibold bg-red-600 text-white rounded shadow pointer-events-none;
+}
+
+.markdown del img {
+  @apply ring-4 ring-red-200 ring-offset-2 dark:ring-offset-gray-900 rounded-lg opacity-60 grayscale-[30%] shadow-md;
+}
+
+.markdown :global(.diff-url-change) {
+  @apply text-xs font-mono inline-block align-baseline ml-1 text-gray-700;
+}
+
+:global(.dark) .markdown :global(.diff-url-change) {
+  @apply text-gray-300;
+}
+
+.markdown :global(.diff-url-change) ins {
+  @apply px-1 py-0.5 rounded break-all no-underline;
+}
+
+.markdown :global(.diff-url-change) del {
+  @apply px-1 py-0.5 rounded break-all line-through;
+}
+
+.markdown :global(.diff-url-badge) {
+  @apply text-xs font-mono inline-block align-baseline ml-1 text-gray-500 dark:text-gray-400 select-text break-all;
+}
+
+.markdown :global(.diff-url-badge) ins {
+  @apply px-1 py-0.5 rounded break-all no-underline;
+}
+
+.markdown :global(.diff-url-badge) del {
+  @apply px-1 py-0.5 rounded break-all line-through;
+}
+
 .markdown a {
-    @apply text-text-links border border-transparent;
-    padding: 0.1em 0;
-    border-radius: 0.25rem;
+  @apply text-text-links border border-transparent;
+  padding: 0.1em 0;
+  border-radius: 0.25rem;
 }
 
 :global(.dark) .markdown a {
-    @apply text-text-links-dark;
+  @apply text-text-links-dark;
 }
 
 .markdown a:hover {
-    @apply underline bg-text-links-highlight text-text-links-hover;
+  @apply underline bg-text-links-highlight text-text-links-hover;
 }
 
 :global(.dark) .markdown a:hover {
-    @apply bg-text-links-highlight-dark text-text-links-hover-dark;
+  @apply bg-text-links-highlight-dark text-text-links-hover-dark;
 }
 
 .markdown td li {
@@ -95,21 +146,21 @@
 }
 
 .markdown h2 {
-    @apply text-2xl mt-8 mb-4 leading-snug font-bold text-text-header-secondary;
+  @apply text-2xl mt-8 mb-4 leading-snug font-bold text-text-header-secondary;
 }
 
 .markdown h3 {
-    @apply text-xl mt-8 mb-4 leading-snug font-bold text-text-header-ternary;
+  @apply text-xl mt-8 mb-4 leading-snug font-bold text-text-header-ternary;
 }
 
 :global(.dark) .markdown h1 {
-    @apply text-text-header-primary-dark;
+  @apply text-text-header-primary-dark;
 }
 
 :global(.dark) .markdown h2 {
-    @apply text-text-header-secondary-dark;
+  @apply text-text-header-secondary-dark;
 }
 
 :global(.dark) .markdown h3 {
-    @apply text-text-header-ternary-dark;
+  @apply text-text-header-ternary-dark;
 }
