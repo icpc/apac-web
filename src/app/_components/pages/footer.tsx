@@ -6,6 +6,7 @@ import WideContainer from "@/components/common/wide-container";
 import styles from "@/app/_styles/footer-styles.module.css";
 import { Card, CardContent } from "@/components/ui/card";
 import { getAssetUrl } from "@/lib/base-path";
+import { getSponsorUrl } from "@/lib/sponsor-utils";
 
 interface SponsorInfo { filename: string; size: number; }
 interface SponsorGroup { [name: string]: SponsorInfo }
@@ -91,14 +92,26 @@ export function Footer() {
               <div className="p-6 flex flex-wrap gap-6 items-center justify-center">
                 {sponsors?.map((sponsorObj: SponsorGroup) => {
                   const [name, logo] = Object.entries(sponsorObj)[0] as [string, any];
-                  return (
+                  const img = (
                     <img
-                      key={name}
                       src={getAssetUrl(logo.filename)}
                       alt={name}
                       style={{ width: `${logo.size * 1.6}rem` }}
                       title={name}
                     />
+                  );
+                  return logo.url ? (
+                    <a
+                      key={name}
+                      href={getSponsorUrl(logo.url)}
+                      target="_blank"
+                      rel="noopener"
+                      className="hover:opacity-80 transition-opacity"
+                    >
+                      {img}
+                    </a>
+                  ) : (
+                    <span key={name}>{img}</span>
                   );
                 })}
               </div>

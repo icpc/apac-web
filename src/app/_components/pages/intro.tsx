@@ -59,9 +59,6 @@ export function Intro() {
         <div className="my-2 lg:row-span-3 w-full px-4 lg:px-8">
           <SponsorsCarousel dataPath="/pages/championship/current-global-sponsors.json" sizeMultiplier={1.8} scrollSpeed={1} />
         </div>
-        {/* <div className="my-2 lg:row-span-3 w-full px-4 lg:px-8">
-          <SponsorsCarousel dataPath="/pages/championship/all-sponsors.json" sizeMultiplier={1} scrollSpeed={2} />
-        </div> */}
       </section>
     </div>
   );

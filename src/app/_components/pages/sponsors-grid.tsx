@@ -5,11 +5,13 @@ import Image from 'next/image';
 import { Card, CardContent } from '@/components/ui/card';
 import sponsorStyles from '@/app/_styles/sponsors-styles.module.css';
 import { getAssetUrl } from '@/lib/base-path';
+import { getSponsorUrl } from '@/lib/sponsor-utils';
 
 // Internal representation of a sponsor's properties
 interface Sponsor {
     size: number;
     filename: string;
+    url?: string;
 }
 
 // Format of a single sponsor entry in the new JSON array
@@ -140,22 +142,41 @@ export default function SponsorsGrid({ year }: SponsorsGridProps) {
                         flexShrink: 0,
                     };
 
+                    const imageElement = (
+                        <Image
+                            src={getAssetUrl(sponsor.filename)}
+                            alt={`${name} logo`}
+                            width={0}
+                            height={0}
+                            sizes="100vw"
+                            style={{
+                                objectFit: 'contain',
+                                width: '100%',
+                                height: 'auto',
+                                marginTop: '0.5rem',
+                                marginBottom: '0.5rem',
+                            }}
+                        />
+                    );
+
                     return (
-                        <div key={name} style={style}>
-                            <Image
-                                src={getAssetUrl(sponsor.filename)}
-                                alt={`${name} logo`}
-                                width={0}
-                                height={0}
-                                sizes="100vw"
-                                style={{
-                                    objectFit: 'contain',
-                                    width: '100%',
-                                    height: 'auto',
-                                    marginTop: '0.5rem',
-                                    marginBottom: '0.5rem',
-                                }}
-                            />
+                        <div key={name} style={style} className="relative group">
+                            {sponsor.url ? (
+                                <a
+                                    href={getSponsorUrl(sponsor.url)}
+                                    target="_blank"
+                                    rel="noopener"
+                                    className="transition-opacity duration-200 hover:opacity-80 inline-flex items-center justify-center w-full"
+                                    title={name}
+                                >
+                                    {imageElement}
+                                </a>
+                            ) : (
+                                imageElement
+                            )}
+                            <span className="absolute left-1/2 -translate-x-1/2 bottom-0 translate-y-full mb-[-4px] px-2.5 py-1 text-xs font-medium text-white bg-gray-900/90 dark:bg-gray-800/95 backdrop-blur-sm rounded-md shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-50 whitespace-nowrap">
+                                {name}
+                            </span>
                         </div>
                     );
                 })}

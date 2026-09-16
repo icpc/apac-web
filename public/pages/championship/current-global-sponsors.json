@@ -2,25 +2,29 @@
   {
     "Jane Street": {
       "size": 8,
-      "filename": "/assets/sponsors/jane-street-logo.png"
+      "filename": "/assets/sponsors/jane-street-logo.png",
+      "url": "https://www.janestreet.com/"
     }
   },
   {
     "Jump Trading": {
       "size": 6,
-      "filename": "/assets/sponsors/jump-trading-logo.png"
+      "filename": "/assets/sponsors/jump-trading-logo.png",
+      "url": "https://www.jumptrading.com/"
     }
   },
   {
     "JetBrains": {
       "size": 9,
-      "filename": "/assets/sponsors/jetbrains-logo.png"
+      "filename": "/assets/sponsors/jetbrains-logo.png",
+      "url": "https://www.jetbrains.com/"
     }
   },
   {
     "HRT": {
       "size": 5,
-      "filename": "/assets/sponsors/hrt-logo.svg"
+      "filename": "/assets/sponsors/hrt-logo.svg",
+      "url": "https://www.hudsonrivertrading.com/"
     }
   }
 ]
