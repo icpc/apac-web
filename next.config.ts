@@ -1,8 +1,13 @@
 import type { NextConfig } from "next";
+import fs from "fs";
+import path from "path";
 
 const getBasePath = () => {
   if (process.env.NEXT_PUBLIC_BASE_PATH !== undefined) {
     return process.env.NEXT_PUBLIC_BASE_PATH;
+  }
+  if (fs.existsSync(path.join(process.cwd(), "public", "CNAME"))) {
+    return "";
   }
   if (process.env.GITHUB_ACTIONS === "true" && process.env.GITHUB_REPOSITORY) {
     const repo = process.env.GITHUB_REPOSITORY.split("/")[1];
