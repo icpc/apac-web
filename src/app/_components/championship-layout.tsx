@@ -44,8 +44,9 @@ export default function ChampionshipLayout({ children, year }: ChampionshipLayou
   const [navigationItems, setNavigationItems] = useState(defaultNavigationItems);
   const [isScrollable, setIsScrollable] = useState(false);
 
-  const currentSection = pathname.split('/').pop() || '';
+  const currentSection = pathname.split('/').filter(Boolean).pop() || '';
   const currentSectionLabel = navigationItems.find(item => item.path === currentSection)?.label || currentSection;
+  const pageTitle = currentSection === 'changelogs' ? 'Change Logs' : currentSectionLabel;
 
   useEffect(() => {
 
@@ -150,6 +151,7 @@ export default function ChampionshipLayout({ children, year }: ChampionshipLayou
               <div className="hidden sm:block">
                 <h1 className="text-4xl font-bold">The Championship</h1>
               </div>
+
               <div className="block sm:hidden ml-6 mb-0">
                 {/* Mobile Sidebar Toggle */}
                 <button
@@ -161,10 +163,10 @@ export default function ChampionshipLayout({ children, year }: ChampionshipLayou
                   <ChevronRightIcon className={`h-5 w-5 text-text-header-primary dark:text-text-header-primary-dark transition-transform duration-200 ${isSidebarOpen ? 'rotate-180' : 'rotate-0'}`} />
                 </button>
                 <h1 className="text-3xl font-bold">The {year} Championship</h1>
-                <h2 className="text-3xl font-bold">{currentSectionLabel === 'changelogs' ? 'Change Logs' : currentSectionLabel}</h2>
+                <h2 className="text-3xl font-bold">{pageTitle}</h2>
               </div>
 
-              {/* Year Dropdown - Desktop Only */}
+              {/* Year Dropdown and Page title - Desktop Only */}
               <div className="hidden sm:block mt-4">
                 <StyledDropdown
                   value={year}
@@ -178,7 +180,9 @@ export default function ChampionshipLayout({ children, year }: ChampionshipLayou
                   width={120}
                 />
               </div>
+              <h1 className="hidden text-4xl font-bold text-text-header-secondary dark:text-text-header-secondary-dark sm:block"> — {pageTitle}</h1>
             </div>
+
             <div className="hidden sm:flex items-center gap-4">
               <Link
                 href={`${basePath}/changelogs`}
