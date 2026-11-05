@@ -1,7 +1,7 @@
 {
   "year": "2026",
   "academicYear": "2026–2027",
-  "rulesUrl": "https://icpc.jp/apac/2026-27/rules/",
+  "rulesUrl": "https://icpc.jp/apac/2026-27/rulenew/",
   "hostCountryCodes": [
     "KR",
     "ID",
@@ -108,7 +108,7 @@
         },
         {
           "ruleCode": "Rule C2 (Championship Slots)",
-          "summary": "Each university can send at most Q = 2 teams to the Championship (or Q = 3 if the university won a medal in the previous World Finals)."
+          "summary": "Each university can qualify at most Q = 2 teams to the Championship. For the 2026–2027 cycle, Q is 2 for every university, because no World Finals is held before the 2027 Championship."
         }
       ]
     },
@@ -138,7 +138,7 @@
         },
         {
           "ruleCode": "Rule C2 (Championship Slots)",
-          "summary": "Each university can qualify at most Q = 2 teams to the Championship (or Q = 3 if the university won a medal in the previous World Finals)."
+          "summary": "Each university can qualify at most Q = 2 teams to the Championship. For the 2026–2027 cycle, Q is 2 for every university, because no World Finals is held before the 2027 Championship."
         }
       ]
     },
