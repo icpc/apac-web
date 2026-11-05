@@ -1,5 +1,5 @@
 import Footer from "@/app/_components/pages/footer";
-import { ICPC_APAC } from "@/lib/constants";
+import { ICPC_APAC, SITE_DESCRIPTION } from "@/lib/constants";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import cn from "classnames";
@@ -18,8 +18,16 @@ export const generateMetadata = (): Metadata => {
   return {
     metadataBase,
     title: `${ICPC_APAC}`,
-    description: `The official website for the ${ICPC_APAC}`,
+    description: SITE_DESCRIPTION,
     openGraph: {
+      title: ICPC_APAC,
+      description: SITE_DESCRIPTION,
+      images: [getAssetUrl("/assets/icpc-logo.png")],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: ICPC_APAC,
+      description: SITE_DESCRIPTION,
       images: [getAssetUrl("/assets/icpc-logo.png")],
     },
   };

@@ -1,6 +1,6 @@
 "use client";
 
-import { ICPC_APAC } from "@/lib/constants";
+import { HERO_SUBTITLE, ICPC_APAC } from "@/lib/constants";
 import WideContainer from "@/components/common/wide-container";
 import styles from "@/app/_styles/intro-styles.module.css";
 import { useTheme } from "@/components/common/theme-context";
@@ -31,9 +31,7 @@ export function Intro() {
         <WideContainer className={`${styles.content} flex flex-col py-36 lg:py-48 lg:py-0 lg:flex-row items-center justify-between lg:row-span-3`}>
           <div className="order-2 lg:order-1">
             <p className={`${styles.title}`}>{ICPC_APAC}</p>
-            <p className={`${styles.subtitle} mt-4 max-w-2xl`}>
-              The premier programming competition for students in the Asia-Pacific region, a gateway to the ICPC World Finals.
-            </p>
+            <p className={`${styles.subtitle} mt-4 max-w-2xl`}>{HERO_SUBTITLE}</p>
             <div className="flex flex-wrap items-center gap-4 sm:gap-6 mt-8">
               <Button
                 asChild
