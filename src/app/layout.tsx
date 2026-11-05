@@ -42,7 +42,7 @@ export default function RootLayout({
         <link rel="icon" type="image/svg+xml" href={getAssetUrl("/favicon/favicon.svg")} />
         <link rel="shortcut icon" href={getAssetUrl("/favicon.ico")} />
         <link rel="apple-touch-icon" sizes="180x180" href={getAssetUrl("/favicon/apple-touch-icon.png")} />
-        <meta name="apple-mobile-web-app-title" content="APAC'25" />
+        <meta name="apple-mobile-web-app-title" content="ICPC APAC" />
         <link rel="manifest" href={getAssetUrl("/favicon/site.webmanifest")} />
       </head>
       <body

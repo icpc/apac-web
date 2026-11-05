@@ -12,7 +12,7 @@ coverImage: "bg-primaryAccent dark:bg-primaryAccent-dark"
         <h3>🏅 Claim Your Medals!</h3>
         <p>Top-performing teams will receive exclusive medals and could win exciting prizes from our sponsors (Note: Prize pool is tentative and subject to the sponsors).</p>
         <h3>🌍 Secure Your Spot at the World Finals!</h3>
-        <p>The top teams from this championship will earn invitations to compete at the <a href"https://worldfinals.icpc.global/">ICPC World Finals</a>, where they will compete against the top teams from all other regions across the globe! The exact number of qualifying teams, expected to be around 18, will be given by the ICPC headquarters and the final World Finals slot distribution defined in the <a href="https://icpc.jp/apac/2025-26/rules/">2025–26 APAC rules</a>.</p>
+        <p>The top teams from this championship will earn invitations to compete at the <a href="https://worldfinals.icpc.global/">ICPC World Finals</a>, where they will compete against the top teams from all other regions across the globe! The exact number of qualifying teams, expected to be around 18, will be given by the ICPC headquarters and the final World Finals slot distribution defined in the <a href="https://icpc.jp/apac/2025-26/rules/">2025–26 APAC rules</a>.</p>
     </div>
     <div class="image-container">
         <div class="image-box" style="height: 400px; border: none;">
