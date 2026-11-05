@@ -20,7 +20,7 @@
 
 /* Title Text */
 .title {
-    @apply text-4xl md:text-5xl lg:text-[4rem] font-bold tracking-tighter leading-tight md:pr-8 text-black text-left break-words;
+    @apply text-4xl md:text-5xl lg:text-[4rem] font-bold tracking-tighter leading-tight md:pr-8 text-black text-left break-words m-0;
 }
 
 :global(.dark) .title {

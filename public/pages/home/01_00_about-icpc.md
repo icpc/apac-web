@@ -3,7 +3,7 @@ title: "About the ICPC Asia Pacific Championship"
 coverImage: "/assets/home/asia-pacific-[theme].png"
 ---
 
-# About the ICPC Asia Pacific Championship
+## About the ICPC Asia Pacific Championship
 
 With the growth of ICPC in Asia Pacific countries and around the world, from the cycle 2023-2024, the ICPC Asia Pacific will change from a three-tier system (Preliminary, Regional, World Finals) to a four-tier system (Preliminary, Regional, Super-Regional, World Finals). The super-regional tier of ICPC Asia Pacific will be called **"The ICPC Asia Pacific Championship."** 
 

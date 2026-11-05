@@ -2,8 +2,8 @@ import { getAssetUrl } from "@/lib/base-path";
 
 export const modifyHtmlContent = (htmlContent: string): string => {
     let updated = htmlContent.replace(
-        /<h(1)(.*?)id="(.*?)"(.*?)>(.*)<\/h\1>/g,
-        `<h1$2id="$3"$4>
+        /<h([12])(.*?)id="(.*?)"(.*?)>(.*)<\/h\1>/g,
+        `<h$1$2id="$3"$4>
             $5
             <a href="#$3" class="header-link">
                 🔗
@@ -11,7 +11,7 @@ export const modifyHtmlContent = (htmlContent: string): string => {
                     Get url to this section
                 </span>
             </a>
-        </h1>`
+        </h$1>`
     );
 
     // Prefix asset, pages, and favicon paths in src and href attributes with getAssetUrl

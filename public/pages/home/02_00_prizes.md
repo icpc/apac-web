@@ -3,7 +3,7 @@ title: "Prizes"
 coverImage: "bg-primaryAccent dark:bg-primaryAccent-dark"
 ---
 
-# Prizes
+## Prizes
 
 <div id="icpc-foundation" class="flex-container">
     <div class="text-container">

@@ -3,7 +3,7 @@ title: "ICPC Foundation"
 coverImage: "/assets/home/icpc-nac.jpeg"
 ---
 
-# Part of the International Collegiate Programming Contest (ICPC)
+## Part of the International Collegiate Programming Contest (ICPC)
 
 <div id="icpc-foundation" class="flex-container">
     <div class="text-container" style="padding-right: 20px;">
