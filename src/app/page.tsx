@@ -19,19 +19,20 @@ export default async function Index() {
           const hasCoverImage = Boolean(processedCoverImage);
           const isClassBased = processedCoverImage.includes("bg-");
           const backgroundImage = !isClassBased && processedCoverImage.startsWith("/assets") ? `url('${getAssetUrl(processedCoverImage)}')` : undefined;
+          const coverSize = content.coverSize === "cover" ? "cover" : "contain";
           const backgroundColor =
             !isClassBased && (processedCoverImage.startsWith("rgba") || /^#[0-9A-Fa-f]{6}$/.test(processedCoverImage)) ? processedCoverImage : undefined;
 
           return (
-            <div key={index} className={hasCoverImage ? "pt-2 mt-8 pb-8 relative overflow-hidden" : "mt-8"}>
+            <div key={index} className={hasCoverImage ? "pt-2 pb-8 relative overflow-hidden" : ""}>
               {hasCoverImage && (
                 <div
                   className={`absolute top-0 left-0 right-0 bottom-0 z-[-1] opacity-10 ${isClassBased ? processedCoverImage : ''}`}
                   style={{
                     backgroundImage,
                     backgroundColor,
-                    backgroundSize: "contain",
-                    backgroundPosition: "calc(50% + 10rem) center",
+                    backgroundSize: coverSize,
+                    backgroundPosition: coverSize === "cover" ? "center" : "calc(50% + 10rem) center",
                     backgroundRepeat: "no-repeat",
                   }}
                 />

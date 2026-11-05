@@ -1,6 +1,7 @@
 ---
 title: "ICPC Foundation"
 coverImage: "/assets/home/icpc-nac.jpeg"
+coverSize: cover
 ---
 
 ## Part of the International Collegiate Programming Contest (ICPC)
