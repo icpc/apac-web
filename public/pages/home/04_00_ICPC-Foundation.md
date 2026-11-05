@@ -20,5 +20,8 @@ coverSize: cover
         <div class="image-box" style="height: 200px; border: none;">
             <img src="/assets/home/icpc-2021-world-champions.jpeg" alt="2021 ICPC World Champions" class="responsive-image" style="object-fit: cover; height: 100%; width: 100%;">
         </div>
+        <div class="image-caption">
+            The 2021 World Champions: Massachusetts Institute of Technology. Image source: <a href="https://icpc.global/community/history-icpc-2021">icpc.global</a>
+        </div>
     </div>
 </div>
